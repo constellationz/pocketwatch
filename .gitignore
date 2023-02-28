@@ -105,3 +105,6 @@ dist
 
 # Certificate files
 sslcert/
+
+# MacOS folder files
+.DS_Store
