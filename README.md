@@ -2,23 +2,22 @@
 
 A MERN stack time tracking app
 
-# Getting Started
+## Getting Started
 
 1. Clone the git repository
 
 ```bash
-$ git clone https://github.com/constellationz/pocketwatch && cd pocketwatch
+git clone https://github.com/constellationz/pocketwatch && cd pocketwatch
 ```
 
 2. Install dependencies
 
 ```bash
-$ npm install
+npm install
 ```
 
-3. Set up .env
+3. Set up `.env`
 
-`.env`
 ```
 NODE_ENV = development
 PORT = 5000
@@ -29,9 +28,9 @@ JWT_SECRET = abc123
 4. Host test server
 
 ```bash
-$ npm run nodemon
+npm run nodemon
 ```
 
-# Attribution
+## Attribution
 
 `pocketwatch` is licensed under the MIT license.
