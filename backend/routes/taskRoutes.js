@@ -1,5 +1,5 @@
 // taskRoutes.js
-// Routes for the task endpoint
+// Routes for the tasks endpoint
 
 const express = require('express')
 const router = express.Router()
