@@ -5,17 +5,18 @@ const express = require('express')
 const router = express.Router()
 const {
     registerUser,
-    authenticateUser,
+    loginUser,
     getMe,
 } = require('../controllers/userController')
+const { protect } = require('../middleware/authMiddleware')
 
 router.route('/')
     .post(registerUser)
 
 router.route('/login')
-    .post(authenticateUser)
+    .post(loginUser)
 
 router.route('/me')
-    .get(getMe)
+    .get(protect, getMe)
 
 module.exports = router;

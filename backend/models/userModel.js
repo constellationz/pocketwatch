@@ -13,7 +13,7 @@ const userSchema = mongoose.Schema({
         required: [true, 'Email field required'],
         unique: true,
     },
-    password: {
+    hashedPassword: {
         type: String,    
         required: [true, 'Password field required'],
     },
