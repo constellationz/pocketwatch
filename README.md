@@ -31,6 +31,46 @@ JWT_SECRET = abc123
 npm run nodemon
 ```
 
+## Usage
+
+Commands:
+
+1. Host the server and restart when changes are detected
+
+```bash
+npm run nodemon
+```
+
+2. Host the server without nodemon
+
+```bash
+npm run serve
+```
+
+3. Host the frontend and listen for changes
+
+```bash
+npm run client
+```
+
+4. Host both the server and the backend and listen for changes on both
+
+```bash
+npm run dev
+```
+
+5. Check for style infractions in files
+
+```bash
+npm run check
+```
+
+6.  Style files with prettifier
+
+```bash
+npm run prettify
+```
+
 ## Attribution
 
 `pocketwatch` is licensed under the MIT license.
