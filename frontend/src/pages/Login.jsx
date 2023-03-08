@@ -26,7 +26,7 @@ function Login() {
 
   return (
     <>
-      <section>
+      <section className="heading">
         <h1>
           <FaSignInAlt /> Login
         </h1>

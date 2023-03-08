@@ -26,11 +26,11 @@ function ForgotPassword() {
 
   return (
     <>
-      <section>
+      <section className="heading">
         <h1>
           <FaQuestion /> Forgot password
         </h1>
-        <p>Enter your username and email and we'll send you a reset link</p>
+        <p>We'll email you a reset link</p>
       </section>
 
       <section className="form">
