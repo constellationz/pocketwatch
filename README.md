@@ -28,7 +28,7 @@ JWT_SECRET = abc123
 4. Host test server
 
 ```bash
-npm run nodemon
+npm run dev
 ```
 
 ## Usage
