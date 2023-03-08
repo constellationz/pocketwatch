@@ -39,21 +39,18 @@ const postTask = asyncHandler(async (req, res) => {
 // @access  Private
 const updateTask = asyncHandler(async (req, res) => {
     const task = await Task.findById(req.params.id)
-
     if (!task) {
         res.status(400)
         throw new Error(`Task of id=${req.params.id} not found`)
     }
 
-    // Make sure user exists
-    const user = await User.findById(req.user.id)
-    if (!user) {
+    if (!req.user) {
         res.status(401)
         throw new Error('User not found')
     }
 
     // Make sure task belongs  to user
-    if (task.user.toString() !== user.id) {
+    if (task.user.toString() !== req.user.id) {
         res.status(401)
         throw new Error('Not authorized')
     }
@@ -77,14 +74,13 @@ const deleteTask = asyncHandler(async (req, res) => {
     }
 
     // Make sure user exists
-    const user = await User.findById(req.user.id)
-    if (!user) {
+    if (!req.user) {
         res.status(401)
         throw new Error('User not found')
     }
 
     // Make sure task belongs  to user
-    if (task.user.toString() !== user.id) {
+    if (task.user.toString() !== req.user.id) {
         res.status(401)
         throw new Error('Not authorized')
     }
