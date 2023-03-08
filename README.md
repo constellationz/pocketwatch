@@ -41,7 +41,6 @@ Commands:
 npm run nodemon
 ```
 
-
 2. Host the frontend and listen for changes
 
 ```bash
