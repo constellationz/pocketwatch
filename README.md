@@ -41,31 +41,26 @@ Commands:
 npm run nodemon
 ```
 
-2. Host the server without nodemon
 
-```bash
-npm run serve
-```
-
-3. Host the frontend and listen for changes
+2. Host the frontend and listen for changes
 
 ```bash
 npm run client
 ```
 
-4. Host both the server and the backend and listen for changes on both
+3. Host both the server and the backend and listen for changes on both
 
 ```bash
 npm run dev
 ```
 
-5. Check for style infractions in files
+4. Check for style infractions in files
 
 ```bash
 npm run check
 ```
 
-6.  Style files with prettifier
+5. Automatically style files with prettifier
 
 ```bash
 npm run prettify
