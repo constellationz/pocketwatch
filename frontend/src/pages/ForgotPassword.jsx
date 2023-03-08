@@ -1,11 +1,11 @@
-// Login.jsx
-// Login page
+// ForgotPassword.jsx
+// Forgot password page
 
 import { useState, useEffect } from "react";
-import { FaSignInAlt } from "react-icons/fa";
+import { FaQuestion } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
-function Login() {
+function ForgotPassword() {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -28,9 +28,9 @@ function Login() {
     <>
       <section>
         <h1>
-          <FaSignInAlt /> Login
+          <FaQuestion /> Forgot password
         </h1>
-        <p>Log into an existing account</p>
+        <p>Enter your username and email and we'll send you a reset link</p>
       </section>
 
       <section className="form">
@@ -63,7 +63,7 @@ function Login() {
             </button>
           </div>
           <div className="form-group">
-            <Link to="/forgotpassword">Forgot password</Link>
+            <Link to="/login">Back to login</Link>
           </div>
         </form>
       </section>
@@ -71,4 +71,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default ForgotPassword;
