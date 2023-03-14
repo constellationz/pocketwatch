@@ -3,6 +3,7 @@
 
 import Timer from "../components/Timer";
 import Search from "../components/Search";
+import ModalButtons from "../components/ModalButtons";
 
 function Dashboard() {
   let currentTask = {
@@ -14,6 +15,7 @@ function Dashboard() {
     <div>
       <Timer time={currentTask.timeElapsed} />
       <Search taskName={currentTask.name} />
+      <ModalButtons successText="Yes" dangerText="No" />
     </div>
   );
 }
