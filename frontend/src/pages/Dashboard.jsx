@@ -2,6 +2,7 @@
 // Main timer/dashboard page
 
 import Timer from "../components/Timer";
+import CurrentTask from "../components/CurrentTask";
 import Search from "../components/Search";
 import ModalButtons from "../components/ModalButtons";
 
@@ -14,6 +15,7 @@ function Dashboard() {
   return (
     <div>
       <Timer time={currentTask.timeElapsed} />
+      <CurrentTask props={currentTask}/>
       <Search taskName={currentTask.name} />
       <ModalButtons successText="Yes" dangerText="No" />
     </div>
