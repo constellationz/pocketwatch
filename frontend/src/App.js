@@ -5,6 +5,7 @@ import Register from "./pages/Register";
 import Settings from "./pages/Settings";
 import ForgotPassword from "./pages/ForgotPassword";
 import Header from "./components/Header";
+import 'bootstrap/dist/css/bootstrap.min.css'
 
 function App() {
   return (
