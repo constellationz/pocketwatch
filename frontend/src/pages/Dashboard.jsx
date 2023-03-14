@@ -2,6 +2,7 @@
 // Main timer/dashboard page
 
 import Timer from "../components/Timer";
+import Search from "../components/Search";
 
 function Dashboard() {
   let currentTask = {
@@ -12,6 +13,7 @@ function Dashboard() {
   return (
     <div>
       <Timer time={currentTask.timeElapsed} />
+      <Search taskName={currentTask.name} />
     </div>
   );
 }
