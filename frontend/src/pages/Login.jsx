@@ -4,6 +4,7 @@
 import { useState, useEffect } from "react";
 import { FaSignInAlt } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import Button from "react-bootstrap/Button";
 
 function Login() {
   const [formData, setFormData] = useState({
@@ -58,9 +59,9 @@ function Login() {
             />
           </div>
           <div className="form-group">
-            <button type="submit" className="btn btn-block">
+            <Button variant="outline-dark" type="submit" className="btn btn-block">
               Submit
-            </button>
+            </Button>
           </div>
           <div className="form-group">
             <Link to="/forgotpassword">Forgot password</Link>

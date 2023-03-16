@@ -3,6 +3,7 @@
 
 import { useState, useEffect } from "react";
 import { FaUser } from "react-icons/fa";
+import Button from "react-bootstrap/Button";
 
 function Register() {
   const [formData, setFormData] = useState({
@@ -81,9 +82,9 @@ function Register() {
             />
           </div>
           <div className="form-group">
-            <button type="submit" className="btn btn-block">
+            <Button variant="outline-dark" type="submit" className="btn btn-block">
               Submit
-            </button>
+            </Button>
           </div>
         </form>
       </section>
