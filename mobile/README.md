@@ -15,3 +15,7 @@ npm run ios
 ```bash
 npm run web
 ```
+
+## Note for MacOS
+
+To use the iOS emulator, install Xcode from the App Store.
