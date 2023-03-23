@@ -1,0 +1,29 @@
+openapi: 3.0.0
+
+servers:
+  - url: https://www.pocketwatch.page
+  - url: https://localhost:5000
+
+info:
+  title: Pocketwatch
+  version: 1.0.0
+  license:
+    name: MIT
+    url: https://mit-license.org
+
+paths:
+  /api/users/me:
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  responses:
+    UnauthorizedError:
+      description: Access token is missing or invalid
+  schemas:
+
+security:
+  - bearerAuth: []
