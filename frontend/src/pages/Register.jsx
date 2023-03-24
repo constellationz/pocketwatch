@@ -24,7 +24,30 @@ function Register() {
 
   const onSubmit = (e) => {
     e.preventDefault();
-  };
+    const newUser = {
+      name: formData.name, 
+      emai: formData.email, 
+      password: formData.password, 
+    }
+    console.log(newUser);
+
+    fetch("/api/users", {
+      method: "POST",
+      crossDomain: true,
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+      body: JSON.stringify({
+        name,
+        email,
+        password
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => { console.log(data);});
+    }
 
   return (
     <>

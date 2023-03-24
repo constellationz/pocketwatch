@@ -23,6 +23,21 @@ function Login() {
 
   const onSubmit = (e) => {
     e.preventDefault();
+    fetch("/api/users/login", {
+      method: "POST",
+      crossDomain: true,
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+      body: JSON.stringify({
+        email,
+        password,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {console.log(data);});
   };
 
   return (
