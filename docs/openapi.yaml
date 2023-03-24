@@ -1,29 +1,266 @@
 openapi: 3.0.0
-
-servers:
-  - url: https://www.pocketwatch.page
-  - url: https://localhost:5000
-
 info:
   title: Pocketwatch
+  description: API for pocketwatch.page
   version: 1.0.0
   license:
     name: MIT
     url: https://mit-license.org
-
+servers:
+  - url: http://www.pocketwatch.page/api
 paths:
-  /api/users/me:
-
+  /tasks:
+    get:
+      summary: Get all tasks
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    post:
+      summary: Create a task
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewTask'
+      security:
+        - bearerAuth: []
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Task'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /tasks/{id}:
+    put:
+      summary: Update a task
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Task'
+      security:
+        - bearerAuth: []
+      responses:
+        '204':
+          description: No Content
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    delete:
+      summary: Delete a task
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeletedTask'
+        '204':
+          description: No Content
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /users:
+    post:
+      summary: Register a user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserRegister'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /users/login:
+    post:
+      summary: Authenticate a user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserLogin'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /users/me:
+    get:
+      summary: Get the currently logged in user
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
 components:
   securitySchemes:
     bearerAuth:
       type: http
       scheme: bearer
       bearerFormat: JWT
-  responses:
-    UnauthorizedError:
-      description: Access token is missing or invalid
   schemas:
-
-security:
-  - bearerAuth: []
+    NewTask:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The name of the task
+      required:
+        - name
+    Task:
+      type: object
+      properties:
+        user:
+          type: string
+          description: The id of the user who created this task
+        _id:
+          type: string
+          description: The unique identifier for a task
+        name:
+          type: string
+          description: The name of the task
+        createdAt:
+          type: string
+          description: The time this task was created
+        updatedAt:
+          type: string
+          description: The time this task was last updated
+      required:
+        - id
+        - name
+        - user
+    DeletedTask:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The unique identifier for a task
+      required:
+        - id
+    UserRegister:
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+      required:
+        - name
+        - email
+        - password
+    UserLogin:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+      required:
+        - email
+        - password
+    User:
+      type: object
+      properties:
+        _id:
+          type: string
+          description: The unique identifier for a user
+        name:
+          type: string
+          description: The name of the user
+        email:
+          type: string
+          description: The email address of the user
+        token:
+          type: string
+          description: The bearer token for the user
+      required:
+        - _id
+        - name
+        - email
+        - token
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+          description: A human-readable error message
+        stack:
+          type: array
+          description: An array of stack trace frames
+          items:
+            type: object
+            properties:
+              file:
+                type: string
+                description: The name of the source file where the error occurred
+              line:
+                type: integer
+                description: The line number in the source file where the error occurred
+              function:
+                type: string
+                description: The name of the function where the error occurred
