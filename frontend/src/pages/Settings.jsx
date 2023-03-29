@@ -18,7 +18,7 @@ function Settings() {
         </Form.Group>
 
         <Form.Group className="mb-2" controlId="current-password">
-          <Form.Label>Old Password</Form.Label>
+          <Form.Label>Current Password</Form.Label>
           <Form.Control type="password" placeholder="Current Password"></Form.Control>
         </Form.Group>
 
