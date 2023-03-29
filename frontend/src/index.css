@@ -191,6 +191,29 @@ h3 {
   animation: spin 1.2s linear infinite;
 }
 
+.task-container {
+  border: 1px solid;
+  padding: 5px;
+  margin-bottom:1%;
+}
+
+.task-name {
+  margin-top: 5px;
+  margin-left: 5px;
+}
+
+.task-elapsed-time {
+  margin-left: 5px;
+}
+
+.edit-task-button {
+  margin-right: 15px;
+}
+
+.delete-task-button {
+  margin-right: 5px;
+}
+
 @keyframes spin {
   0% {
     transform: rotate(0deg);
@@ -226,6 +249,6 @@ h3 {
   }
 
   #media-control {
-    margin-right: 5%;
+    margin-right: 15px;
   }
 }
