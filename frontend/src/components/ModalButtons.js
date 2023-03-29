@@ -1,11 +1,12 @@
 import Button from 'react-bootstrap/Button';
+import ButtonGroup from 'react-bootstrap/ButtonGroup';
 
 const ModalButtons = (props) => {
   return (
-    <div className="d-flex justify-content-center">
-      <Button variant="danger">{props.dangerText}</Button>
-      <Button variant="success">{props.successText}</Button>
-    </div>
+    <ButtonGroup vertical>
+      <Button variant="light">{props.successText}</Button>
+      <Button variant="dark">{props.dangerText}</Button>
+    </ButtonGroup>
   );
 };
 
