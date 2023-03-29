@@ -1,7 +1,7 @@
 const Timer = ({ time }) => {
   return (
     <div className="timer-container">
-      <p className="timer-elapsed-time">{time}</p>
+      <time className="timer-elapsed-time fs-1 fw-bold">{time}</time>
     </div>
   );
 };
