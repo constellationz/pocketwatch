@@ -6,9 +6,9 @@ const CurrentTask = ({ props }) => {
       <div className="d-flex justify-content-start col-md-8 col-12">
         <input className="form-control" placeholder={props.name} />
       </div>
-      <div className="d-flex justify-content-around col-md-4 col-12">
-          <Button id="media-control">Play / Pause</Button>
-          <Button id="add-task">Add Task</Button>
+      <div className="d-flex col-md-4 col-12 current-task-buttons">
+          <Button variant="dark" id="media-control">Play</Button>
+          <Button variant="dark" id="add-task">+</Button>
       </div>
     </div>
   );

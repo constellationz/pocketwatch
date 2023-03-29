@@ -213,3 +213,19 @@ h3 {
     font-size: 1.5rem;
   }
 }
+
+@media (max-width: 768px) {
+  .current-task-buttons {
+    justify-content: space-around;
+  }
+}
+
+@media (min-width: 768px) {
+  .current-task-buttons {
+    justify-content: end;
+  }
+
+  #media-control {
+    margin-right: 5%;
+  }
+}
