@@ -81,6 +81,9 @@ function Login() {
           <div className="form-group">
             <Link to="/forgotpassword">Forgot password</Link>
           </div>
+          <div className="form-group">
+            <p>Don't have an account? <Link to="/register">Register</Link></p>
+          </div>
         </form>
       </section>
     </>

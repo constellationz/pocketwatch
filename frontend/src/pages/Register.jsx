@@ -3,6 +3,7 @@
 
 import { useState, useEffect } from "react";
 import { FaUser } from "react-icons/fa";
+import { Link } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 
 function Register() {
@@ -108,6 +109,9 @@ function Register() {
             <Button variant="dark" type="submit" className="btn btn-block">
               Submit
             </Button>
+          </div>
+          <div className="form-group">
+            <p>Already have an account? <Link to="/login">Login</Link></p>
           </div>
         </form>
       </section>
