@@ -8,7 +8,7 @@ const Task = ({ task }) => {
       </div>
 
       <div className="d-flex justify-content-between">
-        <h2 className="task-elapsed-time">{task.timeElapsed}</h2>
+        <time className="task-elapsed-time fs-3">{task.timeElapsed}</time>
         <div>
           <Button className="edit-task-button" variant="dark">Edit</Button>
           <Button className="delete-task-button" variant="outline-dark">Delete</Button>
