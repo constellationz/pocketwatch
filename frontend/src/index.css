@@ -238,6 +238,10 @@ h3 {
 }
 
 @media (max-width: 768px) {
+  .current-task-name {
+    margin-bottom: 3%;
+  }
+
   .current-task-buttons {
     justify-content: space-around;
   }

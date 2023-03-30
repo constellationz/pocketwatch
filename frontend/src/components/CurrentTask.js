@@ -2,8 +2,8 @@ import Button from "react-bootstrap/Button";
 
 const CurrentTask = ({ props }) => {
   return (
-    <div className="row">
-      <div className="d-flex justify-content-start col-md-8 col-12">
+    <div className="row mb-3">
+      <div className="d-flex justify-content-start col-md-8 col-12 current-task-name">
         <input className="form-control" placeholder={props.name} />
       </div>
       <div className="d-flex col-md-4 col-12 current-task-buttons">
