@@ -48,17 +48,6 @@ function ForgotPassword() {
             />
           </div>
           <div className="form-group">
-            <input
-              type="password"
-              className="form-control"
-              id="password"
-              name="password"
-              value={password}
-              placeholder="Password"
-              onChange={onChange}
-            />
-          </div>
-          <div className="form-group">
             <Button variant="dark" type="submit" className="btn btn-block">
               Submit
             </Button>
