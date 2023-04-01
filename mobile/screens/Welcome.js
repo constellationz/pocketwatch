@@ -1,5 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import { useEffect, useState } from 'react';
+import { styles } from '../styles';
 import {
   StyleSheet,
   Text,
@@ -11,7 +12,6 @@ import {
   Alert,
   ActivityIndicator,
 } from 'react-native';
-import Register from './Register';
 
 function Welcome({ navigation }) {
   let [email, setEmail] = useState('');
@@ -41,42 +41,34 @@ function Welcome({ navigation }) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text>PocketWatch Login</Text>
-      <TextInput
-        style={styles.textInput}
-        placeholder="Email"
-        value={email}
-        onChangeText={(value) => setEmail(value)}></TextInput>
-      <TextInput
-        style={styles.textInput}
-        placeholder="Password"
-        value={password}
-        onChangeText={(value) => setPassword(value)}
-        secureTextEntry={true}></TextInput>
-      <Button title="Login" onPress={() => userLogin(email, password)} />
-      <Button title="Cringe" onPress={() => navigation.navigate('Register')} />
-      <Text>Forgot your password?</Text>
-      <Text>Request a password reset</Text>
-      <StatusBar style="auto" />
+      <Text style={styles.topText}>Login</Text>
+      <View>
+        <Text style={styles.text}>Email</Text>
+        <TextInput
+          style={styles.textInput}
+          //placeholder="Email"
+          value={email}
+          onChangeText={(value) => setEmail(value)}></TextInput>
+        <Text style={styles.text}>Password</Text>
+        <TextInput
+          style={styles.textInput}
+          //placeholder="Password"
+          value={password}
+          onChangeText={(value) => setPassword(value)}
+          secureTextEntry={true}></TextInput>
+        <Text style={styles.button} onPress={() => userLogin(email, password)}>
+          Login
+        </Text>
+      </View>
+      <Text style={styles.smallText} onPress={() => navigation.navigate('Register')}>
+        Create a new account
+      </Text>
+      <Text style={styles.smallText} onPress={() => navigation.navigate('Forgot')}>
+        Forgot password
+      </Text>
+      <StatusBar style="dark" />
     </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  textInput: {
-    borderWidth: 1,
-    borderColor: 'gray',
-    borderRadius: 5,
-    padding: 0,
-    placeholderTextColor: 'gray',
-    marginVertical: 4,
-  },
-});
 
 export default Welcome;
