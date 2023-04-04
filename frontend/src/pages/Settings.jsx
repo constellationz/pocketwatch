@@ -2,6 +2,8 @@
 // Settings page
 
 import Button from 'react-bootstrap/Button';
+import UpdateEmail from '../components/UpdateEmail';
+import UpdatePassword from '../components/UpdatePassword';
 
 function Settings() {
   return (
@@ -23,12 +25,8 @@ function Settings() {
           <Button className="btn btn-block form-button" id="pocketwatch">
             Re-verify Email
           </Button>
-          <Button className="btn btn-block form-button" id="pocketwatch">
-            Update Email
-          </Button>
-          <Button className="btn btn-block form-button" id="pocketwatch">
-            Update Password
-          </Button>
+          <UpdateEmail />
+          <UpdatePassword />
           <Button className="btn btn-block form-button" id="pocketwatch">
             Forgot Password
           </Button>
