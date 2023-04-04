@@ -27,16 +27,16 @@ function ForgotPassword() {
 
   return (
     <>
-      <section className="heading">
-        <h1>
-          <FaQuestion /> Forgot password
-        </h1>
-        <p>We'll email you a reset link</p>
-      </section>
+      <h1>
+        Forgot Password
+      </h1>
+
+      <p>Enter your email and we'll send you a password reset link.</p>
 
       <section className="form">
         <form onSubmit={onSubmit}>
           <div className="form-group">
+            <label for="email">Email</label>
             <input
               type="text"
               className="form-control"
@@ -48,8 +48,8 @@ function ForgotPassword() {
             />
           </div>
           <div className="form-group">
-            <Button variant="dark" type="submit" className="btn btn-block">
-              Submit
+            <Button variant="dark" type="submit" className="btn btn-block form-button" id="pocketwatch">
+              Send reset link
             </Button>
           </div>
           <div className="form-group">
