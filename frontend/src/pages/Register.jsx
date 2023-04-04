@@ -51,11 +51,9 @@ function Register() {
 
   return (
     <>
-      <section className="heading">
-        <h1>
-          Register
-        </h1>
-      </section>
+      <h1>
+        Register
+      </h1>
 
       <section className="form">
         <form onSubmit={onSubmit}>

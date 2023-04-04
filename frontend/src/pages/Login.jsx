@@ -2,7 +2,6 @@
 // Login page
 
 import { useState, useEffect } from "react";
-import { FaSignInAlt } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 
@@ -42,11 +41,9 @@ function Login() {
 
   return (
     <>
-      <section className="heading">
-        <h1>
-          Login
-        </h1>
-      </section>
+      <h1>
+        Login
+      </h1>
 
       <section className="form">
         <form onSubmit={onSubmit}>

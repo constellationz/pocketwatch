@@ -2,7 +2,6 @@
 // Forgot password page
 
 import { useState, useEffect } from "react";
-import { FaQuestion } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 
