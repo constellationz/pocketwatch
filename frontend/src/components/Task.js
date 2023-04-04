@@ -1,4 +1,5 @@
-import Button from 'react-bootstrap/Button';
+import EditTask from './EditTask';
+import DeleteTask from './DeleteTask';
 
 const Task = ({ task }) => {
   return (
@@ -10,8 +11,8 @@ const Task = ({ task }) => {
       <div className="d-flex justify-content-between">
         <time className="task-elapsed-time fs-3">{task.timeElapsed}</time>
         <div>
-          <Button className="edit-task-button" variant="dark">Edit</Button>
-          <Button className="delete-task-button" variant="outline-dark">Delete</Button>
+          <EditTask task={task} />
+          <DeleteTask task={task} />
         </div>
       </div>
     </div>

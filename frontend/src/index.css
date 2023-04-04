@@ -192,7 +192,6 @@ h3 {
 }
 
 #pocketwatch.form-button {
-  color: white;
   background-color: #9DA1FF;
   border-color: #9DA1FF;
 }
@@ -205,6 +204,21 @@ h3 {
 #pocketwatch.form-button:active {
   background-color: #656EC6;
   border-color: #656EC6;
+}
+
+#pocketwatch.btn-danger {
+  background: #FF9D9D;
+  border-color: #FF9D9D;
+}
+
+#pocketwatch.btn-danger:hover {
+  background-color: #E18283;
+  border-color: #E18283;
+}
+
+#pocketwatch.btn-danger:active {
+  background-color: #C4686A;
+  border-color: #C4686A;
 }
 
 a:link {
