@@ -9,7 +9,7 @@ function Settings() {
         <div className="col-12 col-lg-8">
           <h1>Settings</h1>
           <div className="form-group">
-            <label for="email">Current Email</label>
+            <label htmlFor="email">Current Email</label>
             <input
                 type="text"
                 className="form-control"
