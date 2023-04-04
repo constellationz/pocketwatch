@@ -44,14 +44,14 @@ function Login() {
     <>
       <section className="heading">
         <h1>
-          <FaSignInAlt /> Login
+          Login
         </h1>
-        <p>Log into an existing account</p>
       </section>
 
       <section className="form">
         <form onSubmit={onSubmit}>
           <div className="form-group">
+            <label for="email">Email</label>
             <input
               type="text"
               className="form-control"
@@ -63,6 +63,7 @@ function Login() {
             />
           </div>
           <div className="form-group">
+            <label for="password">Password</label>
             <input
               type="password"
               className="form-control"
@@ -74,15 +75,25 @@ function Login() {
             />
           </div>
           <div className="form-group">
-            <Button variant="dark" type="submit" className="btn btn-block">
-              Submit
+            <Button type="submit" className="btn btn-block form-button" id="pocketwatch">
+              Login
             </Button>
           </div>
           <div className="form-group">
-            <Link to="/forgotpassword">Forgot password</Link>
+            <Button className="btn btn-block form-button" id="google">
+              Sign in with Google
+            </Button>
           </div>
           <div className="form-group">
-            <p>Don't have an account? <Link to="/register">Register</Link></p>
+            <Button variant="outline-dark" className="btn btn-block form-button" id="apple">
+              Sign in with Apple
+            </Button>
+          </div>
+          <div className="form-group">
+            <Link to="/register">Create new account</Link>
+          </div>
+          <div className="form-group">
+            <Link to="/forgotpassword">Forgot password</Link>
           </div>
         </form>
       </section>
