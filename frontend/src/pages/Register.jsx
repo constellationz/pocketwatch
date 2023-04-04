@@ -2,7 +2,6 @@
 // Registration page
 
 import { useState, useEffect } from "react";
-import { FaUser } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 
@@ -54,14 +53,14 @@ function Register() {
     <>
       <section className="heading">
         <h1>
-          <FaUser /> Register
+          Register
         </h1>
-        <p>Make a new account</p>
       </section>
 
       <section className="form">
         <form onSubmit={onSubmit}>
           <div className="form-group">
+            <label for="name">Username</label>
             <input
               type="text"
               className="form-control"
@@ -73,6 +72,7 @@ function Register() {
             />
           </div>
           <div className="form-group">
+            <label for="email">Email</label>
             <input
               type="text"
               className="form-control"
@@ -84,6 +84,7 @@ function Register() {
             />
           </div>
           <div className="form-group">
+            <label for="password">Password</label>
             <input
               type="password"
               className="form-control"
@@ -95,23 +96,27 @@ function Register() {
             />
           </div>
           <div className="form-group">
+            <label for="password2">Repeat Password</label>
             <input
               type="password"
               className="form-control"
               id="password2"
               name="password2"
               value={password2}
-              placeholder="Confirm password"
+              placeholder="Repeat password"
               onChange={onChange}
             />
           </div>
           <div className="form-group">
-            <Button variant="dark" type="submit" className="btn btn-block">
-              Submit
+            <Button type="submit" className="btn btn-block form-button" id="pocketwatch">
+              Register
             </Button>
           </div>
           <div className="form-group">
-            <p>Already have an account? <Link to="/login">Login</Link></p>
+            <Link to="/login">Back to login</Link>
+          </div>
+          <div className="form-group">
+            <Link to="/forgotpassword">Forgot password</Link>
           </div>
         </form>
       </section>
