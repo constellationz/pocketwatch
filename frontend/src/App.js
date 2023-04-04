@@ -5,6 +5,8 @@ import Register from "./pages/Register";
 import Settings from "./pages/Settings";
 import ForgotPassword from "./pages/ForgotPassword";
 import Header from "./components/Header";
+import ResetPassword from "./pages/ResetPassword";
+import NotFound from "./pages/NotFound";
 import 'bootstrap/dist/css/bootstrap.min.css'
 
 function App() {
@@ -19,6 +21,8 @@ function App() {
             <Route path="/register" element={<Register />} />
             <Route path="/settings" element={<Settings />} />
             <Route path="/forgotpassword" element={<ForgotPassword />} />
+            <Route path="/resetpassword" element={<ResetPassword />} />
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </div>
       </Router>
