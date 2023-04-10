@@ -76,6 +76,44 @@ const loginUser = asyncHandler(async (req, res) => {
   }
 });
 
+// @desc    Update email (protected)
+// @route   POST /api/users/updateEmail
+// @access  Private
+const updateEmail = asyncHandler(async (req, res) => {
+  // Get all fields
+  const { currPassword, email } = req.body;
+  if (!currPassword || !email) {
+    res.status(400);
+    throw new Error("Missing fields");
+  }
+
+  if (!req.user) {
+    res.status(401);
+    throw new Error("Not authorized, no token");
+  }
+
+  const _id = req.user._id;
+  const user = await User.findById({ _id });
+
+  if (!(await bcrypt.compare(currPassword, user.hashedPassword))) {
+    res.status(401);
+    throw new Error("Current password incorrect");
+  }
+
+  await User.findById({ _id }).then(async (doc) => {
+    // Save edited document
+    doc.$set("email", email);
+    await doc.save().then(() => {
+      res.status(200).json({
+        _id: doc._id,
+        name: doc.name,
+        email: doc.email,
+        token: generateToken(doc._id),
+      });
+    });
+  });
+});
+
 // @desc    Update password (protected)
 // @route   POST /api/users/updatePassword
 // @access  Private
@@ -135,6 +173,7 @@ const generateToken = (id) => {
 module.exports = {
   registerUser,
   loginUser,
+  updateEmail,
   updatePassword,
   getMe,
 };
