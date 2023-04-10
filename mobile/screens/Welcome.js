@@ -12,7 +12,8 @@ import {
   Alert,
   ActivityIndicator,
 } from 'react-native';
-
+// Old login, need to fix this to validate before navigating to dashboard
+// <Text style={styles.button} onPress={() => userLogin(email, password)}>
 function Welcome({ navigation }) {
   let [email, setEmail] = useState('');
   let [password, setPassword] = useState('');
@@ -56,14 +57,18 @@ function Welcome({ navigation }) {
           value={password}
           onChangeText={(value) => setPassword(value)}
           secureTextEntry={true}></TextInput>
-        <Text style={styles.button} onPress={() => userLogin(email, password)}>
+        <Text style={styles.button} onPress={() => navigation.navigate('Dashboard')}>
           Login
         </Text>
       </View>
-      <Text style={styles.smallText} onPress={() => navigation.navigate('Register')}>
+      <Text
+        style={styles.smallText}
+        onPress={() => navigation.navigate('Register')}>
         Create a new account
       </Text>
-      <Text style={styles.smallText} onPress={() => navigation.navigate('Forgot')}>
+      <Text
+        style={styles.smallText}
+        onPress={() => navigation.navigate('Forgot')}>
         Forgot password
       </Text>
       <StatusBar style="dark" />

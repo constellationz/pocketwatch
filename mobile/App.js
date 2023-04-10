@@ -32,7 +32,8 @@ Make buttons have rounded corners in style sheet idk how
 function App() 
 {
   let customFonts = {
-    'Inter-Bold': require('./assets/fonts/Inter-Bold.ttf')
+    'Inter-Bold': require('./assets/fonts/Inter-Bold.ttf'),
+    'Inter-Regular': require('./assets/fonts/Inter-Regular.ttf')
   };
   
   const [isLoaded] = useFonts(customFonts);
@@ -41,15 +42,15 @@ function App()
 
   return (
     <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen name="Welcome to Pocketwatch" component={Welcome}/>
+      <Stack.Navigator screenOptions={{headerShown: false}}>
+        <Stack.Screen name="Welcome" component={Welcome}/>
         <Stack.Screen name="Register" component={Register}/>
-        <Stack.Screen name="Edit Task" component={Edit}/>
-        <Stack.Screen name="Pocketwatch Home" component={Dashboard}/>
-        <Stack.Screen name="Forgot Password" component={Forgot}/>
+        <Stack.Screen name="Edit" component={Edit}/>
+        <Stack.Screen name="Dashboard" component={Dashboard}/>
+        <Stack.Screen name="Forgot" component={Forgot}/>
         <Stack.Screen name="Settings" component={Settings}/>
-        <Stack.Screen name="Update Email" component={UpdateEmail}/>
-        <Stack.Screen name="Update Password" component={UpdatePassword}/>
+        <Stack.Screen name="UpdateEmail" component={UpdateEmail}/>
+        <Stack.Screen name="UpdatePassword" component={UpdatePassword}/>
       </Stack.Navigator>
     </NavigationContainer>
   );

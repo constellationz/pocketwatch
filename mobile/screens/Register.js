@@ -1,5 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import { useState } from 'react';
+import { styles } from '../styles';
 import {
   StyleSheet,
   Text,
@@ -42,57 +43,50 @@ function Register({ navigation }) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text>PocketWatch Login</Text>
-      <TextInput
-        style={styles.textInput}
-        placeholder="Name"
-        value={name}
-        onChangeText={(value) => setName(value)}
-      />
-      <TextInput
-        style={styles.textInput}
-        placeholder="Email"
-        value={email}
-        onChangeText={(value) => setEmail(value)}></TextInput>
-      <TextInput
-        style={styles.textInput}
-        placeholder="Password"
-        value={password}
-        onChangeText={(value) => setPassword(value)}
-        secureTextEntry={true}></TextInput>
-      <TextInput
-        style={styles.textInput}
-        placeholder="Confirm password"
-        value={password2}
-        onChangeText={(value) => setPassword2(value)}
-        secureTextEntry={true}></TextInput>
-      <Button
-        title="Register"
-        onPress={() => registerUser(name, email, password, password2)}
-      />
-      <Button title="Cringe" onPress={() => navigation.navigate('Welcome')} />
-      <Text>Forgot your password?</Text>
-      <Text>Request a password reset</Text>
-      <StatusBar style="auto" />
+      <Text style={styles.topText}>Register</Text>
+      <View>
+        <Text style={styles.text}>Name</Text>
+        <TextInput
+          style={styles.textInput}
+          value={name}
+          onChangeText={(value) => setName(value)}
+        />
+        <Text style={styles.text}>Email</Text>
+        <TextInput
+          style={styles.textInput}
+          value={email}
+          onChangeText={(value) => setEmail(value)}></TextInput>
+        <Text style={styles.text}>Password</Text>
+        <TextInput
+          style={styles.textInput}
+          value={password}
+          onChangeText={(value) => setPassword(value)}
+          secureTextEntry={true}></TextInput>
+        <Text style={styles.text}>Confirm password</Text>
+        <TextInput
+          style={styles.textInput}
+          value={password2}
+          onChangeText={(value) => setPassword2(value)}
+          secureTextEntry={true}></TextInput>
+        <Text
+          style={styles.button}
+          onPress={() => registerUser(name, email, password, password2)}>
+          Register
+        </Text>
+      </View>
+      <Text
+        style={styles.smallText}
+        onPress={() => navigation.navigate('Welcome')}>
+        Back to login
+      </Text>
+      <Text
+        style={styles.smallText}
+        onPress={() => navigation.navigate('Forgot')}>
+        Forgot password
+      </Text>
+      <StatusBar style="dark" />
     </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  textInput: {
-    borderWidth: 1,
-    borderColor: 'gray',
-    borderRadius: 5,
-    padding: 0,
-    placeholderTextColor: 'gray',
-    marginVertical: 4,
-  },
-});
 
 export default Register;

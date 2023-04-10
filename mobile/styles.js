@@ -7,6 +7,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  containerDash: {
+    flex: 1,
+    backgroundColor: '#FFFFFF',
+  },
   textInput: {
     borderWidth: 2,
     borderColor: '#CCCCCC',
@@ -23,6 +27,12 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontFamily: 'Inter-Bold',
   },
+  regularText: {
+    textAlign: 'left',
+    fontSize: 14,
+    marginBottom: 16,
+    maxWidth: '80%',
+  },
   topText: {
     textAlign: 'left',
     fontSize: 18,
@@ -34,6 +44,18 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontFamily: 'Inter-Bold',
     marginTop: 18,
+  },
+  timerText: {
+    textAlign: 'center',
+    fontSize: 50,
+    fontFamily: 'Inter-Bold',
+    marginTop: 0,
+  },
+  textDash: {
+    textAlign: 'right',
+    fontSize: 18,
+    padding: 15,
+    fontFamily: 'Inter-Bold',
   },
   button: {
     fontFamily: 'Inter-Bold',
@@ -47,11 +69,29 @@ const styles = StyleSheet.create({
     color: 'white',
     textAlign: 'center',
     fontSize: 16,
+    minWidth: '80%',
+    maxWidth: '80%',
+    overflow: 'hidden',
+  },
+  buttonSettings: {
+    fontFamily: 'Inter-Bold',
+    marginVertical: 10,
+    paddingVertical: 11,
+    paddingHorizontal: 0,
+    borderWidth: 2,
+    borderColor: '#9DA1FF',
+    borderRadius: 4,
+    backgroundColor: '#9DA1FF',
+    color: 'white',
+    textAlign: 'center',
+    fontSize: 16,
+    minWidth: '80%',
+    maxWidth: '80%',
     overflow: 'hidden',
   },
   cancel: {
     fontFamily: 'Inter-Bold',
-    marginVertical: 4,
+    marginVertical: 10,
     paddingVertical: 11,
     paddingHorizontal: 0,
     borderWidth: 2,
@@ -61,11 +101,14 @@ const styles = StyleSheet.create({
     color: 'white',
     textAlign: 'center',
     fontSize: 16,
+    minWidth: '80%',
+    maxWidth: '80%',
     overflow: 'hidden',
   },
   graybox: {
     fontFamily: 'Inter-Bold',
     marginVertical: 4,
+    marginBottom: 10,
     paddingVertical: 11,
     paddingHorizontal: 0,
     borderWidth: 2,
@@ -75,8 +118,10 @@ const styles = StyleSheet.create({
     color: 'white',
     textAlign: 'center',
     fontSize: 16,
+    minWidth: '80%',
+    maxWidth: '80%',
     overflow: 'hidden',
   },
 });
 
-export { styles }
+export { styles };
