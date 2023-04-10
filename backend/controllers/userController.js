@@ -5,6 +5,7 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const asyncHandler = require("express-async-handler");
 const User = require("../models/userModel");
+const mongoose = require("mongoose");
 
 // @desc    Register a new user
 // @route   POST /api/users
@@ -75,6 +76,48 @@ const loginUser = asyncHandler(async (req, res) => {
   }
 });
 
+// @desc    Update password (protected)
+// @route   POST /api/users/updatePassword
+// @access  Private
+const updatePassword = asyncHandler(async (req, res) => {
+  // Get all fields
+  const { currPassword, newPassword } = req.body;
+  if (!currPassword || !newPassword) {
+    res.status(400);
+    throw new Error("Missing fields");
+  }
+
+  if (!req.user) {
+    res.status(401);
+    throw new Error("Not authorized, no token");
+  }
+
+  const _id = req.user._id;
+  const user = await User.findById({ _id });
+
+  if (!(await bcrypt.compare(currPassword, user.hashedPassword))) {
+    res.status(401);
+    throw new Error("Current password incorrect");
+  }
+
+  await User.findById({ _id }).then(async (doc) => {
+    // Hash password
+    const salt = await bcrypt.genSalt(10);
+    const newHashedPassword = await bcrypt.hash(newPassword, salt);
+
+    // Save edited document
+    doc.$set("hashedPassword", newHashedPassword);
+    doc.save().then(() => {
+      res.status(200).json({
+        _id: doc._id,
+        name: doc.name,
+        email: doc.email,
+        token: generateToken(doc._id),
+      });
+    });
+  });
+});
+
 // @desc    Get user data
 // @route   POST /api/users/me
 // @access  Private
@@ -92,5 +135,6 @@ const generateToken = (id) => {
 module.exports = {
   registerUser,
   loginUser,
+  updatePassword,
   getMe,
 };
