@@ -63,8 +63,8 @@ const loginUser = asyncHandler(async (req, res) => {
 // @route   POST /api/users/updateEmail
 // @access  Private
 const updateEmail = asyncHandler(async (req, res) => {
-  const { currPassword, email } = req.body;
-  if (!currPassword || !email) {
+  const { password, newEmail } = req.body;
+  if (!password || !newEmail) {
     res.status(400);
     throw new Error("Missing fields");
   }
@@ -74,9 +74,9 @@ const updateEmail = asyncHandler(async (req, res) => {
     throw new Error("Not authorized, no token");
   }
 
-  if (!(await bcrypt.compare(currPassword, req.user.password))) {
+  if (!(await bcrypt.compare(password, req.user.password))) {
     res.status(401);
-    throw new Error("Current password incorrect");
+    throw new Error("Incorrect password");
   }
 
   // Save edited user
@@ -90,8 +90,8 @@ const updateEmail = asyncHandler(async (req, res) => {
 // @route   POST /api/users/updatePassword
 // @access  Private
 const updatePassword = asyncHandler(async (req, res) => {
-  const { currPassword, newPassword } = req.body;
-  if (!currPassword || !newPassword) {
+  const { password, newPassword } = req.body;
+  if (!password || !newPassword) {
     res.status(400);
     throw new Error("Missing fields");
   }
@@ -101,9 +101,9 @@ const updatePassword = asyncHandler(async (req, res) => {
     throw new Error("Not authorized, no token");
   }
 
-  if (!(await bcrypt.compare(currPassword, req.user.password))) {
+  if (!(await bcrypt.compare(password, req.user.password))) {
     res.status(401);
-    throw new Error("Current password incorrect");
+    throw new Error("Incorrect password");
   }
 
   // Save edited user
@@ -117,6 +117,7 @@ const updatePassword = asyncHandler(async (req, res) => {
 // @route   POST /api/users/forgotPassword
 // @access  Public
 const forgotPassword = asyncHandler(async (req, res) => {
+
 });
 
 // @desc    Request email verification (protected)
