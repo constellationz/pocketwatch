@@ -2,6 +2,8 @@
 // Schema for the user resource
 
 const mongoose = require("mongoose");
+const bcrypt = require("bcryptjs");
+const saltRounds = 10;
 
 const userSchema = mongoose.Schema(
   {
@@ -14,7 +16,7 @@ const userSchema = mongoose.Schema(
       required: [true, "Email field required"],
       unique: true,
     },
-    hashedPassword: {
+    password: {
       type: String,
       required: [true, "Password field required"],
     },
@@ -28,4 +30,15 @@ const userSchema = mongoose.Schema(
   }
 );
 
-module.exports = mongoose.model("User", userSchema);
+userSchema.pre("save", async function (next) {
+  if (!this.isModified("password")) {
+    return next();
+  }
+  try {
+    const salt = await bcrypt.genSalt(saltRounds);
+    this.password = await bcrypt.hash(this.password, salt);
+    return next();
+  } catch(error) {
+    return next(error)
+  }
+})

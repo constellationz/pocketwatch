@@ -25,15 +25,11 @@ const registerUser = asyncHandler(async (req, res) => {
     throw new Error("User already exists");
   }
 
-  // Hash password
-  const salt = await bcrypt.genSalt(10);
-  const hashedPassword = await bcrypt.hash(password, salt);
-
   // Create user
   const user = await User.create({
     name,
     email,
-    hashedPassword,
+    password,
   });
 
   if (user) {
@@ -62,7 +58,7 @@ const loginUser = asyncHandler(async (req, res) => {
 
   // Return JWT if login is valid
   const user = await User.findOne({ email });
-  if (user && (await bcrypt.compare(password, user.hashedPassword))) {
+  if (user && (await bcrypt.compare(password, user.password))) {
     res.status(200);
     res.json({
       _id: user._id,
@@ -95,7 +91,7 @@ const updateEmail = asyncHandler(async (req, res) => {
   const _id = req.user._id;
   const user = await User.findById({ _id });
 
-  if (!(await bcrypt.compare(currPassword, user.hashedPassword))) {
+  if (!(await bcrypt.compare(currPassword, user.password))) {
     res.status(401);
     throw new Error("Current password incorrect");
   }
@@ -133,18 +129,14 @@ const updatePassword = asyncHandler(async (req, res) => {
   const _id = req.user._id;
   const user = await User.findById({ _id });
 
-  if (!(await bcrypt.compare(currPassword, user.hashedPassword))) {
+  if (!(await bcrypt.compare(currPassword, user.password))) {
     res.status(401);
     throw new Error("Current password incorrect");
   }
 
   await User.findById({ _id }).then(async (doc) => {
-    // Hash password
-    const salt = await bcrypt.genSalt(10);
-    const newHashedPassword = await bcrypt.hash(newPassword, salt);
-
     // Save edited document
-    doc.$set("hashedPassword", newHashedPassword);
+    doc.$set("password", newPassword);
     doc.save().then(() => {
       res.status(200).json({
         _id: doc._id,
