@@ -8,7 +8,8 @@ const {
   loginUser,
   updateEmail,
   updatePassword,
-  forgotPassword,
+  requestPasswordReset,
+  resetPassword,
   requestEmailVerification,
   verifyEmail,
   getMe,
@@ -27,7 +28,9 @@ router.route("/requestEmailVerification").post(protect, requestEmailVerification
 
 router.route("/verifyEmail").post(verifyEmail);
 
-router.route("/forgotPassword").post(forgotPassword);
+router.route("/requstPasswordReset").post(requestPasswordReset);
+
+router.route("/resetPassword").post(resetPassword);
 
 router.route("/me").get(protect, getMe);
 

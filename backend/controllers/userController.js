@@ -113,10 +113,17 @@ const updatePassword = asyncHandler(async (req, res) => {
   });
 });
 
-// @desc    Forgot password
-// @route   POST /api/users/forgotPassword
+// @desc    Request a password reset
+// @route   POST /api/users/requestPasswordReset
 // @access  Public
-const forgotPassword = asyncHandler(async (req, res) => {
+const requestPasswordReset = asyncHandler(async (req, res) => {
+
+});
+
+// @desc    Reset a password
+// @route   POST /api/users/resetPassword
+// @access  Public
+const resetPassword = asyncHandler(async (req, res) => {
 
 });
 
@@ -163,7 +170,8 @@ module.exports = {
   loginUser,
   updateEmail,
   updatePassword,
-  forgotPassword,
+  requestPasswordReset,
+  resetPassword,
   requestEmailVerification,
   verifyEmail,
   getMe,
