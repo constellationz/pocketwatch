@@ -207,6 +207,42 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/User'
+  /users/requestPasswordReset:
+    post:
+      tags:
+        - users
+      summary: Request a password reset
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RequestPasswordReset'
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /users/requestEmailVerification:
+    post:
+      tags:
+        - users
+      summary: Request email verification
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
 components:
   securitySchemes:
     bearerAuth:
@@ -297,6 +333,13 @@ components:
       required:
         - password
         - newEmail
+    RequestPasswordReset:
+      type: object
+      properties:
+        email:
+          type: string
+      required:
+        - email
     User:
       type: object
       properties:
