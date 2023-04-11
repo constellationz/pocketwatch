@@ -5,7 +5,13 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const asyncHandler = require("express-async-handler");
 const User = require("../models/userModel");
+const { 
+  sendEmail,
+  sendEmailIfVerified,
+} = require("../util/email");
 const mongoose = require("mongoose");
+
+const clientURL = process.env.CLIENT_URL
 
 // @desc    Register a new user
 // @route   POST /api/users
@@ -79,8 +85,24 @@ const updateEmail = asyncHandler(async (req, res) => {
     throw new Error("Incorrect password");
   }
 
+  if (newEmail == req.user.email) {
+    res.status(400);
+    throw new Error("New email cannot be the same as old email");
+  }
+
+  // Send an email letting the user know that their email was just changed
+  sendEmailIfVerified(
+    req.user, 
+    "Email Updated", 
+    {
+      name: req.user.name,
+    },
+    "../templates/emailUpdated.handlebars"
+  );
+
   // Save edited user
   req.user.email = newEmail;
+  req.user.emailVerified = false;
   req.user.save().then(savedUser => {
     res.status(200).json(savedUser);
   });
@@ -106,6 +128,21 @@ const updatePassword = asyncHandler(async (req, res) => {
     throw new Error("Incorrect password");
   }
 
+  if (await bcrypt.compare(newPassword, req.user.password)) {
+    res.status(400);
+    throw new Error("New password cannot be the same as old password");
+  }
+
+  // Send an email letting the user know that their password was just changed
+  sendEmailIfVerified(
+    req.user, 
+    "Password Updated", 
+    {
+      name: req.user.name,
+    },
+    "../templates/passwordUpdated.handlebars"
+  );
+
   // Save edited user
   req.user.password = newPassword;
   req.user.save().then(savedUser => {
@@ -117,7 +154,34 @@ const updatePassword = asyncHandler(async (req, res) => {
 // @route   POST /api/users/requestPasswordReset
 // @access  Public
 const requestPasswordReset = asyncHandler(async (req, res) => {
+  const { email } = req.body;
+  if (!email) {
+    res.status(400);
+    throw new Error("Missing fields");
+  }
 
+  const user = await User.findOne({ email });
+  if (!user) {
+    res.status(400);
+    throw new Error("Email not registered");
+  }
+
+  // Generate a passord reset token and email it to the user
+  const resetToken = jwt.sign({ id: user.id, email: user.email }, process.env.JWT_SECRET, {
+    expiresIn: "1h",
+  });
+  const link = `${clientURL}/api/user/resetPassword?token=${resetToken}&id=${user._id}`;
+  sendEmail(
+    user.email, 
+    "Password Reset Request for Pocketwatch", 
+    {
+      name: user.name,
+      link: link,
+    },
+    "../templates/resetPassword.handlebars"
+  );
+
+  res.sendStatus(200);
 });
 
 // @desc    Reset a password
@@ -131,7 +195,32 @@ const resetPassword = asyncHandler(async (req, res) => {
 // @route   POST /api/users/requestEmailVerification
 // @access  Private
 const requestEmailVerification = asyncHandler(async (req, res) => {
+  if (!req.user) {
+    res.status(401);
+    throw new Error("Not authorized, no token");
+  }
 
+  if (req.user.emailVerified) {
+    res.status(400);
+    throw new Error("Email already verified");
+  }
+
+  // Generate an email verification token and email it to the user
+  const verifyToken = jwt.sign({ id: req.user._id, email: req.user.email }, process.env.JWT_SECRET, {
+    expiresIn: "24h",
+  });
+  const link = `${clientURL}/api/user/verifyEmail?token=${verifyToken}&id=${req.user._id}`;
+  sendEmail(
+    req.user.email, 
+    "Email Verification Request for Pocketwatch", 
+    {
+      name: req.user.name,
+      link: link,
+    },
+    "../templates/verifyEmail.handlebars"
+  );
+
+  res.sendStatus(200);
 });
 
 // @desc    Verify email (public)
@@ -154,15 +243,18 @@ const generateUserLogin = (user) => {
     _id: user._id,
     name: user.name,
     email: user.email,
-    token: generateToken(user._id),
+    token: generateLoginToken(user._id),
   }
 }
 
-// Generate JWT
-const generateToken = (id) => {
+// Generate JWT for login
+const generateLoginToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
     expiresIn: "30d",
   });
+};
+
+const generatePasswordResetToken = (id, email) => {
 };
 
 module.exports = {

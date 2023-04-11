@@ -28,7 +28,7 @@ router.route("/requestEmailVerification").post(protect, requestEmailVerification
 
 router.route("/verifyEmail").post(verifyEmail);
 
-router.route("/requstPasswordReset").post(requestPasswordReset);
+router.route("/requestPasswordReset").post(requestPasswordReset);
 
 router.route("/resetPassword").post(resetPassword);
 

@@ -3,7 +3,8 @@
 
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
-const saltRounds = 10;
+
+const saltRounds = Number(process.env.SALT_ROUNDS);
 
 const userSchema = mongoose.Schema(
   {
