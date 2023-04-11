@@ -167,6 +167,46 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/User'
+  /users/updateEmail:
+    post:
+      tags:
+        - users
+      summary: Update the email for the currently logged in user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateEmail'
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+  /users/updatePassword:
+    post:
+      tags:
+        - users
+      summary: Update the password for the currently logged in user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdatePassword'
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
 components:
   securitySchemes:
     bearerAuth:
@@ -237,6 +277,26 @@ components:
       required:
         - email
         - password
+    UpdatePassword:
+      type: object
+      properties:
+        password:
+          type: string
+        newPassword:
+          type: string
+      required:
+        - password
+        - newPassword
+    UpdateEmail:
+      type: object
+      properties:
+        password:
+          type: string
+        newEmail:
+          type: string
+      required:
+        - password
+        - newEmail
     User:
       type: object
       properties:
@@ -264,17 +324,5 @@ components:
           type: string
           description: A human-readable error message
         stack:
-          type: array
-          description: An array of stack trace frames
-          items:
-            type: object
-            properties:
-              file:
-                type: string
-                description: The name of the source file where the error occurred
-              line:
-                type: integer
-                description: The line number in the source file where the error occurred
-              function:
-                type: string
-                description: The name of the function where the error occurred
+          type: string
+          description: The error message that the server generated
