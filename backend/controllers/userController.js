@@ -156,6 +156,27 @@ const updatePassword = asyncHandler(async (req, res) => {
   });
 });
 
+// @desc    Forgot password
+// @route   POST /api/users/forgotPassword
+// @access  Public
+const forgotPassword = asyncHandler(async (req, res) => {
+
+});
+
+// @desc    Request email verification (protected)
+// @route   POST /api/users/requestEmailVerification
+// @access  Private
+const requestEmailVerification = asyncHandler(async (req, res) => {
+  
+});
+
+// @desc    Verify email (public)
+// @route   POST /api/users/verifyEmail
+// @access  Public
+const verifyEmail = asyncHandler(async (req, res) => {
+
+});
+
 // @desc    Get user data
 // @route   POST /api/users/me
 // @access  Private
@@ -175,5 +196,8 @@ module.exports = {
   loginUser,
   updateEmail,
   updatePassword,
+  forgotPassword,
+  requestEmailVerification,
+  verifyEmail,
   getMe,
 };

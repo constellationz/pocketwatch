@@ -18,6 +18,10 @@ const userSchema = mongoose.Schema(
       type: String,
       required: [true, "Password field required"],
     },
+    emailVerified: {
+      type: Boolean,
+      default: false
+    },
   },
   {
     timestamps: true,
