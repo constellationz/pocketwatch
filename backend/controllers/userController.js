@@ -11,7 +11,6 @@ const mongoose = require("mongoose");
 // @route   POST /api/users
 // @access  Public
 const registerUser = asyncHandler(async (req, res) => {
-  // Make sure name, email, and password have been entered
   const { name, email, password } = req.body;
   if (!name || !email || !password) {
     res.status(400);
@@ -25,58 +24,45 @@ const registerUser = asyncHandler(async (req, res) => {
     throw new Error("User already exists");
   }
 
-  // Create user
   const user = await User.create({
     name,
     email,
     password,
   });
 
-  if (user) {
-    res.status(201).json({
-      _id: user._id,
-      name: user.name,
-      email: user.email,
-      token: generateToken(user._id),
-    });
-  } else {
+  // If the user couldn't be created, throw an error
+  if (!user) {
     res.status(400);
     throw new Error("User could not be created");
   }
+
+  res.status(201).json(generateUserLogin(user));
 });
 
 // @desc    Authenticate a user
 // @route   POST /api/users/login
 // @access  Public
 const loginUser = asyncHandler(async (req, res) => {
-  // Get all fields
   const { email, password } = req.body;
   if (!email || !password) {
     res.status(400);
     throw new Error("Missing fields");
   }
 
-  // Return JWT if login is valid
+  // If the user doesn't exist or the password is incorrect, throw an error
   const user = await User.findOne({ email });
-  if (user && (await bcrypt.compare(password, user.password))) {
-    res.status(200);
-    res.json({
-      _id: user._id,
-      name: user.name,
-      email: user.email,
-      token: generateToken(user._id),
-    });
-  } else {
+  if (!user || !(await bcrypt.compare(password, user.password))) {
     res.status(400);
     throw new Error("Invalid login");
   }
+
+  res.status(200).json(generateUserLogin(user));
 });
 
 // @desc    Update email (protected)
 // @route   POST /api/users/updateEmail
 // @access  Private
 const updateEmail = asyncHandler(async (req, res) => {
-  // Get all fields
   const { currPassword, email } = req.body;
   if (!currPassword || !email) {
     res.status(400);
@@ -88,25 +74,15 @@ const updateEmail = asyncHandler(async (req, res) => {
     throw new Error("Not authorized, no token");
   }
 
-  const _id = req.user._id;
-  const user = await User.findById({ _id });
-
-  if (!(await bcrypt.compare(currPassword, user.password))) {
+  if (!(await bcrypt.compare(currPassword, req.user.password))) {
     res.status(401);
     throw new Error("Current password incorrect");
   }
 
-  await User.findById({ _id }).then(async (doc) => {
-    // Save edited document
-    doc.$set("email", email);
-    await doc.save().then(() => {
-      res.status(200).json({
-        _id: doc._id,
-        name: doc.name,
-        email: doc.email,
-        token: generateToken(doc._id),
-      });
-    });
+  // Save edited user
+  req.user.email = email;
+  req.user.save().then(savedUser => {
+    res.status(200).json(savedUser);
   });
 });
 
@@ -114,7 +90,6 @@ const updateEmail = asyncHandler(async (req, res) => {
 // @route   POST /api/users/updatePassword
 // @access  Private
 const updatePassword = asyncHandler(async (req, res) => {
-  // Get all fields
   const { currPassword, newPassword } = req.body;
   if (!currPassword || !newPassword) {
     res.status(400);
@@ -126,25 +101,15 @@ const updatePassword = asyncHandler(async (req, res) => {
     throw new Error("Not authorized, no token");
   }
 
-  const _id = req.user._id;
-  const user = await User.findById({ _id });
-
-  if (!(await bcrypt.compare(currPassword, user.password))) {
+  if (!(await bcrypt.compare(currPassword, req.user.password))) {
     res.status(401);
     throw new Error("Current password incorrect");
   }
 
-  await User.findById({ _id }).then(async (doc) => {
-    // Save edited document
-    doc.$set("password", newPassword);
-    doc.save().then(() => {
-      res.status(200).json({
-        _id: doc._id,
-        name: doc.name,
-        email: doc.email,
-        token: generateToken(doc._id),
-      });
-    });
+  // Save edited user
+  req.user.password = newPassword;
+  req.user.save().then(savedUser => {
+    res.status(200).json(savedUser);
   });
 });
 
@@ -152,14 +117,13 @@ const updatePassword = asyncHandler(async (req, res) => {
 // @route   POST /api/users/forgotPassword
 // @access  Public
 const forgotPassword = asyncHandler(async (req, res) => {
-
 });
 
 // @desc    Request email verification (protected)
 // @route   POST /api/users/requestEmailVerification
 // @access  Private
 const requestEmailVerification = asyncHandler(async (req, res) => {
-  
+
 });
 
 // @desc    Verify email (public)
@@ -175,6 +139,16 @@ const verifyEmail = asyncHandler(async (req, res) => {
 const getMe = asyncHandler(async (req, res) => {
   res.status(200).json(req.user);
 });
+
+// Generate a login response for a user
+const generateUserLogin = (user) => {
+  return {
+    _id: user._id,
+    name: user.name,
+    email: user.email,
+    token: generateToken(user._id),
+  }
+}
 
 // Generate JWT
 const generateToken = (id) => {
