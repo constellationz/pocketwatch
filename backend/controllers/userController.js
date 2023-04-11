@@ -80,7 +80,7 @@ const updateEmail = asyncHandler(async (req, res) => {
   }
 
   // Save edited user
-  req.user.email = email;
+  req.user.email = newEmail;
   req.user.save().then(savedUser => {
     res.status(200).json(savedUser);
   });
