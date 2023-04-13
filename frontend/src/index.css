@@ -11,9 +11,16 @@ body {
   height: 100vh;
 }
 
-a {
-  text-decoration: none;
-  color: #000;
+a:link {
+  color: #454CEE;
+}
+
+a:visited {
+  color: #001EB5;
+}
+
+a:hover {
+  color: #0735D1;
 }
 
 p {
@@ -219,18 +226,6 @@ h3 {
 #pocketwatch.btn-danger:active {
   background-color: #C4686A;
   border-color: #C4686A;
-}
-
-a:link {
-  color: #454CEE;
-}
-
-a:visited {
-  color: #001EB5;
-}
-
-a:hover {
-  color: #0735D1;
 }
 
 .task-container {
