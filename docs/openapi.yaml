@@ -243,6 +243,50 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+  /users/verifyEmail:
+    post:
+      tags:
+        - users
+      summary: Verify a user's email
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VerifyEmail'
+      responses:
+        '200':
+          description: OK
+        '401':
+          description: Not Authorized
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /users/resetPassword:
+    post:
+      tags:
+        - users
+      summary: Reset the user's password
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ResetPassword'
+      responses:
+        '200':
+          description: OK
+        '401':
+          description: Not Authorized
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
 components:
   securitySchemes:
     bearerAuth:
@@ -340,6 +384,26 @@ components:
           type: string
       required:
         - email
+    VerifyEmail:
+      type: object
+      properties:
+        token:
+          type: string
+          description: The authorization token provided in the verification URL
+      required:
+        - token
+    ResetPassword:
+      type: object
+      properties:
+        token:
+          type: string
+          description: The authorization token provided in the verification URL
+        newPassword:
+          type: string
+          description: The new password
+      required:
+        - token
+        - newPassword
     User:
       type: object
       properties:

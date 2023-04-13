@@ -10,8 +10,10 @@ const {
   sendEmailIfVerified,
 } = require("../util/email");
 const mongoose = require("mongoose");
+const ObjectId = mongoose.Types.ObjectId;
 
 const clientURL = process.env.CLIENT_URL
+const jwtSecret = process.env.JWT_SECRET
 
 // @desc    Register a new user
 // @route   POST /api/users
@@ -167,10 +169,10 @@ const requestPasswordReset = asyncHandler(async (req, res) => {
   }
 
   // Generate a passord reset token and email it to the user
-  const resetToken = jwt.sign({ id: user.id, email: user.email }, process.env.JWT_SECRET, {
+  const resetToken = jwt.sign({ id: user.id, email: user.email }, jwtSecret, {
     expiresIn: "1h",
   });
-  const link = `${clientURL}/api/user/resetPassword?token=${resetToken}&id=${user._id}`;
+  const link = `${clientURL}/api/user/resetPassword?token=${resetToken}`;
   sendEmail(
     user.email, 
     "Password Reset Request for Pocketwatch", 
@@ -188,7 +190,38 @@ const requestPasswordReset = asyncHandler(async (req, res) => {
 // @route   POST /api/users/resetPassword
 // @access  Public
 const resetPassword = asyncHandler(async (req, res) => {
+  const { token, newPassword } = req.body;
+  if (!token || !newPassword) {
+    res.status(400);
+    throw new Error("Missing fields");
+  }
 
+  // Invalid tokens are bad requests
+  let decoded;
+  try {
+    decoded = jwt.verify(token, jwtSecret);
+  } catch {
+    res.status(400);
+    throw new Error("Bad Token");
+  }
+
+  // If the token id is malformed, this is a bad request
+  if (!ObjectId.isValid(decoded.id)) {
+    res.status(400);
+    throw new Error("Bad request");
+  }
+
+  // If the token email doesn't match the current email, this token is invalid
+  const user = await User.findOne({ _id: new ObjectId(decoded.id) });
+  if (!user || decoded.email != user.email) {
+    res.status(401);
+    throw new Error("Not authorized");
+  }
+
+  user.password = newPassword
+  user.save().then(() => {
+    res.sendStatus(200);
+  });
 });
 
 // @desc    Request email verification (protected)
@@ -206,10 +239,10 @@ const requestEmailVerification = asyncHandler(async (req, res) => {
   }
 
   // Generate an email verification token and email it to the user
-  const verifyToken = jwt.sign({ id: req.user._id, email: req.user.email }, process.env.JWT_SECRET, {
-    expiresIn: "24h",
+  const verifyToken = jwt.sign({ id: req.user._id, email: req.user.email }, jwtSecret, {
+    expiresIn: "1h",
   });
-  const link = `${clientURL}/api/user/verifyEmail?token=${verifyToken}&id=${req.user._id}`;
+  const link = `${clientURL}/api/user/verifyEmail?token=${verifyToken}`;
   sendEmail(
     req.user.email, 
     "Email Verification Request for Pocketwatch", 
@@ -220,14 +253,47 @@ const requestEmailVerification = asyncHandler(async (req, res) => {
     "../templates/verifyEmail.handlebars"
   );
 
-  res.sendStatus(200);
+  req.user.save().then(() => {
+    res.sendStatus(200);
+  });
 });
 
 // @desc    Verify email (public)
 // @route   POST /api/users/verifyEmail
 // @access  Public
 const verifyEmail = asyncHandler(async (req, res) => {
+  const { token } = req.body;
+  if (!token) {
+    res.status(400);
+    throw new Error("Missing fields");
+  }
 
+  // Invalid tokens are bad requests
+  let decoded;
+  try {
+    decoded = jwt.verify(token, jwtSecret);
+  } catch {
+    res.status(400);
+    throw new Error("Bad Token");
+  }
+
+  // If the token id is malformed, this is a bad request
+  if (!ObjectId.isValid(decoded.id)) {
+    res.status(400);
+    throw new Error("Bad request");
+  }
+
+  // If the token email doesn't match the current email, this token is invalid
+  const user = await User.findOne({ _id: new ObjectId(decoded.id) });
+  if (!user || decoded.email != user.email) {
+    res.status(401);
+    throw new Error("Not authorized");
+  }
+
+  user.emailVerified = true;
+  user.save().then(() => {
+    res.sendStatus(200);
+  });
 });
 
 // @desc    Get user data
