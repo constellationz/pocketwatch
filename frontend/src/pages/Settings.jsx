@@ -2,6 +2,7 @@
 // Settings page
 
 import Button from 'react-bootstrap/Button';
+import UserAlert from '../components/UserAlert';
 import UpdateEmail from '../components/UpdateEmail';
 import UpdatePassword from '../components/UpdatePassword';
 
@@ -22,9 +23,7 @@ function Settings() {
                 disabled
             />
           </div>
-          <Button className="btn btn-block form-button" id="pocketwatch">
-            Re-verify Email
-          </Button>
+          <UserAlert buttonText={"Re-verify Email"} alertText={"Verification Email Sent"} />
           <UpdateEmail />
           <UpdatePassword />
           <Button className="btn btn-block form-button" id="pocketwatch">
