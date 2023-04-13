@@ -172,7 +172,7 @@ const requestPasswordReset = asyncHandler(async (req, res) => {
   const resetToken = jwt.sign({ id: user.id, email: user.email }, jwtSecret, {
     expiresIn: "1h",
   });
-  const link = `${clientURL}/api/user/resetPassword?token=${resetToken}`;
+  const link = `${clientURL}/resetPassword?token=${resetToken}`;
   sendEmail(
     user.email, 
     "Password Reset Request for Pocketwatch", 
@@ -242,7 +242,7 @@ const requestEmailVerification = asyncHandler(async (req, res) => {
   const verifyToken = jwt.sign({ id: req.user._id, email: req.user.email }, jwtSecret, {
     expiresIn: "1h",
   });
-  const link = `${clientURL}/api/user/verifyEmail?token=${verifyToken}`;
+  const link = `${clientURL}/verifyEmail?token=${verifyToken}`;
   sendEmail(
     req.user.email, 
     "Email Verification Request for Pocketwatch", 
@@ -318,9 +318,6 @@ const generateLoginToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
     expiresIn: "30d",
   });
-};
-
-const generatePasswordResetToken = (id, email) => {
 };
 
 module.exports = {
