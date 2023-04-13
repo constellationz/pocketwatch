@@ -5,6 +5,7 @@ import Button from 'react-bootstrap/Button';
 import UserAlert from '../components/UserAlert';
 import UpdateEmail from '../components/UpdateEmail';
 import UpdatePassword from '../components/UpdatePassword';
+import { Link } from 'react-router-dom';
 
 function Settings() {
   return (
@@ -26,12 +27,16 @@ function Settings() {
           <UserAlert buttonText={"Re-verify Email"} alertText={"Verification Email Sent"} />
           <UpdateEmail />
           <UpdatePassword />
-          <Button className="btn btn-block form-button" id="pocketwatch">
-            Forgot Password
-          </Button>
-          <Button className="btn btn-block form-button" id="pocketwatch">
-            Logout
-          </Button>
+          <Link to="/forgotpassword">
+            <Button className="btn btn-block form-button" id="pocketwatch">
+              Forgot Password
+            </Button>
+          </Link>
+          <Link to="/logout">
+            <Button className="btn btn-block form-button" id="pocketwatch">
+              Logout
+            </Button>
+          </Link>
         </div>
       </div>
   );
