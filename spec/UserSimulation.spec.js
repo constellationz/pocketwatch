@@ -1,5 +1,5 @@
 const bcrypt = require("bcryptjs");
-const NUM_TASKS = 1;
+const NUM_TASKS = 3;
 
 describe("User Simulation: ", function() {
     let user, token;
@@ -206,6 +206,41 @@ describe("User Simulation: ", function() {
 
         it("should return user data", function() {
             expect(task.user).toEqual(user._id);
+        });
+    
+        it("should give 200 status code", function() {
+            expect(status).toEqual(200);
+        });
+    });
+
+    describe("updating a task", function() {
+        let tasks, status;
+
+        beforeAll(async function() {
+            tasks = await getTasks();
+
+            await fetch(`http://localhost:5000/api/tasks/${tasks[0]._id}`, {
+                method: "PUT",
+                crossDomain: true,
+                headers: {
+                    "Authorization": `Bearer ${token}`,
+                    "Content-Type": "application/json",
+                    Accept: "application/json",
+                    "Access-Control-Allow-Origin": "*"
+                },
+                body: JSON.stringify({
+                    name: "ChangedTaskName"
+                })
+            })
+            .then(res => {
+                status = res.status;
+            });
+
+            tasks = await getTasks();
+        });
+
+        it("should return user data", function() {
+            expect(tasks[0].name).toEqual("ChangedTaskName");
         });
     
         it("should give 200 status code", function() {
