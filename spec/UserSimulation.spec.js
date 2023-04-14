@@ -147,6 +147,34 @@ describe("User Simulation: ", function() {
         });
     });
 
+    describe("verifying user email (test endpoint)", function() {
+        let status;
+
+        beforeAll(async function() {
+            await fetch("http://localhost:5000/api/tests/verifyEmail", {
+                method: "POST",
+                crossDomain: true,
+                headers: {
+                    "Authorization": `Bearer ${token}`,
+                    "Content-Type": "application/json",
+                    Accept: "application/json",
+                    "Access-Control-Allow-Origin": "*"
+                }
+            })
+            .then(res => {
+                status = res.status;
+                return res.json()
+            })
+            .then(data => {
+                user = data;
+            });
+        });
+    
+        it("should give 200 status code", function() {
+            expect(status).toEqual(200);
+        });
+    });
+
     afterAll(async function() {
         await fetch("http://localhost:5000/api/tests/deleteUser", {
             method: "POST",

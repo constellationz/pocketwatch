@@ -7,8 +7,23 @@ const Task = require("../models/taskModel");
 const User = require("../models/userModel");
 const { ObjectId } = require("bson");
 
-// @desc    Get tasks of a user
-// @route   GET /api/deleteUser
+// @desc    Verify email
+// @route   POST /api/tests/verifyEmail
+// @access  Private
+const verifyEmail = asyncHandler(async (req, res) => {
+    if (!req.user) {
+      res.status(401);
+      throw new Error("Not authorized, no token");
+    }
+  
+    req.user.emailVerified = true;
+    req.user.save().then(savedUser => {
+      res.status(200).json(savedUser);
+    });
+});
+
+// @desc    Delete user
+// @route   GET /api/tests/deleteUser
 // @access  Public
 const deleteUser = asyncHandler(async (req, res) => {
     const { id } = req.body;
@@ -38,5 +53,6 @@ const deleteUser = asyncHandler(async (req, res) => {
 });
 
 module.exports = {
+    verifyEmail,
     deleteUser
 };
