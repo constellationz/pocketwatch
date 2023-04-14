@@ -175,18 +175,29 @@ describe("User Simulation: ", function() {
         });
     });
 
-    afterAll(async function() {
-        await fetch("http://localhost:5000/api/tests/deleteUser", {
-            method: "POST",
-            crossDomain: true,
-            headers: {
-                "Content-Type": "application/json",
-                Accept: "application/json",
-                "Access-Control-Allow-Origin": "*"
-            },
-            body: JSON.stringify({
-                id: user._id
+    describe("verifying test user was deleted (test endpoint)", function() {
+        let status;
+
+        beforeAll(async function() {
+            await fetch("http://localhost:5000/api/tests/deleteUser", {
+                method: "POST",
+                crossDomain: true,
+                headers: {
+                    "Content-Type": "application/json",
+                    Accept: "application/json",
+                    "Access-Control-Allow-Origin": "*"
+                },
+                body: JSON.stringify({
+                    id: user._id
+                })
             })
+            .then(res => {
+                status = res.status;
+            });
+        });
+
+        it("should have deleted user", function() {
+            expect(status).toEqual(200);
         });
     });
 });
