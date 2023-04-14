@@ -1,4 +1,5 @@
 const bcrypt = require("bcryptjs");
+const NUM_TASKS = 1;
 
 describe("User Simulation: ", function() {
     let user, token;
@@ -175,6 +176,76 @@ describe("User Simulation: ", function() {
         });
     });
 
+    describe("creating tasks", function() {
+        let task, status;
+
+        beforeAll(async function() {
+            for (let i = 1; i <= NUM_TASKS; i++) {
+                await fetch("http://localhost:5000/api/tasks", {
+                    method: "POST",
+                    crossDomain: true,
+                    headers: {
+                        "Authorization": `Bearer ${token}`,
+                        "Content-Type": "application/json",
+                        Accept: "application/json",
+                        "Access-Control-Allow-Origin": "*"
+                    },
+                    body: JSON.stringify({
+                        name: `DeleteIfYouSeeThis_Task${i}_${new Date().toISOString()}`
+                    })
+                })
+                .then(res => {
+                    status = res.status;
+                    return res.json()
+                })
+                .then(data => {
+                    task = data;
+                });
+            }
+        });
+
+        it("should return user data", function() {
+            expect(task.user).toEqual(user._id);
+        });
+    
+        it("should give 200 status code", function() {
+            expect(status).toEqual(200);
+        });
+    });
+
+    describe("deleting all tasks from test user", function() {
+        let empty, status;
+
+        beforeAll(async function() {
+            let tasks = await getTasks();
+
+            for (let task of tasks) {
+                await fetch(`http://localhost:5000/api/tasks/${task._id}`, {
+                    method: "DELETE",
+                    crossDomain: true,
+                    headers: {
+                        "Authorization": `Bearer ${token}`,
+                        "Content-Type": "application/json",
+                        Accept: "application/json",
+                        "Access-Control-Allow-Origin": "*"
+                    }
+                })
+                .then(res => {
+                    status = res.status;
+                });
+            }
+            empty = await getTasks();
+        });
+
+        it("should have deleted all tasks from the test user", function() {
+            expect(empty.length).toEqual(0);
+        });
+
+        it("should give 200 status code", function() {
+            expect(status).toEqual(200);
+        });
+    });
+
     describe("verifying test user was deleted (test endpoint)", function() {
         let status;
 
@@ -200,4 +271,23 @@ describe("User Simulation: ", function() {
             expect(status).toEqual(200);
         });
     });
+
+    async function getTasks() {
+        let tasks;
+        await fetch("http://localhost:5000/api/tasks", {
+            method: "GET",
+            crossDomain: true,
+            headers: {
+                "Authorization": `Bearer ${token}`,
+                "Content-Type": "application/json",
+                Accept: "application/json",
+                "Access-Control-Allow-Origin": "*"
+            }
+        })
+        .then(res => res.json())
+        .then(data => {
+            tasks = data;
+        });
+        return tasks;
+    };
 });
