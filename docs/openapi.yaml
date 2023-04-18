@@ -1,0 +1,435 @@
+openapi: 3.0.0
+info:
+  title: Pocketwatch
+  description: API for pocketwatch.page
+  version: 1.0.0
+  license:
+    name: MIT
+    url: https://mit-license.org
+servers:
+  - url: http://www.pocketwatch.page/api
+paths:
+  /tasks:
+    get:
+      tags:
+        - tasks
+      summary: Get all tasks
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    post:
+      tags:
+        - tasks
+      summary: Create a task
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewTask'
+      security:
+        - bearerAuth: []
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Task'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /tasks/{id}:
+    put:
+      tags:
+        - tasks
+      summary: Update a task
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Task'
+      security:
+        - bearerAuth: []
+      responses:
+        '204':
+          description: No Content
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    delete:
+      tags:
+        - tasks
+      summary: Delete a task
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeletedTask'
+        '204':
+          description: No Content
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /users:
+    post:
+      tags:
+        - users
+      summary: Register a user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserRegister'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /users/login:
+    post:
+      tags:
+        - users
+      summary: Authenticate a user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserLogin'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /users/me:
+    get:
+      tags:
+        - users
+      summary: Get the currently logged in user
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+  /users/updateEmail:
+    post:
+      tags:
+        - users
+      summary: Update the email for the currently logged in user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateEmail'
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+  /users/updatePassword:
+    post:
+      tags:
+        - users
+      summary: Update the password for the currently logged in user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdatePassword'
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+  /users/requestPasswordReset:
+    post:
+      tags:
+        - users
+      summary: Request a password reset
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RequestPasswordReset'
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /users/requestEmailVerification:
+    post:
+      tags:
+        - users
+      summary: Request email verification
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /users/verifyEmail:
+    post:
+      tags:
+        - users
+      summary: Verify a user's email
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VerifyEmail'
+      responses:
+        '200':
+          description: OK
+        '401':
+          description: Not Authorized
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /users/resetPassword:
+    post:
+      tags:
+        - users
+      summary: Reset the user's password
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ResetPassword'
+      responses:
+        '200':
+          description: OK
+        '401':
+          description: Not Authorized
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    NewTask:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The name of the task
+      required:
+        - name
+    Task:
+      type: object
+      properties:
+        user:
+          type: string
+          description: The id of the user who created this task
+        _id:
+          type: string
+          description: The unique identifier for a task
+        name:
+          type: string
+          description: The name of the task
+        createdAt:
+          type: string
+          description: The time this task was created
+        updatedAt:
+          type: string
+          description: The time this task was last updated
+      required:
+        - id
+        - name
+        - user
+    DeletedTask:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The unique identifier for a task
+      required:
+        - id
+    UserRegister:
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+      required:
+        - name
+        - email
+        - password
+    UserLogin:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+      required:
+        - email
+        - password
+    UpdatePassword:
+      type: object
+      properties:
+        password:
+          type: string
+        newPassword:
+          type: string
+      required:
+        - password
+        - newPassword
+    UpdateEmail:
+      type: object
+      properties:
+        password:
+          type: string
+        newEmail:
+          type: string
+      required:
+        - password
+        - newEmail
+    RequestPasswordReset:
+      type: object
+      properties:
+        email:
+          type: string
+      required:
+        - email
+    VerifyEmail:
+      type: object
+      properties:
+        token:
+          type: string
+          description: The authorization token provided in the verification URL
+      required:
+        - token
+    ResetPassword:
+      type: object
+      properties:
+        token:
+          type: string
+          description: The authorization token provided in the verification URL
+        newPassword:
+          type: string
+          description: The new password
+      required:
+        - token
+        - newPassword
+    User:
+      type: object
+      properties:
+        _id:
+          type: string
+          description: The unique identifier for a user
+        name:
+          type: string
+          description: The name of the user
+        email:
+          type: string
+          description: The email address of the user
+        token:
+          type: string
+          description: The bearer token for the user
+      required:
+        - _id
+        - name
+        - email
+        - token
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+          description: A human-readable error message
+        stack:
+          type: string
+          description: The error message that the server generated
