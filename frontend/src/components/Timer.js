@@ -1,9 +1,15 @@
-const Timer = ({ time }) => {
+import React from "react";
+
+const Timer = ({ timerHours, timerMinutes, timerSeconds }) => {
   return (
-    <div className="timer-container">
-      <time className="timer-elapsed-time fs-1 fw-bold">{time}</time>
+    <div id="timer">
+      <span> {timerHours} </span>
+      <span>:</span>
+      <span> {timerMinutes} </span>
+      <span>:</span>
+      <span> {timerSeconds} </span>
     </div>
   );
 };
 
-export default Timer;
+export default Timer; 

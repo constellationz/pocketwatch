@@ -1,13 +1,30 @@
-import React, { useState } from 'react';
-import Button from 'react-bootstrap/Button';
-import Modal from 'react-bootstrap/Modal';
-import ModalButtons from "./ModalButtons";
+import React from 'react';
+import { Modal, Button } from 'react-bootstrap';
+import { TaskContext } from '../contexts/TaskContext';
+import { useContext, useState } from 'react';
 
-function EditTask({task}) {
+function EditTask({ task }) {
+
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
+  const id = task.id;
+
+  const [name, setName] = useState(task.name);
+  const [startTime, setStartTime] = useState(task.startTime);
+  const [endTime, setEndTime] = useState(task.endTime);
+
+  const { updateTask } = useContext(TaskContext);
+
+  const updatedTask = { id, name, startTime, endTime }
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    updateTask(id, updatedTask);
+    handleClose();
+  }
 
   return (
     <>
@@ -22,27 +39,40 @@ function EditTask({task}) {
         <Modal.Body>
           <div className="form-group">
             <label htmlFor="task-name">Task Name</label>
-            <input className="form-control" id="task-name" value={task.name} placeholder={"Task Name"}></input>
+            <input
+              className="form-control"
+              id="task-name"
+              value={name}
+              placeholder={"Task Name"}
+              onChange={(e) => setName(e.target.value)}
+              required
+            />
           </div>
           <div className="form-group">
             <label htmlFor="start-time">Start Time</label>
-            <input className="form-control" id="start-time" value={task.startTime} placeholder={"Start Time"}></input>
+            <input
+              className="form-control"
+              id="start-time"
+              value={startTime}
+              placeholder={"Start Time"}
+              onChange={(e) => setStartTime(e.target.value)}
+              required />
           </div>
           <div className="form-group">
             <label htmlFor="end-time">End Time</label>
-            <input className="form-control" id="end-time" value={task.endTime} placeholder={"End Time"}></input>
-          </div>
-          <div className="form-group">
-            <label htmlFor="time-elapsed">Time Elapsed</label>
-            <input className="form-control" id="time-elapsed" value={task.timeElapsed} placeholder={"Time Elapsed"}></input>
-          </div>
-          <div className="form-group">
-            <label htmlFor="location">Location</label>
-            <input className="form-control" id="location" value={task.location} placeholder={"Location"}></input>
+            <input
+              className="form-control"
+              id="end-time"
+              value={endTime}
+              placeholder={"End Time"}
+              onChange={(e) => setEndTime(e.target.value)}
+              required
+            />
           </div>
         </Modal.Body>
         <Modal.Footer className="d-flex flex-column align-items-stretch">
-          <ModalButtons successText="Save" dangerText="Discard Changes" />
+          <Button onClick={handleSubmit} className="form-button mb-3" id="pocketwatch">Save</Button>
+          <Button onClick={handleClose} variant="danger" id="pocketwatch">Discard Changes</Button>
         </Modal.Footer>
       </Modal>
     </>

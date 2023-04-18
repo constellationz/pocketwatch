@@ -1,9 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
-import ModalButtons from "./ModalButtons";
+import { TaskContext } from '../contexts/TaskContext';
 
-function DeleteTask({task}) {
+function DeleteTask({ task }) {
+
+  const { deleteTask } = useContext(TaskContext);
+
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -23,7 +26,8 @@ function DeleteTask({task}) {
           <p>Are you sure you want to delete this task?</p>
         </Modal.Body>
         <Modal.Footer className="d-flex flex-column align-items-stretch">
-          <ModalButtons successText="Yes, I'm sure!" dangerText="Don't delete" />
+          <Button onClick={() => deleteTask(task.id)} className="form-button mb-3" id="pocketwatch">Yes, I'm sure!</Button>
+          <Button onClick={handleClose} variant="danger" id="pocketwatch">Don't delete</Button>
         </Modal.Footer>
       </Modal>
     </>
