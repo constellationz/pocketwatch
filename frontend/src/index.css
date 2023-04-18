@@ -11,9 +11,32 @@ body {
   height: 100vh;
 }
 
-a {
-  text-decoration: none;
-  color: #000;
+a:link {
+  color: #454CEE;
+}
+
+a:visited {
+  color: #001EB5;
+}
+
+a:hover {
+  color: #0735D1;
+}
+
+.navbar-brand a {
+  color: #454CEE;
+}
+
+.navbar-brand a:focus, .navbar-brand a:hover {
+  color: #0735D1;
+}
+
+.navbar-light .navbar-nav .nav-link {
+  color: #454CEE;
+}
+
+.navbar-light .navbar-nav .nav-link:focus, .navbar-light .navbar-nav .nav-link:hover {
+  color: #0735D1;
 }
 
 p {
@@ -191,6 +214,59 @@ h3 {
   animation: spin 1.2s linear infinite;
 }
 
+#pocketwatch.form-button {
+  background-color: #9DA1FF;
+  border-color: #9DA1FF;
+}
+
+#pocketwatch.form-button:hover {
+  background-color: #8187E2;
+  border-color: #8187E2;
+}
+
+#pocketwatch.form-button:active {
+  background-color: #656EC6;
+  border-color: #656EC6;
+}
+
+#pocketwatch.btn-danger {
+  background: #FF9D9D;
+  border-color: #FF9D9D;
+}
+
+#pocketwatch.btn-danger:hover {
+  background-color: #E18283;
+  border-color: #E18283;
+}
+
+#pocketwatch.btn-danger:active {
+  background-color: #C4686A;
+  border-color: #C4686A;
+}
+
+.task-container {
+  border: 1px solid;
+  padding: 5px;
+  margin-bottom:1%;
+}
+
+.task-name {
+  margin-top: 5px;
+  margin-left: 5px;
+}
+
+.task-elapsed-time {
+  margin-left: 5px;
+}
+
+.edit-task-button {
+  margin-right: 15px;
+}
+
+.delete-task-button {
+  margin-right: 5px;
+}
+
 @keyframes spin {
   0% {
     transform: rotate(0deg);
@@ -211,5 +287,25 @@ h3 {
 
   .heading p {
     font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .current-task-name {
+    margin-bottom: 3%;
+  }
+
+  .current-task-buttons {
+    justify-content: space-around;
+  }
+}
+
+@media (min-width: 768px) {
+  .current-task-buttons {
+    justify-content: end;
+  }
+
+  #media-control {
+    margin-right: 15px;
   }
 }
