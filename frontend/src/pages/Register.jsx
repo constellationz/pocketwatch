@@ -15,6 +15,9 @@ function Register() {
 
   const { name, email, password, password2 } = formData;
 
+  const [hasRegisterError, setHasRegisterError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+
   const onChange = (e) => {
     setFormData((prevState) => ({
       ...prevState,
@@ -46,7 +49,19 @@ function Register() {
       }),
     })
       .then((res) => res.json())
-      .then((data) => { console.log(data);});
+      .then((data) => {
+        // invalid registration
+        if(!data.ok) {
+          setErrorMessage(data.message);
+          setHasRegisterError(true);
+          return;
+        }
+
+        // valid registration
+        setErrorMessage("");
+        setHasRegisterError(false);
+        console.log(data);
+      });
     }
 
   return (
@@ -105,6 +120,7 @@ function Register() {
               onChange={onChange}
             />
           </div>
+          {errorMessage && hasRegisterError && <div className="form-error mb-2">{errorMessage}</div>}
           <div className="form-group">
             <Button type="submit" className="btn btn-block form-button" id="pocketwatch">
               Register
