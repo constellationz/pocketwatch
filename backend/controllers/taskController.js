@@ -10,7 +10,25 @@ const User = require("../models/userModel");
 // @route   GET /api/tasks
 // @access  Private
 const getTasks = asyncHandler(async (req, res) => {
-  const tasks = await Task.find({ user: req.user.id });
+  const { search, skip, limit } = req.body;
+
+  // Use different initial queries based on whether a search is provided
+  let query;
+  if (search) {
+    query = Task.find({
+      user: req.user.id,
+      $text: { $search: search },
+    });
+  } else {
+    query = Task.find({
+      user: req.user.id,
+    });
+  }
+
+  const tasks = await query
+    .skip(skip)
+    .limit(limit)
+    .exec()
 
   res.status(200).json(tasks);
 });
@@ -19,8 +37,6 @@ const getTasks = asyncHandler(async (req, res) => {
 // @route   POST /api/tasks
 // @access  Private
 const postTask = asyncHandler(async (req, res) => {
-  console.log(req.body);
-
   if (!req.body.name) {
     res.status(400);
     throw new Error("No name field provided");
