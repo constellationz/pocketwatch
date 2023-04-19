@@ -77,16 +77,6 @@ function Login() {
             </Button>
           </div>
           <div className="form-group">
-            <Button className="btn btn-block form-button" id="google">
-              Sign in with Google
-            </Button>
-          </div>
-          <div className="form-group">
-            <Button variant="outline-dark" className="btn btn-block form-button" id="apple">
-              Sign in with Apple
-            </Button>
-          </div>
-          <div className="form-group">
             <Link to="/register">Create new account</Link>
           </div>
           <div className="form-group">
