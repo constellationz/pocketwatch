@@ -13,6 +13,9 @@ function Login() {
 
   const { email, password } = formData;
 
+  const [hasLoginError, setHasLoginError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+
   const onChange = (e) => {
     setFormData((prevState) => ({
       ...prevState,
@@ -35,8 +38,20 @@ function Login() {
         password,
       }),
     })
-      .then((res) => res.json())
-      .then((data) => {console.log(data);});
+      .then((res) => (res.json()))
+      .then((data) => {
+        // invalid login
+        if(!data.ok) {
+          setErrorMessage(data.message);
+          setHasLoginError(true);
+          return;
+        }
+
+        // valid login
+        setErrorMessage("");
+        setHasLoginError(false);
+        console.log(data);
+      });
   };
 
   return (
@@ -71,6 +86,7 @@ function Login() {
               onChange={onChange}
             />
           </div>
+          {errorMessage && hasLoginError && <div className="form-error mb-2">{errorMessage}</div>}
           <div className="form-group">
             <Button type="submit" className="btn btn-block form-button" id="pocketwatch">
               Login
