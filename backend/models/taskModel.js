@@ -20,4 +20,6 @@ const taskSchema = mongoose.Schema(
   }
 );
 
+taskSchema.index({ name: "text" });
+
 module.exports = mongoose.model("Task", taskSchema);

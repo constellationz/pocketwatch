@@ -14,6 +14,12 @@ paths:
       tags:
         - tasks
       summary: Get all tasks
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetTasks'
       security:
         - bearerAuth: []
       responses:
@@ -332,6 +338,18 @@ components:
           description: The unique identifier for a task
       required:
         - id
+    GetTasks:
+      type: object
+      properties:
+        search:
+          type: string
+          description: The search query
+        skip:
+          type: number
+          description: The number of results to skip
+        limit:
+          type: number
+          description: The number of results to limit the search to
     UserRegister:
       type: object
       properties:
