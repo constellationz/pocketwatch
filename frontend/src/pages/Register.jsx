@@ -48,21 +48,22 @@ function Register() {
         password
       }),
     })
-      .then((res) => res.json())
-      .then((data) => {
-        // invalid registration
-        if(!data.ok) {
-          setErrorMessage(data.message);
-          setHasRegisterError(true);
-          return;
-        }
-
-        // valid registration
-        setErrorMessage("");
-        setHasRegisterError(false);
-        console.log(data);
-      });
-    }
+    .then((res) => {
+      if(!res.ok) {
+        return res.text().then(text => {throw new Error(text)});
+      }
+      return res.json();
+    })
+    .then((data) => {
+      setErrorMessage("");
+      setHasRegisterError(false);
+      console.log(data);
+    })
+    .catch((err) => {
+      setErrorMessage(JSON.parse(err.message).message);
+      setHasRegisterError(true);
+    });
+  }
 
   return (
     <>
