@@ -38,19 +38,20 @@ function Login() {
         password,
       }),
     })
-      .then((res) => (res.json()))
-      .then((data) => {
-        // invalid login
-        if(!data.ok) {
-          setErrorMessage(data.message);
-          setHasLoginError(true);
-          return;
+      .then((res) => {
+        if(!res.ok) {
+          return res.text().then(text => {throw new Error(text)});
         }
-
-        // valid login
+        return res.json();
+      })
+      .then((data) => {
         setErrorMessage("");
         setHasLoginError(false);
         console.log(data);
+      })
+      .catch((err) => {
+        setErrorMessage(JSON.parse(err.message).message);
+        setHasLoginError(true);
       });
   };
 
