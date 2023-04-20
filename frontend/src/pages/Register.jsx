@@ -55,6 +55,7 @@ function Register() {
       return res.json();
     })
     .then((data) => {
+      localStorage.setItem("token", data.token);
       setErrorMessage("");
       setHasRegisterError(false);
       console.log(data);

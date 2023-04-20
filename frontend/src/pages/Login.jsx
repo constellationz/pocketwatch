@@ -45,6 +45,7 @@ function Login() {
         return res.json();
       })
       .then((data) => {
+        localStorage.setItem("token", data.token);
         setErrorMessage("");
         setHasLoginError(false);
         console.log(data);
