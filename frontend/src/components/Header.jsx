@@ -8,7 +8,7 @@ import Navbar from "react-bootstrap/Navbar";
 
 function Header() {
   return (
-    <Navbar bg="light" expand="md">
+    <Navbar bg="white" expand="md">
       <Container>
         <Navbar.Brand>
           <Link className="navbar-brand" to="/">Pocketwatch</Link>
