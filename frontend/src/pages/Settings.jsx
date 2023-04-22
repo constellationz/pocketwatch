@@ -6,8 +6,33 @@ import UserAlert from '../components/UserAlert';
 import UpdateEmail from '../components/UpdateEmail';
 import UpdatePassword from '../components/UpdatePassword';
 import { Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 
 function Settings() {
+  const [userInfo, setUserInfo] = useState("");
+
+  let token = localStorage.getItem("token");
+
+  useEffect(() => {
+    fetch("api/users/me", {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+        'Access-Control-Allow-Origin': '*',
+      },
+    })
+    .then(res => res.json())
+    .then(data => {
+      setUserInfo(data);
+      console.log(data.email);
+    })
+    .catch(err => {
+      console.log(err);
+    });  
+  }, []);
+
   return (
       <div className="row d-flex justify-content-center">
         <div className="col-12 col-lg-8">
@@ -19,7 +44,7 @@ function Settings() {
                 className="form-control"
                 id="email"
                 name="email"
-                value={""}
+                value={userInfo.email}
                 placeholder="Email"
                 disabled
             />
