@@ -26,7 +26,6 @@ function Settings() {
     .then(res => res.json())
     .then(data => {
       setUserInfo(data);
-      console.log(data.email);
     })
     .catch(err => {
       console.log(err);
