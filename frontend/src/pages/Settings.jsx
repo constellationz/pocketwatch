@@ -43,8 +43,7 @@ function Settings() {
                 className="form-control"
                 id="email"
                 name="email"
-                value={userInfo.email}
-                placeholder="Email"
+                placeholder={userInfo.email}
                 disabled
             />
           </div>
