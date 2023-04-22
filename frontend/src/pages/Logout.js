@@ -9,7 +9,7 @@ const Logout = () => {
 
   // Redirect to homepage
   useEffect(() => {
-    // navigate("/");
+    navigate("/");
   });
 };
 
