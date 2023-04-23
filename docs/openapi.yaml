@@ -370,10 +370,10 @@ components:
           type: string
           description: The search query
         skip:
-          type: number
+          type: integer
           description: The number of results to skip
         limit:
-          type: number
+          type: integer
           description: The number of results to limit the search to
     UserRegister:
       type: object
