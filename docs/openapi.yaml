@@ -306,6 +306,19 @@ components:
         name:
           type: string
           description: The name of the task
+        startTime:
+          type: number
+          description: The start time of the task in UNIX milliseconds
+        endTime:
+          type: number
+          description: The end time of the task in UNIX milliseconds
+        location:
+          description: The location of the task
+          type: array
+          maxItems: 2
+          minItems: 2
+          items:
+            type: number
       required:
         - name
     Task:
@@ -320,6 +333,18 @@ components:
         name:
           type: string
           description: The name of the task
+        startTime:
+          type: number
+          description: The start of the task in UNIX milliseconds
+        endTime:
+          type: number
+          description: The end of the task in UNIX milliseconds
+        location:
+          type: array
+          maxItems: 2
+          minItems: 2
+          items:
+            type: number
         createdAt:
           type: string
           description: The time this task was created
@@ -345,10 +370,10 @@ components:
           type: string
           description: The search query
         skip:
-          type: number
+          type: integer
           description: The number of results to skip
         limit:
-          type: number
+          type: integer
           description: The number of results to limit the search to
     UserRegister:
       type: object
