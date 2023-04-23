@@ -45,6 +45,9 @@ const postTask = asyncHandler(async (req, res) => {
   const task = await Task.create({
     name: req.body.name,
     user: req.user.id,
+    startTime: req.body.startTime,
+    endTime: req.body.endTime,
+    location: req.body.location,
   });
 
   res.status(200).json(task);
