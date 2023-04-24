@@ -2,7 +2,8 @@
 // Registration page
 
 import { useState, useEffect } from "react";
-import { FaUser } from "react-icons/fa";
+import { Link } from "react-router-dom";
+import Button from "react-bootstrap/Button";
 
 function Register() {
   const [formData, setFormData] = useState({
@@ -23,20 +24,41 @@ function Register() {
 
   const onSubmit = (e) => {
     e.preventDefault();
-  };
+    const newUser = {
+      name: formData.name, 
+      emai: formData.email, 
+      password: formData.password, 
+    }
+    console.log(newUser);
+
+    fetch("/api/users", {
+      method: "POST",
+      crossDomain: true,
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+      body: JSON.stringify({
+        name,
+        email,
+        password
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => { console.log(data);});
+    }
 
   return (
     <>
-      <section className="heading">
-        <h1>
-          <FaUser /> Register
-        </h1>
-        <p>Make a new account</p>
-      </section>
+      <h1>
+        Register
+      </h1>
 
       <section className="form">
         <form onSubmit={onSubmit}>
           <div className="form-group">
+            <label htmlFor="name">Username</label>
             <input
               type="text"
               className="form-control"
@@ -48,6 +70,7 @@ function Register() {
             />
           </div>
           <div className="form-group">
+            <label htmlFor="email">Email</label>
             <input
               type="text"
               className="form-control"
@@ -59,6 +82,7 @@ function Register() {
             />
           </div>
           <div className="form-group">
+            <label htmlFor="password">Password</label>
             <input
               type="password"
               className="form-control"
@@ -70,20 +94,27 @@ function Register() {
             />
           </div>
           <div className="form-group">
+            <label htmlFor="password2">Repeat Password</label>
             <input
               type="password"
               className="form-control"
               id="password2"
               name="password2"
               value={password2}
-              placeholder="Confirm password"
+              placeholder="Repeat password"
               onChange={onChange}
             />
           </div>
           <div className="form-group">
-            <button type="submit" className="btn btn-block">
-              Submit
-            </button>
+            <Button type="submit" className="btn btn-block form-button" id="pocketwatch">
+              Register
+            </Button>
+          </div>
+          <div className="form-group">
+            <Link to="/login">Back to login</Link>
+          </div>
+          <div className="form-group">
+            <Link to="/forgotpassword">Forgot password</Link>
           </div>
         </form>
       </section>

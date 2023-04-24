@@ -2,8 +2,8 @@
 // Login page
 
 import { useState, useEffect } from "react";
-import { FaSignInAlt } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import Button from "react-bootstrap/Button";
 
 function Login() {
   const [formData, setFormData] = useState({
@@ -22,20 +22,33 @@ function Login() {
 
   const onSubmit = (e) => {
     e.preventDefault();
+    fetch("/api/users/login", {
+      method: "POST",
+      crossDomain: true,
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+      body: JSON.stringify({
+        email,
+        password,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {console.log(data);});
   };
 
   return (
     <>
-      <section className="heading">
-        <h1>
-          <FaSignInAlt /> Login
-        </h1>
-        <p>Log into an existing account</p>
-      </section>
+      <h1>
+        Login
+      </h1>
 
       <section className="form">
         <form onSubmit={onSubmit}>
           <div className="form-group">
+            <label htmlFor="email">Email</label>
             <input
               type="text"
               className="form-control"
@@ -47,6 +60,7 @@ function Login() {
             />
           </div>
           <div className="form-group">
+            <label htmlFor="password">Password</label>
             <input
               type="password"
               className="form-control"
@@ -58,9 +72,22 @@ function Login() {
             />
           </div>
           <div className="form-group">
-            <button type="submit" className="btn btn-block">
-              Submit
-            </button>
+            <Button type="submit" className="btn btn-block form-button" id="pocketwatch">
+              Login
+            </Button>
+          </div>
+          <div className="form-group">
+            <Button className="btn btn-block form-button" id="google">
+              Sign in with Google
+            </Button>
+          </div>
+          <div className="form-group">
+            <Button variant="outline-dark" className="btn btn-block form-button" id="apple">
+              Sign in with Apple
+            </Button>
+          </div>
+          <div className="form-group">
+            <Link to="/register">Create new account</Link>
           </div>
           <div className="form-group">
             <Link to="/forgotpassword">Forgot password</Link>
