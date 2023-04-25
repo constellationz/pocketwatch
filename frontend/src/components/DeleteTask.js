@@ -9,8 +9,7 @@ function DeleteTask({ task, deleteTask }) {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   
-  const handleDeleteSubmit = (event) =>{
-    console.log("task id is here: " + task.id);
+  const handleDeleteSubmit = () =>{
     deleteTask(task.id);
     handleClose(); 
   }
@@ -29,7 +28,8 @@ function DeleteTask({ task, deleteTask }) {
           <p>Are you sure you want to delete this task?</p>
         </Modal.Body>
         <Modal.Footer className="d-flex flex-column align-items-stretch">
-          <Button onClick={(event) => handleDeleteSubmit(event)} className="form-button mb-3"></Button>
+          {/* <Button onClick={(event) => handleDeleteSubmit(event)} className="form-button mb-3"></Button> */}
+          <ModalButtons successText="Yes, I'm sure!" dangerText="Don't delete" successButtonPressed={handleDeleteSubmit} dangerButtonPressed={handleClose}/>
         </Modal.Footer>
       </Modal>
     </>
