@@ -27,6 +27,13 @@ function Register() {
 
   const onSubmit = (e) => {
     e.preventDefault();
+
+    if(password !== password2) {
+      setErrorMessage("Passwords do not match");
+      setHasRegisterError(true);
+      return false;
+    }
+
     const newUser = {
       name: formData.name, 
       emai: formData.email, 
