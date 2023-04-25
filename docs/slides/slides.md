@@ -104,7 +104,7 @@ Pedro Kasprzykowski [@PKTidus](https://github.com/PKTidus) Mobile App
 
 # Testing Demonstration
 
-Khalil time!
+[Link to Zoom](https://ucf.zoom.us/my/pkasprzy)
 
 ---
 
@@ -117,6 +117,7 @@ Khalil time!
 # Mobile Demo
 
 Doc cam!
+[Link to Zoom](https://ucf.zoom.us/my/pkasprzy)
 
 ---
 
