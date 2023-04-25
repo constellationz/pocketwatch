@@ -40,12 +40,7 @@ function UpdateEmail() {
       setErrorMessage("");
       setHasError(false);
       handleClose();
-
-      // log user out
-      localStorage.removeItem("token");
-
-      // redirect to login page
-      window.location.replace("/login");
+      window.location.reload();
     })
     .catch(err => {
       setErrorMessage(JSON.parse(err.message).message);
