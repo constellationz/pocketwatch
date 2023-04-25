@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import ModalButtons from "./ModalButtons";
-import { useNavigate } from 'react-router-dom';
 
 function UpdateEmail() {
   const [show, setShow] = useState(false);
@@ -14,8 +13,6 @@ function UpdateEmail() {
   
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-
-  const navigate = useNavigate();
 
   let token = localStorage.getItem("token");
 
@@ -48,7 +45,7 @@ function UpdateEmail() {
       localStorage.removeItem("token");
 
       // redirect to login page
-      navigate("../login");
+      window.location.replace("/login");
     })
     .catch(err => {
       setErrorMessage(JSON.parse(err.message).message);

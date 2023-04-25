@@ -56,9 +56,7 @@ function Register() {
     })
     .then((data) => {
       localStorage.setItem("token", data.token);
-      setErrorMessage("");
-      setHasRegisterError(false);
-      console.log(data);
+      window.location.replace("/");
     })
     .catch((err) => {
       setErrorMessage(JSON.parse(err.message).message);
