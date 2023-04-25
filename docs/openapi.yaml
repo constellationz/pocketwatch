@@ -2,134 +2,138 @@ openapi: 3.0.0
 info:
   title: Pocketwatch
   description: API for pocketwatch.page
-  version: 1.0.0
   license:
     name: MIT
     url: https://mit-license.org
+  version: 1.0.0
 servers:
-  - url: http://www.pocketwatch.page/api
+- url: http://www.pocketwatch.page/api
 paths:
   /tasks:
     get:
       tags:
-        - tasks
+      - tasks
       summary: Get all tasks
       requestBody:
-        required: false
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/GetTasks'
-      security:
-        - bearerAuth: []
+        required: false
       responses:
-        '200':
+        "200":
           description: OK
-        '400':
+        "400":
           description: Bad Request
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+      security:
+      - bearerAuth: []
     post:
       tags:
-        - tasks
+      - tasks
       summary: Create a task
       requestBody:
-        required: true
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/NewTask'
-      security:
-        - bearerAuth: []
+        required: true
       responses:
-        '201':
+        "201":
           description: Created
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Task'
-        '400':
+        "400":
           description: Bad Request
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+      security:
+      - bearerAuth: []
   /tasks/{id}:
     put:
       tags:
-        - tasks
+      - tasks
       summary: Update a task
       parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: integer
-      requestBody:
+      - name: id
+        in: path
         required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+      requestBody:
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/Task'
-      security:
-        - bearerAuth: []
+        required: true
       responses:
-        '204':
+        "204":
           description: No Content
-        '400':
+        "400":
           description: Bad Request
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+      security:
+      - bearerAuth: []
     delete:
       tags:
-        - tasks
+      - tasks
       summary: Delete a task
       parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: string
-      security:
-        - bearerAuth: []
+      - name: id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/DeletedTask'
-        '204':
+        "204":
           description: No Content
-        '400':
+        "400":
           description: Bad Request
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+      security:
+      - bearerAuth: []
   /users:
     post:
       tags:
-        - users
+      - users
       summary: Register a user
       requestBody:
-        required: true
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/UserRegister'
+        required: true
       responses:
-        '201':
+        "201":
           description: Created
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/User'
-        '400':
+        "400":
           description: Bad Request
           content:
             application/json:
@@ -138,22 +142,22 @@ paths:
   /users/login:
     post:
       tags:
-        - users
+      - users
       summary: Authenticate a user
       requestBody:
-        required: true
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/UserLogin'
+        required: true
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/User'
-        '400':
+        "400":
           description: Bad Request
           content:
             application/json:
@@ -162,72 +166,72 @@ paths:
   /users/me:
     get:
       tags:
-        - users
+      - users
       summary: Get the currently logged in user
-      security:
-        - bearerAuth: []
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/User'
+      security:
+      - bearerAuth: []
   /users/updateEmail:
     post:
       tags:
-        - users
+      - users
       summary: Update the email for the currently logged in user
       requestBody:
-        required: true
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/UpdateEmail'
-      security:
-        - bearerAuth: []
+        required: true
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/User'
+      security:
+      - bearerAuth: []
   /users/updatePassword:
     post:
       tags:
-        - users
+      - users
       summary: Update the password for the currently logged in user
       requestBody:
-        required: true
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/UpdatePassword'
-      security:
-        - bearerAuth: []
+        required: true
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/User'
+      security:
+      - bearerAuth: []
   /users/requestPasswordReset:
     post:
       tags:
-        - users
+      - users
       summary: Request a password reset
       requestBody:
-        required: true
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/RequestPasswordReset'
+        required: true
       responses:
-        '200':
+        "200":
           description: OK
-        '400':
+        "400":
           description: Bad Request
           content:
             application/json:
@@ -236,36 +240,36 @@ paths:
   /users/requestEmailVerification:
     post:
       tags:
-        - users
+      - users
       summary: Request email verification
-      security:
-        - bearerAuth: []
       responses:
-        '200':
+        "200":
           description: OK
-        '400':
+        "400":
           description: Bad Request
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+      security:
+      - bearerAuth: []
   /users/verifyEmail:
     post:
       tags:
-        - users
+      - users
       summary: Verify a user's email
       requestBody:
-        required: true
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/VerifyEmail'
+        required: true
       responses:
-        '200':
+        "200":
           description: OK
-        '401':
+        "401":
           description: Not Authorized
-        '400':
+        "400":
           description: Bad Request
           content:
             application/json:
@@ -274,33 +278,30 @@ paths:
   /users/resetPassword:
     post:
       tags:
-        - users
+      - users
       summary: Reset the user's password
       requestBody:
-        required: true
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/ResetPassword'
+        required: true
       responses:
-        '200':
+        "200":
           description: OK
-        '401':
+        "401":
           description: Not Authorized
-        '400':
+        "400":
           description: Bad Request
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
 components:
-  securitySchemes:
-    bearerAuth:
-      type: http
-      scheme: bearer
-      bearerFormat: JWT
   schemas:
     NewTask:
+      required:
+      - name
       type: object
       properties:
         name:
@@ -313,15 +314,17 @@ components:
           type: number
           description: The end time of the task in UNIX milliseconds
         location:
-          description: The location of the task
-          type: array
           maxItems: 2
           minItems: 2
+          type: array
+          description: The location of the task
           items:
             type: number
-      required:
-        - name
     Task:
+      required:
+      - id
+      - name
+      - user
       type: object
       properties:
         user:
@@ -340,9 +343,9 @@ components:
           type: number
           description: The end of the task in UNIX milliseconds
         location:
-          type: array
           maxItems: 2
           minItems: 2
+          type: array
           items:
             type: number
         createdAt:
@@ -351,18 +354,14 @@ components:
         updatedAt:
           type: string
           description: The time this task was last updated
-      required:
-        - id
-        - name
-        - user
     DeletedTask:
+      required:
+      - id
       type: object
       properties:
         id:
           type: string
           description: The unique identifier for a task
-      required:
-        - id
     GetTasks:
       type: object
       properties:
@@ -376,6 +375,10 @@ components:
           type: integer
           description: The number of results to limit the search to
     UserRegister:
+      required:
+      - email
+      - name
+      - password
       type: object
       properties:
         name:
@@ -385,11 +388,10 @@ components:
           format: email
         password:
           type: string
-      required:
-        - name
-        - email
-        - password
     UserLogin:
+      required:
+      - email
+      - password
       type: object
       properties:
         email:
@@ -397,45 +399,45 @@ components:
           format: email
         password:
           type: string
-      required:
-        - email
-        - password
     UpdatePassword:
+      required:
+      - newPassword
+      - password
       type: object
       properties:
         password:
           type: string
         newPassword:
           type: string
-      required:
-        - password
-        - newPassword
     UpdateEmail:
+      required:
+      - newEmail
+      - password
       type: object
       properties:
         password:
           type: string
         newEmail:
           type: string
-      required:
-        - password
-        - newEmail
     RequestPasswordReset:
+      required:
+      - email
       type: object
       properties:
         email:
           type: string
-      required:
-        - email
     VerifyEmail:
+      required:
+      - token
       type: object
       properties:
         token:
           type: string
           description: The authorization token provided in the verification URL
-      required:
-        - token
     ResetPassword:
+      required:
+      - newPassword
+      - token
       type: object
       properties:
         token:
@@ -444,10 +446,12 @@ components:
         newPassword:
           type: string
           description: The new password
-      required:
-        - token
-        - newPassword
     User:
+      required:
+      - _id
+      - email
+      - name
+      - token
       type: object
       properties:
         _id:
@@ -462,11 +466,6 @@ components:
         token:
           type: string
           description: The bearer token for the user
-      required:
-        - _id
-        - name
-        - email
-        - token
     Error:
       type: object
       properties:
@@ -476,3 +475,8 @@ components:
         stack:
           type: string
           description: The error message that the server generated
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
