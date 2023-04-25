@@ -8,6 +8,7 @@ const ResetPassword = () => {
   const [repeatPassword, setRepeatPassword] = useState("");
   const [message, setMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const [dataLoaded, setDataLoaded] = useState(false);
 
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
@@ -27,6 +28,7 @@ const ResetPassword = () => {
     .then(res => res.json())
     .then(data => {
       setEmail(data.email);
+      setDataLoaded(true);
     })
     .catch(err => {
       console.log(err);
@@ -64,7 +66,7 @@ const ResetPassword = () => {
   };
 
   return (
-    <div className="form">
+    dataLoaded && <div className="form">
       <h1>Reset Password</h1>
       <p>Enter a new password for your account registered with {email}</p>
       
