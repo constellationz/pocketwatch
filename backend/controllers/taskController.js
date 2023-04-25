@@ -7,10 +7,10 @@ const Task = require("../models/taskModel");
 const User = require("../models/userModel");
 
 // @desc    Get tasks of a user
-// @route   GET /api/tasks
+// @route   POST /api/tasks/search
 // @access  Private
 const getTasks = asyncHandler(async (req, res) => {
-  const tasks = await Task.find({ user: req.user.id });
+  const tasks = await Task.find({ user: req.user.id, name: { $regex: req.body.search, $options: "i" } });
 
   res.status(200).json(tasks);
 });
