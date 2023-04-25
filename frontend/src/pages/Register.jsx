@@ -80,14 +80,14 @@ function Register() {
       <section className="form">
         <form onSubmit={onSubmit}>
           <div className="form-group">
-            <label htmlFor="name">Username</label>
+            <label htmlFor="name">Name</label>
             <input
               type="text"
               className="form-control"
               id="name"
               name="name"
               value={name}
-              placeholder="Username"
+              placeholder="Name"
               onChange={onChange}
             />
           </div>
