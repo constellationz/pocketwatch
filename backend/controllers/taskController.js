@@ -7,7 +7,7 @@ const Task = require("../models/taskModel");
 const User = require("../models/userModel");
 
 // @desc    Get tasks of a user
-// @route   GET /api/tasks
+// @route   POST /api/tasks/search
 // @access  Private
 const getTasks = asyncHandler(async (req, res) => {
   const { search, skip, limit } = req.body;

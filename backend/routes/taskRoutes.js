@@ -11,7 +11,9 @@ const {
 } = require("../controllers/taskController");
 const { protect } = require("../middleware/authMiddleware");
 
-router.route("/").get(protect, getTasks).post(protect, postTask);
+router.route("/search").post(protect, getTasks);
+
+router.route("/").post(protect, postTask);
 
 router.route("/:id").put(protect, updateTask).delete(protect, deleteTask);
 
