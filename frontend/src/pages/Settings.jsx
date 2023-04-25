@@ -10,6 +10,7 @@ import { useEffect, useState } from 'react';
 
 function Settings() {
   const [userInfo, setUserInfo] = useState("");
+  const [dataLoaded, setDataLoaded] = useState(false);
 
   let token = localStorage.getItem("token");
 
@@ -26,6 +27,7 @@ function Settings() {
     .then(res => res.json())
     .then(data => {
       setUserInfo(data);
+      setDataLoaded(true);
     })
     .catch(err => {
       console.log(err);
@@ -33,7 +35,7 @@ function Settings() {
   }, []);
 
   return (
-      <div className="row d-flex justify-content-center">
+      dataLoaded && <div className="row d-flex justify-content-center">
         <div className="col-12 col-lg-8">
           <h1>Settings</h1>
           <div className="form-group">
@@ -46,6 +48,8 @@ function Settings() {
                 placeholder={userInfo.email}
                 disabled
             />
+            {!userInfo.emailVerified && <label className="text-danger">Email not verified</label>}
+            {userInfo.emailVerified && <label className="text-primary">Email verified</label>}
           </div>
           <UserAlert buttonText={"Re-verify Email"} alertText={"Verification Email Sent"} />
           <UpdateEmail />
