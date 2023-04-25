@@ -17,6 +17,12 @@ function UpdatePassword() {
   let token = localStorage.getItem("token");
 
   const updatePassword = () => {
+    if(newPassword !== repeatNewPassword) {
+      setErrorMessage("New passwords do not match");
+      setHasError(true);
+      return;
+    }
+
     fetch("api/users/updatePassword", {
       method: 'POST',
       headers: {

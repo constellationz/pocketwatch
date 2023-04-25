@@ -52,7 +52,7 @@ function Settings() {
             {userInfo.emailVerified && <label className="text-primary">Email verified</label>}
           </div>
           <UserAlert buttonText={"Re-verify Email"} alertText={"Verification Email Sent"} />
-          <UpdateEmail />
+          <UpdateEmail currentEmail={userInfo.email} />
           <UpdatePassword />
           <Link to="/forgotpassword">
             <Button className="btn btn-block form-button" id="pocketwatch">

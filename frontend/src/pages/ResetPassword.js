@@ -36,6 +36,12 @@ const ResetPassword = () => {
   }, []);
 
   const resetPassword = () => {
+    if(password !== repeatPassword) {
+      setMessage("");
+      setErrorMessage("Passwords do not match");
+      return;
+    }
+
     fetch("/api/users/resetPassword", {
       method: "POST",
       headers: {

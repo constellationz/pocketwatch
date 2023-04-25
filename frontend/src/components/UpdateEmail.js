@@ -3,7 +3,7 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import ModalButtons from "./ModalButtons";
 
-function UpdateEmail() {
+function UpdateEmail(props) {
   const [show, setShow] = useState(false);
   const [currentEmail, setCurrentEmail] = useState("");
   const [newEmail, setNewEmail] = useState("");
@@ -17,6 +17,12 @@ function UpdateEmail() {
   let token = localStorage.getItem("token");
 
   const updateEmail = () => {
+    if(currentEmail.toLowerCase() !== props.currentEmail) {
+      setErrorMessage("Invalid current email");
+      setHasError(true);
+      return;
+    }
+
     fetch("api/users/updateEmail", {
       method: 'POST',
       headers: {
