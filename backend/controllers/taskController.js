@@ -7,10 +7,28 @@ const Task = require("../models/taskModel");
 const User = require("../models/userModel");
 
 // @desc    Get tasks of a user
-// @route   GET /api/tasks
+// @route   POST /api/tasks/search
 // @access  Private
 const getTasks = asyncHandler(async (req, res) => {
-  const tasks = await Task.find({ user: req.user.id });
+  const { search, skip, limit } = req.body;
+
+  // Use different initial queries based on whether a search is provided
+  let query;
+  if (search) {
+    query = Task.find({
+      user: req.user.id,
+      $text: { $search: search },
+    });
+  } else {
+    query = Task.find({
+      user: req.user.id,
+    });
+  }
+
+  const tasks = await query
+    .skip(skip)
+    .limit(limit)
+    .exec()
 
   res.status(200).json(tasks);
 });
@@ -19,8 +37,6 @@ const getTasks = asyncHandler(async (req, res) => {
 // @route   POST /api/tasks
 // @access  Private
 const postTask = asyncHandler(async (req, res) => {
-  console.log(req.body);
-
   if (!req.body.name) {
     res.status(400);
     throw new Error("No name field provided");
@@ -29,6 +45,9 @@ const postTask = asyncHandler(async (req, res) => {
   const task = await Task.create({
     name: req.body.name,
     user: req.user.id,
+    startTime: req.body.startTime,
+    endTime: req.body.endTime,
+    location: req.body.location,
   });
 
   res.status(200).json(task);

@@ -1,0 +1,9 @@
+@startuml
+(*) --> "Timer button clicked"
+If "Is timer running?" then
+    -right-> [No] "Start timer"
+else
+    --> [Yes] "Stop timer"
+    --> "POST new task with current time and name"
+endif
+@enduml

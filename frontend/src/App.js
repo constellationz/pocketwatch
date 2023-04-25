@@ -5,19 +5,26 @@ import Register from "./pages/Register";
 import Settings from "./pages/Settings";
 import ForgotPassword from "./pages/ForgotPassword";
 import Header from "./components/Header";
+import ResetPassword from "./pages/ResetPassword";
+import NotFound from "./pages/NotFound";
+import Logout from "./pages/Logout";
+import 'bootstrap/dist/css/bootstrap.min.css'
 
 function App() {
   return (
     <>
       <Router>
+        <Header />
         <div className="container">
-          <Header />
           <Routes>
             <Route path="/" element={<Dashboard />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/settings" element={<Settings />} />
             <Route path="/forgotpassword" element={<ForgotPassword />} />
+            <Route path="/resetpassword" element={<ResetPassword />} />
+            <Route path="/logout" element={<Logout />} />
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </div>
       </Router>

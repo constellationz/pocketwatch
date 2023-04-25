@@ -19,11 +19,13 @@ const jwtSecret = process.env.JWT_SECRET
 // @route   POST /api/users
 // @access  Public
 const registerUser = asyncHandler(async (req, res) => {
-  const { name, email, password } = req.body;
+  let { name, email, password } = req.body;
   if (!name || !email || !password) {
     res.status(400);
     throw new Error("Missing fields");
   }
+
+  email = email.toLowerCase();
 
   // Make sure user doesn't already exist
   const userExists = await User.findOne({ email });
@@ -51,11 +53,13 @@ const registerUser = asyncHandler(async (req, res) => {
 // @route   POST /api/users/login
 // @access  Public
 const loginUser = asyncHandler(async (req, res) => {
-  const { email, password } = req.body;
+  let { email, password } = req.body;
   if (!email || !password) {
     res.status(400);
     throw new Error("Missing fields");
   }
+
+  email = email.toLowerCase();
 
   // If the user doesn't exist or the password is incorrect, throw an error
   const user = await User.findOne({ email });
@@ -71,11 +75,13 @@ const loginUser = asyncHandler(async (req, res) => {
 // @route   POST /api/users/updateEmail
 // @access  Private
 const updateEmail = asyncHandler(async (req, res) => {
-  const { password, newEmail } = req.body;
+  let { password, newEmail } = req.body;
   if (!password || !newEmail) {
     res.status(400);
     throw new Error("Missing fields");
   }
+
+  newEmail = newEmail.toLowerCase();
 
   if (!req.user) {
     res.status(401);
@@ -156,11 +162,13 @@ const updatePassword = asyncHandler(async (req, res) => {
 // @route   POST /api/users/requestPasswordReset
 // @access  Public
 const requestPasswordReset = asyncHandler(async (req, res) => {
-  const { email } = req.body;
+  let { email } = req.body;
   if (!email) {
     res.status(400);
     throw new Error("Missing fields");
   }
+  
+  email = email.toLowerCase();
 
   const user = await User.findOne({ email });
   if (!user) {
@@ -172,7 +180,7 @@ const requestPasswordReset = asyncHandler(async (req, res) => {
   const resetToken = jwt.sign({ id: user.id, email: user.email }, jwtSecret, {
     expiresIn: "1h",
   });
-  const link = `${clientURL}/api/user/resetPassword?token=${resetToken}`;
+  const link = `${clientURL}/resetPassword?token=${resetToken}`;
   sendEmail(
     user.email, 
     "Password Reset Request for Pocketwatch", 
@@ -242,7 +250,7 @@ const requestEmailVerification = asyncHandler(async (req, res) => {
   const verifyToken = jwt.sign({ id: req.user._id, email: req.user.email }, jwtSecret, {
     expiresIn: "1h",
   });
-  const link = `${clientURL}/api/user/verifyEmail?token=${verifyToken}`;
+  const link = `${clientURL}/verifyEmail?token=${verifyToken}`;
   sendEmail(
     req.user.email, 
     "Email Verification Request for Pocketwatch", 
@@ -318,9 +326,6 @@ const generateLoginToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
     expiresIn: "30d",
   });
-};
-
-const generatePasswordResetToken = (id, email) => {
 };
 
 module.exports = {

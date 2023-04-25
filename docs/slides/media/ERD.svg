@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" height="301px" preserveAspectRatio="none" style="width:495px;height:301px;background:#FFFFFF;" version="1.1" viewBox="0 0 495 301" width="495px" zoomAndPan="magnify"><defs/><g><!--MD5=[e59cf999063292dce8d6ea34dd10a338]
+class user--><g id="elem_user"><rect codeLine="1" fill="#F1F1F1" height="178.9297" id="user" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="219" x="7" y="103"/><ellipse cx="96.75" cy="119" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1.0;"/><path d="M100.3643,125.5 L92.6445,125.5 L92.6445,113.1069 L100.3643,113.1069 L100.3643,115.2651 L95.0933,115.2651 L95.0933,117.938 L99.8662,117.938 L99.8662,120.0962 L95.0933,120.0962 L95.0933,123.3418 L100.3643,123.3418 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="31" x="117.25" y="124.291">User</text><line style="stroke:#181818;stroke-width:0.5;" x1="8" x2="225" y1="135" y2="135"/><ellipse cx="18" cy="148.7441" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="193" x="27" y="152.5352">A single user of the website.</text><line style="stroke:#181818;stroke-width:1.0;" x1="8" x2="225" y1="159.4883" y2="159.4883"/><line style="stroke:#181818;stroke-width:1.0;" x1="8" x2="225" y1="161.4883" y2="161.4883"/><ellipse cx="18" cy="173.2324" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="177" x="27" y="177.0234">_id : ObjectId «generated»</text><line style="stroke:#181818;stroke-width:1.0;stroke-dasharray:1.0,2.0;" x1="8" x2="225" y1="183.9766" y2="183.9766"/><ellipse cx="18" cy="197.7207" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="90" x="27" y="201.5117">name : string</text><line style="stroke:#181818;stroke-width:1.0;stroke-dasharray:1.0,2.0;" x1="8" x2="225" y1="208.4648" y2="208.4648"/><ellipse cx="18" cy="222.209" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="89" x="27" y="226">email : string</text><line style="stroke:#181818;stroke-width:1.0;stroke-dasharray:1.0,2.0;" x1="8" x2="225" y1="232.9531" y2="232.9531"/><ellipse cx="18" cy="246.6973" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="186" x="27" y="250.4883">password : string «hashed»</text><line style="stroke:#181818;stroke-width:1.0;stroke-dasharray:1.0,2.0;" x1="8" x2="225" y1="257.4414" y2="257.4414"/><ellipse cx="18" cy="271.1855" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="158" x="27" y="274.9766">emailVerified : boolean</text></g><!--MD5=[7995dc4b925f04a8b903038d633a4635]
+class task--><g id="elem_task"><rect codeLine="14" fill="#F1F1F1" height="203.418" id="task" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="227" x="261" y="91"/><ellipse cx="354.25" cy="107" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1.0;"/><path d="M357.8643,113.5 L350.1445,113.5 L350.1445,101.1069 L357.8643,101.1069 L357.8643,103.2651 L352.5933,103.2651 L352.5933,105.938 L357.3662,105.938 L357.3662,108.0962 L352.5933,108.0962 L352.5933,111.3418 L357.8643,111.3418 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="32" x="374.75" y="112.291">Task</text><line style="stroke:#181818;stroke-width:0.5;" x1="262" x2="487" y1="123" y2="123"/><ellipse cx="272" cy="136.7441" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="91" x="281" y="140.5352">A single task.</text><line style="stroke:#181818;stroke-width:1.0;" x1="262" x2="487" y1="147.4883" y2="147.4883"/><line style="stroke:#181818;stroke-width:1.0;" x1="262" x2="487" y1="149.4883" y2="149.4883"/><ellipse cx="272" cy="161.2324" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="177" x="281" y="165.0234">_id : ObjectId «generated»</text><line style="stroke:#181818;stroke-width:1.0;stroke-dasharray:1.0,2.0;" x1="262" x2="487" y1="171.9766" y2="171.9766"/><ellipse cx="272" cy="185.7207" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="99" x="281" y="189.5117">user : ObjectId</text><line style="stroke:#181818;stroke-width:1.0;stroke-dasharray:1.0,2.0;" x1="262" x2="487" y1="196.4648" y2="196.4648"/><ellipse cx="272" cy="210.209" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="90" x="281" y="214">name : string</text><line style="stroke:#181818;stroke-width:1.0;stroke-dasharray:1.0,2.0;" x1="262" x2="487" y1="220.9531" y2="220.9531"/><ellipse cx="272" cy="234.6973" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="131" x="281" y="238.4883">startTime : number</text><line style="stroke:#181818;stroke-width:1.0;stroke-dasharray:1.0,2.0;" x1="262" x2="487" y1="245.4414" y2="245.4414"/><ellipse cx="272" cy="259.1855" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="126" x="281" y="262.9766">endTime : number</text><line style="stroke:#181818;stroke-width:1.0;stroke-dasharray:1.0,2.0;" x1="262" x2="487" y1="269.9297" y2="269.9297"/><ellipse cx="272" cy="283.6738" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="201" x="281" y="287.4648">location : [ number, number ]</text></g><g id="elem_n1"><path d="M30.5,6 L30.5,31.3105 L460.5,31.3105 L460.5,16 L450.5,6 L30.5,6 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/><path d="M450.5,6 L450.5,16 L460.5,16 L450.5,6 " fill="#FEFFDD" style="stroke:#181818;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="409" x="36.5" y="23.5684">There are many tasks per user but there is only one user per task</text></g><!--MD5=[3465afa4b586faeb86de713a2c47928c]
+link n1 to user--><g id="link_n1_user"><path codeLine="30" d="M236.63,31.32 C225.19,46.58 204.22,74.54 182.96,102.88 " fill="none" id="n1-user" style="stroke:#181818;stroke-width:1.0;stroke-dasharray:7.0,7.0;"/></g><!--MD5=[99e0c3fede559f09ee32f2fc53447486]
+link n1 to task--><g id="link_n1_task"><path codeLine="31" d="M254.37,31.32 C264.16,44.38 280.93,66.74 298.88,90.68 " fill="none" id="n1-task" style="stroke:#181818;stroke-width:1.0;stroke-dasharray:7.0,7.0;"/></g><!--MD5=[7e19e99c62e66b6cc2ebec7a1f780b29]
+link user to task--><g id="link_user_task"><path codeLine="32" d="M235.23,192.5 C240.82,192.5 246.41,192.5 252,192.5 " fill="none" id="user-task" style="stroke:#181818;stroke-width:1.0;stroke-dasharray:7.0,7.0;"/><line style="stroke:#181818;stroke-width:1.0;" x1="251.78" x2="259.78" y1="192.5" y2="186.5"/><line style="stroke:#181818;stroke-width:1.0;" x1="251.78" x2="259.78" y1="192.5" y2="198.5"/><line style="stroke:#181818;stroke-width:1.0;" x1="251.78" x2="259.78" y1="192.5" y2="192.5"/><ellipse cx="245.78" cy="192.5" fill="none" rx="4" ry="4" style="stroke:#181818;stroke-width:1.0;"/><line style="stroke:#181818;stroke-width:1.0;" x1="231.35" x2="231.35" y1="196.5" y2="188.5"/><line style="stroke:#181818;stroke-width:1.0;" x1="234.35" x2="234.35" y1="196.5" y2="188.5"/><line style="stroke:#181818;stroke-width:1.0;" x1="235.35" x2="227.35" y1="192.5" y2="192.5"/></g><!--MD5=[18ee2f9205d4cbafcd215a81109beff3]
+@startuml ERD
+entity "User" as user {
+  + A single user of the website.
+  ==
+  + _id : ObjectId <<generated>>
+  ..
+  + name : string
+  ..
+  + email : string
+  ..
+  + password : string <<hashed>>
+  ..
+  + emailVerified : boolean
+}
+entity "Task" as task {
+  + A single task.
+  ==
+  + _id : ObjectId <<generated>>
+  ..
+  + user : ObjectId
+  ..
+  + name : string
+  ..
+  + startTime : number
+  ..
+  + endTime : number
+  ..
+  + location : [ number, number ] 
+}
+note "There are many tasks per user but there is only one user per task" as n1
+n1 .. user
+n1 .. task 
+user ||.right.o{ task
+@enduml
+
+PlantUML version 1.2022.7(Mon Aug 22 13:01:30 EDT 2022)
+(GPL source distribution)
+Java Runtime: OpenJDK Runtime Environment
+JVM: OpenJDK 64-Bit Server VM
+Default Encoding: UTF-8
+Language: en
+Country: US
+--></g></svg>
