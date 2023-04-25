@@ -14,6 +14,14 @@ const taskSchema = mongoose.Schema(
       type: String,
       required: [true, "Name field required"],
     },
+    startTime: {
+      type: String,
+      required: false,
+    },
+    endTime: {
+      type: String,
+      required: false,
+    }
   },
   {
     timestamps: true,
