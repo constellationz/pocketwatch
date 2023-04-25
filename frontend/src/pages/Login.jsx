@@ -46,9 +46,7 @@ function Login() {
       })
       .then((data) => {
         localStorage.setItem("token", data.token);
-        setErrorMessage("");
-        setHasLoginError(false);
-        console.log(data);
+        window.location.replace("/");
       })
       .catch((err) => {
         setErrorMessage(JSON.parse(err.message).message);

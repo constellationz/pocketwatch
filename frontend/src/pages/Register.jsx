@@ -27,6 +27,13 @@ function Register() {
 
   const onSubmit = (e) => {
     e.preventDefault();
+
+    if(password !== password2) {
+      setErrorMessage("Passwords do not match");
+      setHasRegisterError(true);
+      return false;
+    }
+
     const newUser = {
       name: formData.name, 
       emai: formData.email, 
@@ -56,9 +63,7 @@ function Register() {
     })
     .then((data) => {
       localStorage.setItem("token", data.token);
-      setErrorMessage("");
-      setHasRegisterError(false);
-      console.log(data);
+      window.location.replace("/");
     })
     .catch((err) => {
       setErrorMessage(JSON.parse(err.message).message);
@@ -75,14 +80,14 @@ function Register() {
       <section className="form">
         <form onSubmit={onSubmit}>
           <div className="form-group">
-            <label htmlFor="name">Username</label>
+            <label htmlFor="name">Name</label>
             <input
               type="text"
               className="form-control"
               id="name"
               name="name"
               value={name}
-              placeholder="Username"
+              placeholder="Name"
               onChange={onChange}
             />
           </div>
