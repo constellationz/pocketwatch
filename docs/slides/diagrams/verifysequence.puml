@@ -1,0 +1,15 @@
+@startuml
+(*) --> "User clicks 'verify email'"
+--> "Generate verification link with special token"
+--> "User clicks on verification link"
+--> "Send token back to server"
+If "Token expired" then
+    -right-> [Yes] "Don't update"
+else
+    If "User's email is token's email" then
+        -right-> [No] "Email changed, do nothing"
+    else
+        --> Verify email
+    endif
+endif
+@enduml
