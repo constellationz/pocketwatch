@@ -23,7 +23,7 @@ const VerifyEmail = () => {
       }
       return res;
     })
-    .then(setMessage("Email Verified"))
+    .then(() => setMessage("Email Verified"))
     .catch(err => setMessage(JSON.parse(err.message).message));
   }, []);
 
