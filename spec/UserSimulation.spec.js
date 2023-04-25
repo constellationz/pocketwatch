@@ -106,7 +106,7 @@ describe("User Simulation: ", function () {
     });
 
     it("should return user data", function () {
-      expect(user.email).toEqual("updateEmail@gmail.com");
+      expect(user.email).toEqual("updateemail@gmail.com");
     });
 
     it("should give 200 status code", function () {
@@ -197,6 +197,12 @@ describe("User Simulation: ", function () {
           },
           body: JSON.stringify({
             name: `DeleteIfYouSeeThis_Task${i}_${new Date().toISOString()}`,
+            startTime: 1,
+            endTime: 2,
+            location: [
+              1,
+              2
+            ]
           }),
         })
           .then((res) => {
@@ -311,8 +317,8 @@ describe("User Simulation: ", function () {
 
   async function getTasks() {
     let tasks;
-    await fetch(`${URL}/tasks`, {
-      method: "GET",
+    await fetch(`${URL}/tasks/search`, {
+      method: "POST",
       crossDomain: true,
       headers: {
         Authorization: `Bearer ${token}`,
@@ -320,6 +326,11 @@ describe("User Simulation: ", function () {
         "Accept": "application/json",
         "Access-Control-Allow-Origin": "*",
       },
+      body: JSON.stringify({
+        search: "",
+        skip: 0,
+        limit: NUM_TASKS + 1
+      }),
     })
       .then((res) => res.json())
       .then((data) => {
