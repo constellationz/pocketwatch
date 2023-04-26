@@ -7,8 +7,10 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 
 function Header() {
+  let token = localStorage.getItem("token");
+
   return (
-    <Navbar bg="light" expand="md">
+    <Navbar bg="white" expand="md">
       <Container>
         <Navbar.Brand>
           <Link className="navbar-brand" to="/">Pocketwatch</Link>
@@ -16,10 +18,10 @@ function Header() {
         <Navbar.Toggle aria-controls="navbar-nav" />
         <Navbar.Collapse className="justify-content-end">
           <Nav>
-            <Link className="nav-link" to="/login">Login</Link>
-            <Link className="nav-link" to="/register">Register</Link>
-            <Link className="nav-link" to="/settings">Settings</Link>
-            <Link className="nav-link" to="/logout">Logout</Link>
+            {!token && <Link className="nav-link" to="/login">Login</Link>}
+            {!token && <Link className="nav-link" to="/register">Register</Link>}
+            {token && <Link className="nav-link" to="/settings">Settings</Link>}
+            {token && <Link className="nav-link" to="/logout">Logout</Link>}
           </Nav>
         </Navbar.Collapse>
       </Container>
@@ -28,3 +30,4 @@ function Header() {
 }
 
 export default Header;
+  

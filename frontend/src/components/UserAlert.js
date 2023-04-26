@@ -6,6 +6,21 @@ const UserAlert = ( {buttonText, alertText} ) => {
   const [alertState, setAlertState] = useState(false);
 
   if(alertState) {
+    let token = localStorage.getItem("token");
+
+    fetch("/api/users/requestEmailVerification", {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+        'Access-Control-Allow-Origin': '*',
+      },
+    })
+    .catch(error => {
+      console.err(error);
+    });
+
     return (
       <div>
         <Alert variant="success" onClose={() => setAlertState(false)} dismissible>

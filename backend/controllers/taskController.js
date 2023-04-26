@@ -6,6 +6,7 @@ const asyncHandler = require("express-async-handler");
 const Task = require("../models/taskModel");
 const User = require("../models/userModel");
 
+
 // @desc    Get tasks of a user
 // @route   POST /api/tasks/search
 // @access  Private
@@ -68,7 +69,7 @@ const updateTask = asyncHandler(async (req, res) => {
     throw new Error("User not found");
   }
 
-  // Make sure task belongs  to user
+  // Make sure task belongs to user
   if (task.user.toString() !== req.user.id) {
     res.status(401);
     throw new Error("Not authorized");
@@ -98,7 +99,7 @@ const deleteTask = asyncHandler(async (req, res) => {
     throw new Error("User not found");
   }
 
-  // Make sure task belongs  to user
+  // Make sure task belongs to user
   if (task.user.toString() !== req.user.id) {
     res.status(401);
     throw new Error("Not authorized");

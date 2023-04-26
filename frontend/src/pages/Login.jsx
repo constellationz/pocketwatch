@@ -13,6 +13,9 @@ function Login() {
 
   const { email, password } = formData;
 
+  const [hasLoginError, setHasLoginError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+
   const onChange = (e) => {
     setFormData((prevState) => ({
       ...prevState,
@@ -35,8 +38,20 @@ function Login() {
         password,
       }),
     })
-      .then((res) => res.json())
-      .then((data) => {console.log(data);});
+      .then((res) => {
+        if(!res.ok) {
+          return res.text().then(text => {throw new Error(text)});
+        }
+        return res.json();
+      })
+      .then((data) => {
+        localStorage.setItem("token", data.token);
+        window.location.replace("/");
+      })
+      .catch((err) => {
+        setErrorMessage(JSON.parse(err.message).message);
+        setHasLoginError(true);
+      });
   };
 
   return (
@@ -71,19 +86,10 @@ function Login() {
               onChange={onChange}
             />
           </div>
+          {errorMessage && hasLoginError && <div className="form-error mb-2">{errorMessage}</div>}
           <div className="form-group">
             <Button type="submit" className="btn btn-block form-button" id="pocketwatch">
               Login
-            </Button>
-          </div>
-          <div className="form-group">
-            <Button className="btn btn-block form-button" id="google">
-              Sign in with Google
-            </Button>
-          </div>
-          <div className="form-group">
-            <Button variant="outline-dark" className="btn btn-block form-button" id="apple">
-              Sign in with Apple
             </Button>
           </div>
           <div className="form-group">

@@ -15,6 +15,9 @@ function Register() {
 
   const { name, email, password, password2 } = formData;
 
+  const [hasRegisterError, setHasRegisterError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+
   const onChange = (e) => {
     setFormData((prevState) => ({
       ...prevState,
@@ -24,6 +27,13 @@ function Register() {
 
   const onSubmit = (e) => {
     e.preventDefault();
+
+    if(password !== password2) {
+      setErrorMessage("Passwords do not match");
+      setHasRegisterError(true);
+      return false;
+    }
+
     const newUser = {
       name: formData.name, 
       emai: formData.email, 
@@ -45,9 +55,21 @@ function Register() {
         password
       }),
     })
-      .then((res) => res.json())
-      .then((data) => { console.log(data);});
-    }
+    .then((res) => {
+      if(!res.ok) {
+        return res.text().then(text => {throw new Error(text)});
+      }
+      return res.json();
+    })
+    .then((data) => {
+      localStorage.setItem("token", data.token);
+      window.location.replace("/");
+    })
+    .catch((err) => {
+      setErrorMessage(JSON.parse(err.message).message);
+      setHasRegisterError(true);
+    });
+  }
 
   return (
     <>
@@ -58,14 +80,14 @@ function Register() {
       <section className="form">
         <form onSubmit={onSubmit}>
           <div className="form-group">
-            <label htmlFor="name">Username</label>
+            <label htmlFor="name">Name</label>
             <input
               type="text"
               className="form-control"
               id="name"
               name="name"
               value={name}
-              placeholder="Username"
+              placeholder="Name"
               onChange={onChange}
             />
           </div>
@@ -105,6 +127,7 @@ function Register() {
               onChange={onChange}
             />
           </div>
+          {errorMessage && hasRegisterError && <div className="form-error mb-2">{errorMessage}</div>}
           <div className="form-group">
             <Button type="submit" className="btn btn-block form-button" id="pocketwatch">
               Register
