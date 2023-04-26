@@ -38,8 +38,6 @@ const getTasks = asyncHandler(async (req, res) => {
 // @route   POST /api/tasks
 // @access  Private
 const postTask = asyncHandler(async (req, res) => {
-  console.log(req.body);
-
   if (!req.body.name) {
     res.status(400);
     throw new Error("No name field provided");
@@ -49,7 +47,8 @@ const postTask = asyncHandler(async (req, res) => {
     name: req.body.name,
     user: req.user.id,
     startTime: req.body.startTime,
-    endTime: req.body.endTime
+    endTime: req.body.endTime,
+    location: req.body.location,
   });
 
   res.status(200).json(task);

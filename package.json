@@ -27,7 +27,8 @@
     "jsonwebtoken": "^9.0.0",
     "mailgun-js": "^0.22.0",
     "moment": "^2.29.4",
-    "mongoose": "^7.0.0"
+    "mongoose": "^7.0.0",
+    "serve-favicon": "^2.5.0"
   },
   "devDependencies": {
     "concurrently": "^7.6.0",
