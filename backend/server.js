@@ -21,6 +21,7 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use("/api/tasks", require("./routes/taskRoutes"));
 app.use("/api/users", require("./routes/userRoutes"));
+app.use("/api/tests", require("./routes/testRoutes"));
 app.use("/public", express.static(path.join(__dirname, "public")));
 app.use(favicon(path.join(__dirname, "public", "images", "favicon.svg")));
 

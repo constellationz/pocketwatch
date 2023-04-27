@@ -1,0 +1,83 @@
+@startuml
+left to right direction
+skinparam packageStyle rectangle
+actor any_user
+database mongodb 
+rectangle Mailgun {
+    rectangle (Send Email)
+}
+rectangle Email {
+    rectangle (Password Reset Email)
+    (Send Email) --> (Password Reset Email)
+    rectangle (Verification Email)
+    (Send Email) --> (Verification Email)
+}
+rectangle Website {
+  rectangle Backend {
+    rectangle (Validate Input)
+  }
+  rectangle Frontend {
+    actor logged_in_user
+  }
+  rectangle Frontend {
+    usecase "Sign Out"
+  }
+  rectangle Tasks {
+      usecase "Create Task"
+      usecase "Get Tasks"
+      usecase "Update Task"
+      usecase "Delete Task"
+      logged_in_user --> (Get Tasks)
+      logged_in_user --> (Update Task)
+      logged_in_user --> (Delete Task)
+      (Create Task) --> mongodb
+      (Get Tasks) --> mongodb
+      (Update Task) --> mongodb
+      (Delete Task) --> mongodb
+  }
+  rectangle Settings {
+    usecase "Update Email"
+    usecase "Update Password"
+    (logged_in_user) --> (Update Email)
+    (logged_in_user) --> (Update Password)
+    (Update Email) .. (Validate Input)
+    (Update Password) .. (Validate Input)
+    (Update Email) --> mongodb
+    (Update Password) --> mongodb
+  }
+  rectangle Timer {
+    usecase "Start Timer"
+    usecase "End Timer"
+    logged_in_user --> (Start Timer)
+    (Start Timer) --> (End Timer)
+    (End Timer) --> (Create Task)
+  }
+  rectangle Public {
+    usecase "Authenticate"
+    usecase "Register"
+    (Register) .. (Validate Input)
+    usecase "Request Password Reset"
+    (Request Password Reset) .. (Validate Input)
+    (Request Password Reset) --> (Send Email)
+  }
+  rectangle EmailLinks {
+    usecase "Reset Password"
+    usecase "Verify Email"
+    (Password Reset Email) --> (Reset Password)
+    (Verification Email) --> (Verify Email)
+    (Reset Password) .. (Validate Input)
+    (Reset Password) --> mongodb
+    (Verify Email) --> mongodb
+  }
+  rectangle Logic {
+    (Validate Input) --> mongodb
+    any_user --> Register
+    any_user --> (Request Password Reset)
+    any_user --> Authenticate
+    Authenticate --> logged_in_user
+    Register --> logged_in_user
+    logged_in_user --> (Sign Out)
+    (Validate Input) --> mongodb
+  }
+}
+@enduml
