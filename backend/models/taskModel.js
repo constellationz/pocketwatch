@@ -16,10 +16,15 @@ const taskSchema = mongoose.Schema(
     },
     startTime: {
       type: String,
+      type: Number,
       required: false,
     },
     endTime: {
-      type: String,
+      type: Number,
+      required: false,
+    },
+    location: {
+      type: [Number],
       required: false,
     }
   },
@@ -27,5 +32,7 @@ const taskSchema = mongoose.Schema(
     timestamps: true,
   }
 );
+
+taskSchema.index({ name: "text" });
 
 module.exports = mongoose.model("Task", taskSchema);
