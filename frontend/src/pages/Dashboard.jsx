@@ -61,42 +61,13 @@ function Dashboard() {
     setHours(0)
   }
 
-  //turning time into format '000000' to send to database
+  //turning time into format to send to database
   const formatTime = () => {
-
     var time = new Date();
     var currentTime = time.getTime();
     var secondsPast = ((parseInt(timerHours) * 60 * 60) + (parseInt(timerMinutes) * 60) + parseInt(timerSeconds)) * 1000;
-    var start = new Date(currentTime - secondsPast); 
-    // console.log("end: "+ time)
-    // console.log("start: "+ start)
-    // console.log("ct: " + currentTime);
-    // console.log("sp: " + secondsPast);
-
-    var startHours = (start.getHours()).toString();
-    var startMinutes = (start.getMinutes()).toString();
-    var startSeconds = (start.getSeconds()).toString();
-
-    startHours = startHours.padStart(2, '0');
-    startMinutes = startMinutes.padStart(2, '0');
-    startSeconds = startSeconds.padStart(2, '0');
-    startTime = parseInt(startHours + startMinutes + startSeconds);
-    console.log("startTime: " + startTime);
-
-    var endHours = (time.getHours()).toString();
-    var endMinutes = (time.getMinutes()).toString();
-    var endSeconds = (time.getSeconds()).toString();
-
-    endHours = endHours.padStart(2, '0');
-    endMinutes = endMinutes.padStart(2, '0');
-    endSeconds = endSeconds.padStart(2, '0');
-    endTime = parseInt(endHours + endMinutes + endSeconds);
-    console.log("endTime: " + endTime);
-
-    // var HH = String(timerHours).padStart(2, '0');
-    // var MM = String(timerMinutes).padStart(2, '0');
-    // var SS = String(timerSeconds).padStart(2, '0');
-    // endTime = parseInt(HH + MM + SS);
+    endTime = currentTime; 
+    startTime = currentTime - secondsPast; 
   }
 
   //current task & task list functions 
@@ -129,7 +100,7 @@ function Dashboard() {
         return res.json();
       })
       .then((res) => {
-        //console.log(res._id);
+        console.log(res);
         const id = res._id;
         const date = (res.createdAt.split(/[-T]+/));
         setTasks([

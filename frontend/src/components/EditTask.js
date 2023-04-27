@@ -2,45 +2,40 @@ import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 
+//need to get PM prblem solved
 function EditTask({ task, updateTask }) {
 
   //setting default value of start time for modal
-  var defaultStart = task.startTime;
-  defaultStart = String(defaultStart).padStart(6, '0');
-  var defaultStartTimeHH = defaultStart.substring(0, 2);
-  var defaultStartTimeMM = defaultStart.substring(2, 4);
-  var defaultStartTimeSS = defaultStart.substring(4);
-  if (defaultStartTimeHH > 12) {
-    defaultStartTimeHH = parseInt(defaultStartTimeHH) - 12;
-    defaultStart = defaultStartTimeHH + ":" + defaultStartTimeMM + ":" + defaultStartTimeSS + " PM";
-  }
-  else if (defaultStartTimeHH === '00') {
-    defaultStartTimeHH = parseInt(defaultStartTimeHH) + 12;
-    defaultStart = defaultStartTimeHH + ":" + defaultStartTimeMM + ":" + defaultStartTimeSS + " AM";
+  var defaultStart = "";
+  var getStartTime = new Date(task.startTime);
+  var SH = getStartTime.getHours();
+  var SM = getStartTime.getMinutes();
+  var sS = getStartTime.getSeconds();
+  var year = getStartTime.getFullYear();
+  var month = getStartTime.getMonth();
+  var day = getStartTime.getDate();
+
+  if (SH > 12) {
+    SH = SH - 12;
+    defaultStart = String(SH).padStart(2, '0') + ":" + String(SM).padStart(2, '0') + ":" + String(sS).padStart(2, '0') + " PM";
   }
   else {
-    defaultStart = defaultStartTimeHH + ":" + defaultStartTimeMM + ":" + defaultStartTimeSS + " AM";
+    defaultStart = String(SH).padStart(2, '0') + ":" + String(SM).padStart(2, '0') + ":" + String(sS).padStart(2, '0') + " AM";
   }
 
   //setting default value of end time for modal
-  var defaultEnd = task.endTime;
-  var defaultEndTemp = String(defaultEnd).padStart(6, '0');
-  var defaultEndTimeHH = defaultEndTemp.substring(0, 2);
-  var defaultEndTimeMM = defaultEndTemp.substring(2, 4);
-  var defaultEndTimeSS = defaultEndTemp.substring(4);
-  defaultEnd = defaultEndTimeHH + ":" + defaultEndTimeMM + ":" + defaultEndTimeSS;
-  if (defaultEndTimeHH > 12) {
-    defaultEndTimeHH = parseInt(defaultEndTimeHH) - 12;
-    defaultEnd = defaultEndTimeHH + ":" + defaultEndTimeMM + ":" + defaultEndTimeSS + " PM";
-  }
-  else if (defaultEndTimeHH === '00') {
-    defaultEndTimeHH = parseInt(defaultEndTimeHH) + 12;
-    defaultEnd = defaultEndTimeHH + ":" + defaultEndTimeMM + ":" + defaultEndTimeSS + " AM";
+  var defaultEnd = "";
+  var getEndTime = new Date(task.endTime);
+  var EH = getEndTime.getHours();
+  var EM = getEndTime.getMinutes();
+  var ES = getEndTime.getSeconds();
+  if (EH > 12) {
+    EH = EH - 12;
+    defaultEnd = String(EH).padStart(2, '0') + ":" + String(EM).padStart(2, '0') + ":" + String(ES).padStart(2, '0') + " PM";
   }
   else {
-    defaultEnd = defaultEndTimeHH + ":" + defaultEndTimeMM + ":" + defaultEndTimeSS + " AM";
+    defaultEnd = String(EH).padStart(2, '0') + ":" + String(EM).padStart(2, '0') + ":" + String(ES).padStart(2, '0') + " AM";
   }
-
 
   //opening and closing the modal
   const [show, setShow] = useState(false);
@@ -54,12 +49,12 @@ function EditTask({ task, updateTask }) {
 
   //for editing time
   const [unformattedStartTime, setUnformattedStartTime] = useState(defaultStart)
-  const getStartTime = unformattedStartTime.split(' ');
-  const formattedStartTime = getStartTime[0].split(':');
+  const getEditStartTime = unformattedStartTime.split(' ');
+  const formattedStartTime = getEditStartTime[0].split(':');
 
   const [unformattedEndTime, setUnformattedEndTime] = useState(defaultEnd)
-  const getEndTime = unformattedEndTime.split(' ');
-  const formattedEndTime = getEndTime[0].split(':');
+  const getEditEndTime = unformattedEndTime.split(' ');
+  const formattedEndTime = getEditEndTime[0].split(':');
 
   //splitting the user input into HH, MM, SS
   var startTimeHH = formattedStartTime[0];
@@ -69,21 +64,30 @@ function EditTask({ task, updateTask }) {
   var endTimeMM = formattedEndTime[1];
   var endTimeSS = formattedEndTime[2];
 
-  if (getStartTime[2] === 'PM') {
+  //formatting start time to be sent to the db
+  var startTimeDecoded = new Date(year, month, day, startTimeHH, startTimeMM, startTimeSS);
+  var startTime = startTimeDecoded.getTime();
+  console.log(new Date(startTime));
+
+  //formatting end time to be sent to the db
+  var endTimeDecoded = new Date(year, month, day, endTimeHH, endTimeMM, endTimeSS);
+  var endTime = endTimeDecoded.getTime();
+  console.log(new Date(endTime));
+
+  //getting time elapsed and putting it in '00:00:00' format 
+  if (getEditStartTime[2] === 'PM') {
     startTimeHH = parseInt(formattedStartTime[0]) + 12;
   }
-  else if ((getStartTime[2] === 'AM') && (startTimeHH === '12')) {
+  else if ((getEditStartTime[2] === 'AM') && (startTimeHH === '12')) {
     startTimeHH = parseInt(formattedStartTime[0]) - 12;
   }
 
-  if (getEndTime[2] === 'PM') {
+  if (getEditEndTime[2] === 'PM') {
     endTimeHH = parseInt(formattedEndTime[0]) + 12;
   }
-  else if ((getStartTime[2] === 'AM') && (startTimeHH === '12')) {
+  else if ((getEditEndTime[2] === 'AM') && (endTimeHH === '12')) {
     endTimeHH = parseInt(formattedEndTime[0]) - 12;
   }
-
-  //getting time elapsed and putting it in '00:00:00' format 
   let temp1 = "";
   var HH = endTimeHH - startTimeHH
   if (HH < 0) {
@@ -94,28 +98,15 @@ function EditTask({ task, updateTask }) {
     MM = MM * -1;
   }
   var SS = endTimeSS - startTimeSS
-  console.log(SS)
+
   if (SS < 0) {
     SS = SS * -1;
     console.log(SS)
   }
-
   HH = String(HH).padStart(2, '0');
   MM = String(MM).padStart(2, '0');
-  console.log(SS)
   SS = String(SS).padStart(2, '0');
   var timeElapsed = temp1.concat(HH, ":", MM, ":", SS);
-  console.log()
-
-  //formatting start time to be sent to the db
-  let temp2 = "";
-  var startTime = temp2.concat(startTimeHH, startTimeMM, startTimeSS);
-  startTime = parseInt(startTime);
-
-  //formatting end time to be sent to the db
-  let temp3 = "";
-  var endTime = temp3.concat(endTimeHH, endTimeMM, endTimeSS);
-  endTime = parseInt(endTime);
 
   const updatedTask = { name, startTime, endTime };
   const handleEditSubmit = (e) => {
@@ -124,7 +115,7 @@ function EditTask({ task, updateTask }) {
     handleClose();
   }
 
-  const cancelEditSubmit = (e) =>{
+  const cancelEditSubmit = (e) => {
     e.preventDefault();
     handleClose();
   }

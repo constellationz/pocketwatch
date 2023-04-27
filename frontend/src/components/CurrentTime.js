@@ -1,39 +1,38 @@
-const CurrentTime = ({task}) => {
+const CurrentTime = ({ task }) => {
 
-    var formatedStartTime = String(task.startTime).padStart(6, '0');
-    var formatedEndTime = String(task.endTime).padStart(6, '0');
+    var getStartTime = new Date(task.startTime);
+    var getEndTime = new Date(task.endTime);
 
-    var startTimeHH = formatedStartTime.substring(0, 2);
-    var startTimeMM = formatedStartTime.substring(2, 4);
-    var startTimeSS = formatedStartTime.substring(4);
+    var SH = getStartTime.getHours();
+    var SM = getStartTime.getMinutes();
+    var sS = getStartTime.getSeconds();
 
-    var endTimeHH = formatedEndTime.substring(0, 2);
-    var endTimeMM = formatedEndTime.substring(2, 4);
-    var endTimeSS = formatedEndTime.substring(4);
+    var EH = getEndTime.getHours();
+    var EM = getEndTime.getMinutes();
+    var ES = getEndTime.getSeconds();
 
-    var totalTimeHH = endTimeHH - startTimeHH;
-    if (totalTimeHH < 0){
-        totalTimeHH = totalTimeHH * -1
+    var TH = EH - SH;
+    if (TH < 0) {
+        TH = TH * -1
     }
-    var totalTimeMM = endTimeMM - startTimeMM;
-    if (totalTimeMM < 0){
-        totalTimeMM = totalTimeMM * -1
+    var TM = EM - SM;
+    if (TM < 0) {
+        TM = TM * -1
     }
-    var totalTimeSS = endTimeSS - startTimeSS;
-    if (totalTimeSS < 0){
-        totalTimeSS = totalTimeSS * -1
+    var TS = ES - sS;
+    if (TS < 0) {
+        TS = TS * -1
     }
 
-    var HH = String(totalTimeHH).padStart(2, '0');
-    var MM = String(totalTimeMM).padStart(2, '0');
-    var SS = String(totalTimeSS).padStart(2, '0');
+    var HH = String(TH).padStart(2, '0');
+    var MM = String(TM).padStart(2, '0');
+    var SS = String(TS).padStart(2, '0');
 
-    var HHMMSS = HH+":"+MM+":"+SS;
-
+    var HHMMSS = HH + ":" + MM + ":" + SS;
 
     return (
         <>
-        <h1 className="justify-content-center"> {HHMMSS} </h1>
+            <h1 className="justify-content-center"> {HHMMSS} </h1>
         </>
     );
 }
