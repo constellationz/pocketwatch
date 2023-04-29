@@ -7,7 +7,7 @@ const CurrentTask = ({ onInputChange, handleSubmit, startTimer, timerOn }) => {
         <input placeholder="Add Task Name" onChange={(event) => onInputChange(event)} className="form-control" />
       </div>
       <div className="d-flex mt-5 mb-5 justify-content-center current-task-buttons">
-        {timerOn ? <Button onClick={(event) => handleSubmit(event)}variant="dark" id="add-task">+</Button>
+        {timerOn ? <Button onClick={(event) => handleSubmit(event)}variant="dark" id="add-task">Stop</Button>
         :<Button onClick={startTimer}variant="dark" id="media-control">Play</Button>}
       </div>
     </div>
