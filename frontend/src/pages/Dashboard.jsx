@@ -207,9 +207,9 @@ function Dashboard() {
         endTime: newEndTime
       }),
     })
-      .then((res) => {
-        return res.json();
-      })
+    .then((res) => {
+      return res.json();
+    });
 
   };
 
