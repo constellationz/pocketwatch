@@ -4,7 +4,7 @@ const Logout = () => {
   localStorage.removeItem("token");
 
   // Redirect to homepage
-  window.location.replace("/");
+  window.location.replace("/login");
 };
 
 export default Logout;
