@@ -177,8 +177,19 @@ function Dashboard() {
     console.log("new start time: " + newStartTime)
     console.log("new end time: " + newEndTime);
 
-
-    setTasks(tasks.map((task) => task.id === id ? updatedTask : task))
+    setTasks(tasks.map((task) => {
+      if(task.id === id) {
+        let temp = Object.assign({}, task);
+        temp.name = newName;
+        temp.startTime = newStartTime;
+        temp.endTime = newEndTime;
+        temp.month = task.month;
+        temp.day = task.day;
+        return temp;
+      } else {
+        return task;
+      }
+    }));
 
     fetch(`/api/tasks/${id}`, {
       method: "PUT",
@@ -198,9 +209,6 @@ function Dashboard() {
     })
       .then((res) => {
         return res.json();
-      })
-      .then((res) => {
-        window.location.reload();
       })
 
   };
