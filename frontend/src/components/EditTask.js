@@ -135,11 +135,11 @@ function EditTask({ task, updateTask }) {
             <input onChange={(event) => setEditName(event.target.value)} className="form-control" id="task-name" defaultValue={task.name} placeholder={"Task Name"}></input>
           </div>
           <div className="form-group">
-            <label htmlFor="task-name">Start Time</label>
+            <label htmlFor="start-time">Start Time</label>
             <input onChange={(event) => setUnformattedStartTime(event.target.value)} className="form-control" id="start-time" defaultValue={defaultStart} placeholder={"Start Time - HH:MM:SS"}></input>
           </div>
           <div className="form-group">
-            <label htmlFor="task-name">End Time</label>
+            <label htmlFor="end-time">End Time</label>
             <input onChange={(event) => setUnformattedEndTime(event.target.value)} className="form-control" id="end-time" defaultValue={defaultEnd} placeholder={"End Time - HH:MM:SS"}></input>
           </div>
           <div className="form-group">
