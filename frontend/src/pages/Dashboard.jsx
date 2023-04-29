@@ -19,7 +19,7 @@ function Dashboard() {
   let navigate = useNavigate();
 
   useEffect(() => {
-    if(token === null) {
+    if (token === null) {
       setIsLoggedIn(false);
       navigate("/login");
     } else {
@@ -39,7 +39,7 @@ function Dashboard() {
   const renders = useRef(0);
   const timerId = useRef();
 
-  var startTime = 0; 
+  var startTime = 0;
   var endTime = 0;
 
   const startTimer = () => {
@@ -84,8 +84,8 @@ function Dashboard() {
     var time = new Date();
     var currentTime = time.getTime();
     var secondsPast = ((parseInt(timerHours) * 60 * 60) + (parseInt(timerMinutes) * 60) + parseInt(timerSeconds)) * 1000;
-    endTime = currentTime; 
-    startTime = currentTime - secondsPast; 
+    endTime = currentTime;
+    startTime = currentTime - secondsPast;
   }
 
   //current task & task list functions 
@@ -130,6 +130,7 @@ function Dashboard() {
             startTime: startTime,
             endTime: endTime
           }]);
+          console.log(tasks);
       })
       .catch((err) => {
         console.log("error");
@@ -275,7 +276,7 @@ function Dashboard() {
         setSearch={setSearch} />
       <TaskList
         tasks={tasks}
-        currentTask={currentTask => {setCurrentTask(currentTask)}}
+        currentTask={currentTask => { setCurrentTask(currentTask) }}
         deleteTask={deleteTask}
         updateTask={updateTask} />
     </div>

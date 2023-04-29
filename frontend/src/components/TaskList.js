@@ -6,6 +6,9 @@ import Modal from 'react-bootstrap/Modal';
 import ModalButtons from "./ModalButtons";
 import CurrentTime from './CurrentTime';
 
+//for the div on click function make initialize show in this compononent and make a function that takes handleshow, handleclose and passes the 
+//result of that function to it to Editask 
+
 const TaskList = ({ tasks, currentTask, updateTask, deleteTask }) => {
 
   return (
@@ -31,8 +34,8 @@ const TaskList = ({ tasks, currentTask, updateTask, deleteTask }) => {
             </h1>
             <div className="task-container d-flex flex-column rounded mb-5" onClick={() => currentTask(task)}>
               <div className="text-start">
-                <CurrentTime task={task} />
                 <h1 className="task-name">{task.name}</h1>
+                <CurrentTime task={task} />
                 <EditTask task={task} updateTask={updateTask} />
                 <DeleteTask task={task} deleteTask={deleteTask} />
               </div>
