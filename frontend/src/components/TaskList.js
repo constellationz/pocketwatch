@@ -17,11 +17,11 @@ const TaskList = ({ tasks, updateTask, deleteTask }) => {
           }
           if (a.month > b.month) {
             if (a.day > b.day) {
-              return 1;
+              return -1;
             }
           }
           else {
-            return -1;
+            return 1;
           }
         })
         .map(task => (
@@ -38,7 +38,8 @@ const TaskList = ({ tasks, updateTask, deleteTask }) => {
               </div>
             </div>
           </div>
-        ))}
+        ))
+        .reverse()}
     </div>
   );
 }
