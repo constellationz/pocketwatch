@@ -5,7 +5,7 @@ import Button from 'react-bootstrap/Button';
 import UserAlert from '../components/UserAlert';
 import UpdateEmail from '../components/UpdateEmail';
 import UpdatePassword from '../components/UpdatePassword';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
 function Settings() {
@@ -14,6 +14,20 @@ function Settings() {
 
   let token = localStorage.getItem("token");
 
+  // check if user is logged in
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  let navigate = useNavigate();
+
+  useEffect(() => {
+    if(token === null) {
+      setIsLoggedIn(false);
+      navigate("/login");
+    } else {
+      setIsLoggedIn(true);
+    }
+  }, []);
+
+  // get user settings
   useEffect(() => {
     fetch("api/users/me", {
       method: 'GET',
@@ -35,7 +49,7 @@ function Settings() {
   }, []);
 
   return (
-      dataLoaded && <div className="row d-flex justify-content-center">
+      isLoggedIn && dataLoaded && <div className="row d-flex justify-content-center">
         <div className="col-12 col-lg-8">
           <h1>Settings</h1>
           <div className="form-group">
@@ -51,7 +65,7 @@ function Settings() {
             {!userInfo.emailVerified && <label className="text-danger">Email not verified</label>}
             {userInfo.emailVerified && <label className="text-primary">Email verified</label>}
           </div>
-          <UserAlert buttonText={"Re-verify Email"} alertText={"Verification Email Sent"} />
+          {!userInfo.emailVerified && <UserAlert buttonText={"Verify Email"} alertText={"Verification Email Sent"} />}
           <UpdateEmail currentEmail={userInfo.email} />
           <UpdatePassword />
           <Link to="/forgotpassword">
