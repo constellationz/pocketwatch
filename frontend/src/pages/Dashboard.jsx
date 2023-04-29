@@ -250,7 +250,7 @@ function Dashboard() {
 
   return (
     isLoggedIn &&
-    <div className="form">
+    <div className="form pb-1">
       <Timer
         timerHours={timerHours}
         timerMinutes={timerMinutes}
