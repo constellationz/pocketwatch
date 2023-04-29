@@ -302,6 +302,11 @@ h3 {
   .current-task-buttons {
     justify-content: space-around;
   }
+
+  .control-button {
+    width: 30px;
+    height: auto;
+  }
 }
 
 @media (min-width: 768px) {
@@ -309,8 +314,9 @@ h3 {
     justify-content: end;
   }
 
-  #media-control {
-    margin-right: 15px;
+  .control-button {
+    width: 50px;
+    height: 50px;
   }
 }
 
