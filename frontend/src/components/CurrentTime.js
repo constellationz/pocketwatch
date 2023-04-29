@@ -32,7 +32,7 @@ const CurrentTime = ({ task }) => {
 
     return (
         <>
-            <h1 className="justify-content-center"> {HHMMSS} </h1>
+            <h1 className="justify-content-center "> {HHMMSS} </h1>
         </>
     );
 }

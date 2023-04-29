@@ -51,7 +51,7 @@ function EditTask({ task, updateTask }) {
     defaultEnd = String(EH).padStart(2, '0') + ":" + String(EM).padStart(2, '0') + ":" + String(ES).padStart(2, '0') + " AM";
   }
 
-  //opening and closing the modal
+  // opening and closing the modal
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -127,12 +127,13 @@ function EditTask({ task, updateTask }) {
   const handleEditSubmit = (e) => {
     e.preventDefault();
     updateTask(id, updatedTask);
-    handleClose();
+    handleClose(show);
   }
 
   const cancelEditSubmit = (e) => {
     e.preventDefault();
     handleClose();
+    console.log(show);
   }
 
   return (
@@ -159,7 +160,7 @@ function EditTask({ task, updateTask }) {
           </div>
           <div className="form-group">
             <label htmlFor="time-elapsed">Time Elapsed</label>
-            <input className="form-control" id="time-elapsed" value={timeElapsed} placeholder={"Time Elapsed"}></input>
+            <input className="form-control" id="time-elapsed" value={timeElapsed} placeholder={"Time Elapsed"} readOnly={true}></input>
           </div>
         </Modal.Body>
         <Modal.Footer className="d-flex flex-column align-items-stretch">
