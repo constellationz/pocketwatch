@@ -9,6 +9,10 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
 function Settings() {
+  useEffect(() => {
+    document.title = "Settings - Pocketwatch";
+  });
+
   const [userInfo, setUserInfo] = useState("");
   const [dataLoaded, setDataLoaded] = useState(false);
 

@@ -6,6 +6,10 @@ import { Link } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 
 function Login() {
+  useEffect(() => {
+    document.title = "Login - Pocketwatch";
+  });
+
   const [formData, setFormData] = useState({
     email: "",
     password: "",

@@ -12,6 +12,9 @@ import Button from "react-bootstrap/esm/Button";
 var moment = require('moment'); // require 
 
 function Dashboard() {
+  useEffect(() => {
+    document.title = "Pocketwatch";
+  });
 
   let token = localStorage.getItem('token');
 
