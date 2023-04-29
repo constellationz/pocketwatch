@@ -19,7 +19,14 @@ function EditTask({ task, updateTask }) {
     SH = SH - 12;
     defaultStart = String(SH).padStart(2, '0') + ":" + String(SM).padStart(2, '0') + ":" + String(sS).padStart(2, '0') + " PM";
   }
-  else {
+  else if (SH === 12){
+    defaultStart = String(SH).padStart(2, '0') + ":" + String(SM).padStart(2, '0') + ":" + String(sS).padStart(2, '0') + " PM";
+  }
+  else if (SH === 0){
+    SH = 12
+    defaultStart = String(SH).padStart(2, '0') + ":" + String(SM).padStart(2, '0') + ":" + String(sS).padStart(2, '0') + " AM";
+  }
+  else{
     defaultStart = String(SH).padStart(2, '0') + ":" + String(SM).padStart(2, '0') + ":" + String(sS).padStart(2, '0') + " AM";
   }
 
@@ -32,6 +39,13 @@ function EditTask({ task, updateTask }) {
   if (EH > 12) {
     EH = EH - 12;
     defaultEnd = String(EH).padStart(2, '0') + ":" + String(EM).padStart(2, '0') + ":" + String(ES).padStart(2, '0') + " PM";
+  }
+  else if (EH === 12){
+    defaultEnd = String(EH).padStart(2, '0') + ":" + String(EM).padStart(2, '0') + ":" + String(ES).padStart(2, '0') + " PM";
+  }
+  else if (EH === 0){
+    EH = 12
+    defaultEnd = String(EH).padStart(2, '0') + ":" + String(EM).padStart(2, '0') + ":" + String(ES).padStart(2, '0') + " AM";
   }
   else {
     defaultEnd = String(EH).padStart(2, '0') + ":" + String(EM).padStart(2, '0') + ":" + String(ES).padStart(2, '0') + " AM";
@@ -58,14 +72,26 @@ function EditTask({ task, updateTask }) {
 
   //splitting the user input into HH, MM, SS -> error thats showing AM when I edit 
   var startTimeHH = formattedStartTime[0];
-  if (getEditStartTime[1] === 'PM'){
+  if ((getEditStartTime[1] === 'PM') && (startTimeHH !== '12')){
     startTimeHH = parseInt(startTimeHH) + 12;
+  }
+  else if ((getEditStartTime[1] === 'PM') && (startTimeHH === '12')){
+    startTimeHH = 12;
+  }
+  else if ((getEditStartTime[1] === 'AM') && (startTimeHH === '12')){
+    startTimeHH = 0;
   }
   var startTimeMM = formattedStartTime[1];
   var startTimeSS = formattedStartTime[2];
   var endTimeHH = formattedEndTime[0];
-  if (getEditEndTime[1] === 'PM'){
+  if ((getEditEndTime[1] === 'PM') && (endTimeHH !== '12')){
     endTimeHH = parseInt(endTimeHH) + 12;
+  }
+  else if ((getEditEndTime[1] === 'PM') && (endTimeHH === '12')){
+    endTimeHH = 12;
+  }
+  else if ((getEditEndTime[1] === 'AM') && (endTimeHH === '12')){
+    endTimeHH = 0;
   }
   var endTimeMM = formattedEndTime[1];
   var endTimeSS = formattedEndTime[2];
@@ -78,20 +104,6 @@ function EditTask({ task, updateTask }) {
   var endTimeDecoded = new Date(year, month, day, endTimeHH, endTimeMM, endTimeSS);
   var endTime = endTimeDecoded.getTime();
 
-  //getting time elapsed and putting it in '00:00:00' format 
-  if (getEditStartTime[2] === 'PM') {
-    startTimeHH = parseInt(formattedStartTime[0]) + 12;
-  }
-  else if ((getEditStartTime[2] === 'AM') && (startTimeHH === '12')) {
-    startTimeHH = parseInt(formattedStartTime[0]) - 12;
-  }
-
-  if (getEditEndTime[2] === 'PM') {
-    endTimeHH = parseInt(formattedEndTime[0]) + 12;
-  }
-  else if ((getEditEndTime[2] === 'AM') && (endTimeHH === '12')) {
-    endTimeHH = parseInt(formattedEndTime[0]) - 12;
-  }
   let temp1 = "";
   var HH = endTimeHH - startTimeHH
   if (HH < 0) {
@@ -102,7 +114,6 @@ function EditTask({ task, updateTask }) {
     MM = MM * -1;
   }
   var SS = endTimeSS - startTimeSS
-
   if (SS < 0) {
     SS = SS * -1;
     console.log(SS)

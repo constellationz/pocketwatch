@@ -6,7 +6,7 @@ import Modal from 'react-bootstrap/Modal';
 import ModalButtons from "./ModalButtons";
 import CurrentTime from './CurrentTime';
 
-const TaskList = ({ tasks, updateTask, deleteTask }) => {
+const TaskList = ({ tasks, currentTask, updateTask, deleteTask }) => {
 
   return (
     <div className="task-list">
@@ -29,7 +29,7 @@ const TaskList = ({ tasks, updateTask, deleteTask }) => {
             <h1 className="task-name d-flex flex-column rounded text-start border border-white">
               {task.month}/{task.day}
             </h1>
-            <div className="task-container d-flex flex-column rounded mb-5">
+            <div className="task-container d-flex flex-column rounded mb-5" onClick={() => currentTask(task)}>
               <div className="text-start">
                 <CurrentTime task={task} />
                 <h1 className="task-name">{task.name}</h1>
