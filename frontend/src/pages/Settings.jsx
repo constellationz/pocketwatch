@@ -51,7 +51,7 @@ function Settings() {
             {!userInfo.emailVerified && <label className="text-danger">Email not verified</label>}
             {userInfo.emailVerified && <label className="text-primary">Email verified</label>}
           </div>
-          <UserAlert buttonText={"Re-verify Email"} alertText={"Verification Email Sent"} />
+          {!userInfo.emailVerified && <UserAlert buttonText={"Verify Email"} alertText={"Verification Email Sent"} />}
           <UpdateEmail currentEmail={userInfo.email} />
           <UpdatePassword />
           <Link to="/forgotpassword">
