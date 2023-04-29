@@ -88,6 +88,17 @@ function Dashboard() {
     startTime = currentTime - secondsPast; 
   }
 
+  // format the timer when a task is selected
+  const formatCurrentTaskTime = (currentTask) => {
+    let startTime = currentTask.startTime;
+    let endTime = currentTask.endTime;
+    let deltaTime = endTime - startTime;
+
+    setSeconds(Math.floor( (deltaTime / 1000) % 60 ));
+    setMinutes(Math.floor( (deltaTime / 1000 / 60) % 60 ));
+    setHours(Math.floor( (deltaTime / 1000 / 3600) % 24));
+  }
+
   //current task & task list functions 
   const [name, setName] = useState("");
 
@@ -255,17 +266,12 @@ function Dashboard() {
   return (
     isLoggedIn &&
     <div className="form pb-1">
-      <div>
-        {`${currentTask.month}/${currentTask.day}`}
-        {currentTask.name}
-        {<CurrentTime task={currentTask} />}
-      </div>
-
       <Timer
         timerHours={timerHours}
         timerMinutes={timerMinutes}
         timerSeconds={timerSeconds} />
       <CurrentTask
+        taskName={name}
         onInputChange={onInputChange}
         handleSubmit={handleSubmit}
         startTimer={startTimer}
@@ -275,7 +281,11 @@ function Dashboard() {
         setSearch={setSearch} />
       <TaskList
         tasks={tasks}
-        currentTask={currentTask => {setCurrentTask(currentTask)}}
+        currentTask={currentTask => {
+          setCurrentTask(currentTask)
+          setName(currentTask.name);
+          formatCurrentTaskTime(currentTask);
+        }}
         deleteTask={deleteTask}
         updateTask={updateTask} />
     </div>
