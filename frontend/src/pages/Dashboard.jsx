@@ -8,6 +8,7 @@ import TaskList from "../components/TaskList";
 import { useState, useRef, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import CurrentTime from "../components/CurrentTime";
+import Button from "react-bootstrap/esm/Button";
 var moment = require('moment'); // require 
 
 function Dashboard() {
@@ -97,6 +98,14 @@ function Dashboard() {
     setSeconds(Math.floor( (deltaTime / 1000) % 60 ));
     setMinutes(Math.floor( (deltaTime / 1000 / 60) % 60 ));
     setHours(Math.floor( (deltaTime / 1000 / 3600) % 24));
+  }
+
+  // reset a selected task to default values
+  const resetTask = () => {
+    setName("");
+    setSeconds(0);
+    setMinutes(0);
+    setHours(0);
   }
 
   //current task & task list functions 
@@ -277,6 +286,7 @@ function Dashboard() {
         handleSubmit={handleSubmit}
         startTimer={startTimer}
         timerOn={timerOn}
+        resetTask={resetTask}
       />
       <Search
         setSearch={setSearch} />
