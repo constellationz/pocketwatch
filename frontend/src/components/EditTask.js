@@ -56,23 +56,27 @@ function EditTask({ task, updateTask }) {
   const getEditEndTime = unformattedEndTime.split(' ');
   const formattedEndTime = getEditEndTime[0].split(':');
 
-  //splitting the user input into HH, MM, SS
+  //splitting the user input into HH, MM, SS -> error thats showing AM when I edit 
   var startTimeHH = formattedStartTime[0];
+  if (getEditStartTime[1] === 'PM'){
+    startTimeHH = parseInt(startTimeHH) + 12;
+  }
   var startTimeMM = formattedStartTime[1];
   var startTimeSS = formattedStartTime[2];
   var endTimeHH = formattedEndTime[0];
+  if (getEditEndTime[1] === 'PM'){
+    endTimeHH = parseInt(endTimeHH) + 12;
+  }
   var endTimeMM = formattedEndTime[1];
   var endTimeSS = formattedEndTime[2];
 
   //formatting start time to be sent to the db
-  var startTimeDecoded = new Date(year, month, day, startTimeHH, startTimeMM, startTimeSS);
+  var startTimeDecoded = new Date(year, month, day, startTimeHH, startTimeMM, startTimeSS)
   var startTime = startTimeDecoded.getTime();
-  console.log(new Date(startTime));
 
   //formatting end time to be sent to the db
   var endTimeDecoded = new Date(year, month, day, endTimeHH, endTimeMM, endTimeSS);
   var endTime = endTimeDecoded.getTime();
-  console.log(new Date(endTime));
 
   //getting time elapsed and putting it in '00:00:00' format 
   if (getEditStartTime[2] === 'PM') {
