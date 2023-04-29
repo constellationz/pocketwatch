@@ -6,11 +6,25 @@ import CurrentTask from "../components/CurrentTask";
 import Search from "../components/Search";
 import TaskList from "../components/TaskList";
 import { useState, useRef, useEffect } from 'react';
+import { useNavigate } from "react-router-dom";
 var moment = require('moment'); // require 
 
 function Dashboard() {
 
   let token = localStorage.getItem('token');
+
+  // check if user is logged in
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  let navigate = useNavigate();
+
+  useEffect(() => {
+    if(token === null) {
+      setIsLoggedIn(false);
+      navigate("/login");
+    } else {
+      setIsLoggedIn(true);
+    }
+  }, []);
 
   //for timer
   const [timerHours, setHours] = useState(0);
@@ -235,6 +249,7 @@ function Dashboard() {
   }, [search]);
 
   return (
+    isLoggedIn &&
     <div>
       <Timer
         timerHours={timerHours}
