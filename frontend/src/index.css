@@ -254,6 +254,10 @@ h3 {
   margin-bottom:1%;
 }
 
+.task-container:hover {
+  background-color: #ECECEC;
+}
+
 .task-name {
   margin-top: 5px;
 }

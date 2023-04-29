@@ -7,6 +7,7 @@ import Search from "../components/Search";
 import TaskList from "../components/TaskList";
 import { useState, useRef, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
+import CurrentTime from "../components/CurrentTime";
 var moment = require('moment'); // require 
 
 function Dashboard() {
@@ -25,6 +26,9 @@ function Dashboard() {
       setIsLoggedIn(true);
     }
   }, []);
+
+  // for current task
+  const [currentTask, setCurrentTask] = useState({});
 
   //for timer
   const [timerHours, setHours] = useState(0);
@@ -251,6 +255,12 @@ function Dashboard() {
   return (
     isLoggedIn &&
     <div className="form pb-1">
+      <div>
+        {`${currentTask.month}/${currentTask.day}`}
+        {currentTask.name}
+        {<CurrentTime task={currentTask} />}
+      </div>
+
       <Timer
         timerHours={timerHours}
         timerMinutes={timerMinutes}
@@ -265,6 +275,7 @@ function Dashboard() {
         setSearch={setSearch} />
       <TaskList
         tasks={tasks}
+        currentTask={currentTask => {setCurrentTask(currentTask)}}
         deleteTask={deleteTask}
         updateTask={updateTask} />
     </div>
