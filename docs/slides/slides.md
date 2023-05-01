@@ -60,6 +60,14 @@ Pedro Kasprzykowski [@PKTidus](https://github.com/PKTidus) Mobile App
 
 ---
 
+#### Color Scheme & Figma
+
+![height:450px](./media/colors.png)
+
+[Show me the Figma!](https://www.figma.com/file/OQnVTmgOJ22D7BsytitP52/Untitled?node-id=1%3A30&t=VEzP1bRfg0t8JoxL-1)
+
+---
+
 #### Use Case Diagram
 
 ![height:600px](./media/usecase.svg)
