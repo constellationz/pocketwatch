@@ -19,6 +19,12 @@ const TaskList = ({ tasks, currentTask, updateTask, deleteTask }) => {
     }
   }
   let days = Array.from(dayMap.values())
+
+  // reverse the tasks in each categorized date
+  days.forEach(key => {
+    key.reverse();
+  });
+
   console.log(days);
 
   return (
