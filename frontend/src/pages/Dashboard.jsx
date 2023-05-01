@@ -52,12 +52,12 @@ function Dashboard() {
       }
       else {
         setSeconds(prev => prev - prev)
-        if (renders.current % 3600 !== 0) {
+        if (renders.current % 3540 !== 0) {
           setMinutes(prev => prev + 1)
         }
         else {
           setMinutes(prev => prev - prev)
-          if (renders.current % 216000 !== 0) {
+          if (renders.current % 82800 !== 0) {
             setHours(prev => prev + 1)
           }
         }
