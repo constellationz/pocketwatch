@@ -1,48 +1,38 @@
-import EditTask from './EditTask';
-import DeleteTask from './DeleteTask';
 import React, { useState } from 'react';
-import Button from 'react-bootstrap/Button';
-import Modal from 'react-bootstrap/Modal';
-import ModalButtons from "./ModalButtons";
-import CurrentTime from './CurrentTime';
+import Tasks from './Tasks';
 
 //for the div on click function make initialize show in this compononent and make a function that takes handleshow, handleclose and passes the 
 //result of that function to it to Editask 
 
 const TaskList = ({ tasks, currentTask, updateTask, deleteTask }) => {
 
+  const dayMap = new Map()
+  for (let i = 0; i < tasks.length; i++) {
+    let task = tasks[i]
+    console.log(task.name)
+    let key = task.day + "/" + task.month
+    if (!dayMap.has(key)) {
+      dayMap.set(key, [task])
+    }
+    else {
+      dayMap.get(key).push(task)
+    }
+  }
+  let days = Array.from(dayMap.values())
+  console.log(days);
+
   return (
     <div className="task-list">
-      {tasks
-        .sort((a, b) => {
-          if ((a.month === b.month) && (a.day === b.day)) {
-            return 0;
-          }
-          if (a.month > b.month) {
-            if (a.day > b.day) {
-              return -1;
-            }
-          }
-          else {
-            return 1;
-          }
-        })
-        .map(task => (
-          <div key={task.id} >
+      {days
+        .map(tasks => (
+          <div>
             <h1 className="task-name d-flex flex-column rounded text-start border border-white">
-              {task.month}/{task.day}
+              {tasks[0].month}/{tasks[0].day}
             </h1>
-            <div className="task-container d-flex flex-column rounded mb-5" onClick={() => currentTask(task)}>
-              <div className="text-start">
-                <h1 className="task-name">{task.name}</h1>
-                <CurrentTime task={task} />
-                <EditTask task={task} updateTask={updateTask} />
-                <DeleteTask task={task} deleteTask={deleteTask} />
-              </div>
-            </div>
+            <Tasks selectedTasks={tasks} updateTask={updateTask} deleteTask={deleteTask} currentTask={currentTask}/>
           </div>
-        ))
-        .reverse()}
+        )).reverse()
+        }
     </div>
   );
 }
