@@ -48,15 +48,15 @@ Pedro Kasprzykowski [@PKTidus](https://github.com/PKTidus) Mobile App
 #### Technology used
 
 - MERN Stack (Mongo, Express, React, Node)
-- Hosted on Heroku
-- Domain from Google Domains
+- Hosted on Heroku with auto-deployment
 - GitHub for version control
-- GitHub Actions to automatically push main branch to Heroku
-- Marp for slide deck, PlantUML for diagrams
+- Mailgun for email service
 - SwaggerHub for API documentation
 - Postman for API testing
+- Jasmine for unit testing & integration testing
 - Trello for organization
 - Discord for communication
+- Domain from Google Domains
 
 ---
 
@@ -106,6 +106,8 @@ Pedro Kasprzykowski [@PKTidus](https://github.com/PKTidus) Mobile App
 
 [Link to Zoom](https://ucf.zoom.us/my/pkasprzy)
 
+[Link to Video Demonstration](https://youtu.be/HQQBye3pXOc)
+
 ---
 
 # Web Demo
@@ -116,7 +118,6 @@ Pedro Kasprzykowski [@PKTidus](https://github.com/PKTidus) Mobile App
 
 # Mobile Demo
 
-Doc cam!
 [Link to Zoom](https://ucf.zoom.us/my/pkasprzy)
 
 ---
