@@ -104,24 +104,17 @@ function EditTask({ task, updateTask }) {
   var endTimeDecoded = new Date(year, month, day, endTimeHH, endTimeMM, endTimeSS);
   var endTime = endTimeDecoded.getTime();
 
-  let temp1 = "";
-  var HH = endTimeHH - startTimeHH
-  if (HH < 0) {
-    HH = HH * -1;
-  }
-  var MM = endTimeMM - startTimeMM
-  if (MM < 0) {
-    MM = MM * -1;
-  }
-  var SS = endTimeSS - startTimeSS
-  if (SS < 0) {
-    SS = SS * -1;
-    console.log(SS)
-  }
-  HH = String(HH).padStart(2, '0');
-  MM = String(MM).padStart(2, '0');
-  SS = String(SS).padStart(2, '0');
-  var timeElapsed = temp1.concat(HH, ":", MM, ":", SS);
+  // calculate the time to display in the modal
+  let deltaTime = endTime - startTime;
+  
+  let seconds = Math.floor( (deltaTime / 1000) % 60 );
+  let minutes = Math.floor( (deltaTime / 1000 / 60) % 60 );
+  let hours = Math.floor( (deltaTime / 1000 / 3600) % 24 );
+
+  let HH = String(hours).padStart(2, '0');
+  let MM = String(minutes).padStart(2, '0');
+  let SS = String(seconds).padStart(2, '0');
+  var timeElapsed = `${HH}:${MM}:${SS}`;
 
   const updatedTask = { name, startTime, endTime };
   const handleEditSubmit = (e) => {
