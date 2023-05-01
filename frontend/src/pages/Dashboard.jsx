@@ -106,9 +106,7 @@ function Dashboard() {
   // reset a selected task to default values
   const resetTask = () => {
     setName("");
-    setSeconds(0);
-    setMinutes(0);
-    setHours(0);
+    stopTimer();
   }
 
   //current task & task list functions 
