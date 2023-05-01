@@ -7,9 +7,6 @@ import Search from "../components/Search";
 import TaskList from "../components/TaskList";
 import { useState, useRef, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
-import CurrentTime from "../components/CurrentTime";
-import Button from "react-bootstrap/esm/Button";
-var moment = require('moment'); // require 
 
 function Dashboard() {
   useEffect(() => {
@@ -54,7 +51,7 @@ function Dashboard() {
         renders.current++
       }
       else {
-        setSeconds(prev => prev - (prev - 1))
+        setSeconds(prev => prev - prev)
         if (renders.current % 3600 !== 0) {
           setMinutes(prev => prev + 1)
         }
