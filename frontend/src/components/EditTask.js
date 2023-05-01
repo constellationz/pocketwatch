@@ -2,47 +2,56 @@ import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 
+//need to get PM prblem solved
 function EditTask({ task, updateTask }) {
 
   //setting default value of start time for modal
-  var defaultStart = task.startTime;
-  defaultStart = String(defaultStart).padStart(6, '0');
-  var defaultStartTimeHH = defaultStart.substring(0, 2);
-  var defaultStartTimeMM = defaultStart.substring(2, 4);
-  var defaultStartTimeSS = defaultStart.substring(4);
-  if (defaultStartTimeHH > 12) {
-    defaultStartTimeHH = parseInt(defaultStartTimeHH) - 12;
-    defaultStart = defaultStartTimeHH + ":" + defaultStartTimeMM + ":" + defaultStartTimeSS + " PM";
+  var defaultStart = "";
+  var getStartTime = new Date(task.startTime);
+  var SH = getStartTime.getHours();
+  var SM = getStartTime.getMinutes();
+  var sS = getStartTime.getSeconds();
+  var year = getStartTime.getFullYear();
+  var month = getStartTime.getMonth();
+  var day = getStartTime.getDate();
+
+  if (SH > 12) {
+    SH = SH - 12;
+    defaultStart = String(SH).padStart(2, '0') + ":" + String(SM).padStart(2, '0') + ":" + String(sS).padStart(2, '0') + " PM";
   }
-  else if (defaultStartTimeHH === '00') {
-    defaultStartTimeHH = parseInt(defaultStartTimeHH) + 12;
-    defaultStart = defaultStartTimeHH + ":" + defaultStartTimeMM + ":" + defaultStartTimeSS + " AM";
+  else if (SH === 12){
+    defaultStart = String(SH).padStart(2, '0') + ":" + String(SM).padStart(2, '0') + ":" + String(sS).padStart(2, '0') + " PM";
   }
-  else {
-    defaultStart = defaultStartTimeHH + ":" + defaultStartTimeMM + ":" + defaultStartTimeSS + " AM";
+  else if (SH === 0){
+    SH = 12
+    defaultStart = String(SH).padStart(2, '0') + ":" + String(SM).padStart(2, '0') + ":" + String(sS).padStart(2, '0') + " AM";
+  }
+  else{
+    defaultStart = String(SH).padStart(2, '0') + ":" + String(SM).padStart(2, '0') + ":" + String(sS).padStart(2, '0') + " AM";
   }
 
   //setting default value of end time for modal
-  var defaultEnd = task.endTime;
-  var defaultEndTemp = String(defaultEnd).padStart(6, '0');
-  var defaultEndTimeHH = defaultEndTemp.substring(0, 2);
-  var defaultEndTimeMM = defaultEndTemp.substring(2, 4);
-  var defaultEndTimeSS = defaultEndTemp.substring(4);
-  defaultEnd = defaultEndTimeHH + ":" + defaultEndTimeMM + ":" + defaultEndTimeSS;
-  if (defaultEndTimeHH > 12) {
-    defaultEndTimeHH = parseInt(defaultEndTimeHH) - 12;
-    defaultEnd = defaultEndTimeHH + ":" + defaultEndTimeMM + ":" + defaultEndTimeSS + " PM";
+  var defaultEnd = "";
+  var getEndTime = new Date(task.endTime);
+  var EH = getEndTime.getHours();
+  var EM = getEndTime.getMinutes();
+  var ES = getEndTime.getSeconds();
+  if (EH > 12) {
+    EH = EH - 12;
+    defaultEnd = String(EH).padStart(2, '0') + ":" + String(EM).padStart(2, '0') + ":" + String(ES).padStart(2, '0') + " PM";
   }
-  else if (defaultEndTimeHH === '00') {
-    defaultEndTimeHH = parseInt(defaultEndTimeHH) + 12;
-    defaultEnd = defaultEndTimeHH + ":" + defaultEndTimeMM + ":" + defaultEndTimeSS + " AM";
+  else if (EH === 12){
+    defaultEnd = String(EH).padStart(2, '0') + ":" + String(EM).padStart(2, '0') + ":" + String(ES).padStart(2, '0') + " PM";
+  }
+  else if (EH === 0){
+    EH = 12
+    defaultEnd = String(EH).padStart(2, '0') + ":" + String(EM).padStart(2, '0') + ":" + String(ES).padStart(2, '0') + " AM";
   }
   else {
-    defaultEnd = defaultEndTimeHH + ":" + defaultEndTimeMM + ":" + defaultEndTimeSS + " AM";
+    defaultEnd = String(EH).padStart(2, '0') + ":" + String(EM).padStart(2, '0') + ":" + String(ES).padStart(2, '0') + " AM";
   }
 
-
-  //opening and closing the modal
+  // opening and closing the modal
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -54,79 +63,70 @@ function EditTask({ task, updateTask }) {
 
   //for editing time
   const [unformattedStartTime, setUnformattedStartTime] = useState(defaultStart)
-  const getStartTime = unformattedStartTime.split(' ');
-  const formattedStartTime = getStartTime[0].split(':');
+  const getEditStartTime = unformattedStartTime.split(' ');
+  const formattedStartTime = getEditStartTime[0].split(':');
 
   const [unformattedEndTime, setUnformattedEndTime] = useState(defaultEnd)
-  const getEndTime = unformattedEndTime.split(' ');
-  const formattedEndTime = getEndTime[0].split(':');
+  const getEditEndTime = unformattedEndTime.split(' ');
+  const formattedEndTime = getEditEndTime[0].split(':');
 
-  //splitting the user input into HH, MM, SS
+  //splitting the user input into HH, MM, SS -> error thats showing AM when I edit 
   var startTimeHH = formattedStartTime[0];
+  if ((getEditStartTime[1] === 'PM') && (startTimeHH !== '12')){
+    startTimeHH = parseInt(startTimeHH) + 12;
+  }
+  else if ((getEditStartTime[1] === 'PM') && (startTimeHH === '12')){
+    startTimeHH = 12;
+  }
+  else if ((getEditStartTime[1] === 'AM') && (startTimeHH === '12')){
+    startTimeHH = 0;
+  }
   var startTimeMM = formattedStartTime[1];
   var startTimeSS = formattedStartTime[2];
   var endTimeHH = formattedEndTime[0];
+  if ((getEditEndTime[1] === 'PM') && (endTimeHH !== '12')){
+    endTimeHH = parseInt(endTimeHH) + 12;
+  }
+  else if ((getEditEndTime[1] === 'PM') && (endTimeHH === '12')){
+    endTimeHH = 12;
+  }
+  else if ((getEditEndTime[1] === 'AM') && (endTimeHH === '12')){
+    endTimeHH = 0;
+  }
   var endTimeMM = formattedEndTime[1];
   var endTimeSS = formattedEndTime[2];
 
-  if (getStartTime[2] === 'PM') {
-    startTimeHH = parseInt(formattedStartTime[0]) + 12;
-  }
-  else if ((getStartTime[2] === 'AM') && (startTimeHH === '12')) {
-    startTimeHH = parseInt(formattedStartTime[0]) - 12;
-  }
-
-  if (getEndTime[2] === 'PM') {
-    endTimeHH = parseInt(formattedEndTime[0]) + 12;
-  }
-  else if ((getStartTime[2] === 'AM') && (startTimeHH === '12')) {
-    endTimeHH = parseInt(formattedEndTime[0]) - 12;
-  }
-
-  //getting time elapsed and putting it in '00:00:00' format 
-  let temp1 = "";
-  var HH = endTimeHH - startTimeHH
-  if (HH < 0) {
-    HH = HH * -1;
-  }
-  var MM = endTimeMM - startTimeMM
-  if (MM < 0) {
-    MM = MM * -1;
-  }
-  var SS = endTimeSS - startTimeSS
-  console.log(SS)
-  if (SS < 0) {
-    SS = SS * -1;
-    console.log(SS)
-  }
-
-  HH = String(HH).padStart(2, '0');
-  MM = String(MM).padStart(2, '0');
-  console.log(SS)
-  SS = String(SS).padStart(2, '0');
-  var timeElapsed = temp1.concat(HH, ":", MM, ":", SS);
-  console.log()
-
   //formatting start time to be sent to the db
-  let temp2 = "";
-  var startTime = temp2.concat(startTimeHH, startTimeMM, startTimeSS);
-  startTime = parseInt(startTime);
+  var startTimeDecoded = new Date(year, month, day, startTimeHH, startTimeMM, startTimeSS)
+  var startTime = startTimeDecoded.getTime();
 
   //formatting end time to be sent to the db
-  let temp3 = "";
-  var endTime = temp3.concat(endTimeHH, endTimeMM, endTimeSS);
-  endTime = parseInt(endTime);
+  var endTimeDecoded = new Date(year, month, day, endTimeHH, endTimeMM, endTimeSS);
+  var endTime = endTimeDecoded.getTime();
+
+  // calculate the time to display in the modal
+  let deltaTime = endTime - startTime;
+  
+  let seconds = Math.floor( (deltaTime / 1000) % 60 );
+  let minutes = Math.floor( (deltaTime / 1000 / 60) % 60 );
+  let hours = Math.floor( (deltaTime / 1000 / 3600) % 24 );
+
+  let HH = String(hours).padStart(2, '0');
+  let MM = String(minutes).padStart(2, '0');
+  let SS = String(seconds).padStart(2, '0');
+  var timeElapsed = `${HH}:${MM}:${SS}`;
 
   const updatedTask = { name, startTime, endTime };
   const handleEditSubmit = (e) => {
     e.preventDefault();
     updateTask(id, updatedTask);
-    handleClose();
+    handleClose(show);
   }
 
-  const cancelEditSubmit = (e) =>{
+  const cancelEditSubmit = (e) => {
     e.preventDefault();
     handleClose();
+    console.log(show);
   }
 
   return (
@@ -144,16 +144,16 @@ function EditTask({ task, updateTask }) {
             <input onChange={(event) => setEditName(event.target.value)} className="form-control" id="task-name" defaultValue={task.name} placeholder={"Task Name"}></input>
           </div>
           <div className="form-group">
-            <label htmlFor="task-name">Start Time</label>
+            <label htmlFor="start-time">Start Time</label>
             <input onChange={(event) => setUnformattedStartTime(event.target.value)} className="form-control" id="start-time" defaultValue={defaultStart} placeholder={"Start Time - HH:MM:SS"}></input>
           </div>
           <div className="form-group">
-            <label htmlFor="task-name">End Time</label>
+            <label htmlFor="end-time">End Time</label>
             <input onChange={(event) => setUnformattedEndTime(event.target.value)} className="form-control" id="end-time" defaultValue={defaultEnd} placeholder={"End Time - HH:MM:SS"}></input>
           </div>
           <div className="form-group">
             <label htmlFor="time-elapsed">Time Elapsed</label>
-            <input className="form-control" id="time-elapsed" value={timeElapsed} placeholder={"Time Elapsed"}></input>
+            <input className="form-control" id="time-elapsed" value={timeElapsed} placeholder={"Time Elapsed"} readOnly={true}></input>
           </div>
         </Modal.Body>
         <Modal.Footer className="d-flex flex-column align-items-stretch">

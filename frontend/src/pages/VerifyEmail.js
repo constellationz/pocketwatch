@@ -3,6 +3,10 @@ import { useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
 
 const VerifyEmail = () => {
+  useEffect(() => {
+    document.title = "Verify Email - Pocketwatch";
+  });
+
   const [message, setMessage] = useState("");
   const [dataLoaded, setDataLoaded] = useState(false);
 

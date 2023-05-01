@@ -6,11 +6,30 @@ import CurrentTask from "../components/CurrentTask";
 import Search from "../components/Search";
 import TaskList from "../components/TaskList";
 import { useState, useRef, useEffect } from 'react';
-var moment = require('moment'); // require 
+import { useNavigate } from "react-router-dom";
 
 function Dashboard() {
+  useEffect(() => {
+    document.title = "Pocketwatch";
+  });
 
   let token = localStorage.getItem('token');
+
+  // check if user is logged in
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  let navigate = useNavigate();
+
+  useEffect(() => {
+    if (token === null) {
+      setIsLoggedIn(false);
+      navigate("/login");
+    } else {
+      setIsLoggedIn(true);
+    }
+  }, []);
+
+  // for current task
+  const [currentTask, setCurrentTask] = useState({});
 
   //for timer
   const [timerHours, setHours] = useState(0);
@@ -21,7 +40,7 @@ function Dashboard() {
   const renders = useRef(0);
   const timerId = useRef();
 
-  var startTime = 0; 
+  var startTime = 0;
   var endTime = 0;
 
   const startTimer = () => {
@@ -32,13 +51,13 @@ function Dashboard() {
         renders.current++
       }
       else {
-        setSeconds(prev => prev - (prev - 1))
-        if (renders.current % 3600 !== 0) {
+        setSeconds(prev => prev - prev)
+        if (renders.current % 3540 !== 0) {
           setMinutes(prev => prev + 1)
         }
         else {
           setMinutes(prev => prev - prev)
-          if (renders.current % 216000 !== 0) {
+          if (renders.current % 82800 !== 0) {
             setHours(prev => prev + 1)
           }
         }
@@ -61,42 +80,30 @@ function Dashboard() {
     setHours(0)
   }
 
-  //turning time into format '000000' to send to database
+  //turning time into format to send to database
   const formatTime = () => {
-
     var time = new Date();
     var currentTime = time.getTime();
     var secondsPast = ((parseInt(timerHours) * 60 * 60) + (parseInt(timerMinutes) * 60) + parseInt(timerSeconds)) * 1000;
-    var start = new Date(currentTime - secondsPast); 
-    // console.log("end: "+ time)
-    // console.log("start: "+ start)
-    // console.log("ct: " + currentTime);
-    // console.log("sp: " + secondsPast);
+    endTime = currentTime;
+    startTime = currentTime - secondsPast;
+  }
 
-    var startHours = (start.getHours()).toString();
-    var startMinutes = (start.getMinutes()).toString();
-    var startSeconds = (start.getSeconds()).toString();
+  // format the timer when a task is selected
+  const formatCurrentTaskTime = (currentTask) => {
+    let startTime = currentTask.startTime;
+    let endTime = currentTask.endTime;
+    let deltaTime = endTime - startTime;
 
-    startHours = startHours.padStart(2, '0');
-    startMinutes = startMinutes.padStart(2, '0');
-    startSeconds = startSeconds.padStart(2, '0');
-    startTime = parseInt(startHours + startMinutes + startSeconds);
-    console.log("startTime: " + startTime);
+    setSeconds(Math.floor( (deltaTime / 1000) % 60 ));
+    setMinutes(Math.floor( (deltaTime / 1000 / 60) % 60 ));
+    setHours(Math.floor( (deltaTime / 1000 / 3600) % 24));
+  }
 
-    var endHours = (time.getHours()).toString();
-    var endMinutes = (time.getMinutes()).toString();
-    var endSeconds = (time.getSeconds()).toString();
-
-    endHours = endHours.padStart(2, '0');
-    endMinutes = endMinutes.padStart(2, '0');
-    endSeconds = endSeconds.padStart(2, '0');
-    endTime = parseInt(endHours + endMinutes + endSeconds);
-    console.log("endTime: " + endTime);
-
-    // var HH = String(timerHours).padStart(2, '0');
-    // var MM = String(timerMinutes).padStart(2, '0');
-    // var SS = String(timerSeconds).padStart(2, '0');
-    // endTime = parseInt(HH + MM + SS);
+  // reset a selected task to default values
+  const resetTask = () => {
+    setName("");
+    stopTimer();
   }
 
   //current task & task list functions 
@@ -129,7 +136,7 @@ function Dashboard() {
         return res.json();
       })
       .then((res) => {
-        //console.log(res._id);
+        console.log(res);
         const id = res._id;
         const date = (res.createdAt.split(/[-T]+/));
         setTasks([
@@ -141,6 +148,7 @@ function Dashboard() {
             startTime: startTime,
             endTime: endTime
           }]);
+          console.log(tasks);
       })
       .catch((err) => {
         console.log("error");
@@ -164,8 +172,19 @@ function Dashboard() {
     console.log("new start time: " + newStartTime)
     console.log("new end time: " + newEndTime);
 
-
-    setTasks(tasks.map((task) => task.id === id ? updatedTask : task))
+    setTasks(tasks.map((task) => {
+      if(task.id === id) {
+        let temp = Object.assign({}, task);
+        temp.name = newName;
+        temp.startTime = newStartTime;
+        temp.endTime = newEndTime;
+        temp.month = task.month;
+        temp.day = task.day;
+        return temp;
+      } else {
+        return task;
+      }
+    }));
 
     fetch(`/api/tasks/${id}`, {
       method: "PUT",
@@ -183,12 +202,9 @@ function Dashboard() {
         endTime: newEndTime
       }),
     })
-      .then((res) => {
-        return res.json();
-      })
-      .then((res) => {
-        window.location.reload();
-      })
+    .then((res) => {
+      return res.json();
+    });
 
   };
 
@@ -264,21 +280,29 @@ function Dashboard() {
   }, [search]);
 
   return (
-    <div>
+    isLoggedIn &&
+    <div className="form pb-1">
       <Timer
         timerHours={timerHours}
         timerMinutes={timerMinutes}
         timerSeconds={timerSeconds} />
       <CurrentTask
+        taskName={name}
         onInputChange={onInputChange}
         handleSubmit={handleSubmit}
         startTimer={startTimer}
         timerOn={timerOn}
+        resetTask={resetTask}
       />
       <Search
         setSearch={setSearch} />
       <TaskList
         tasks={tasks}
+        currentTask={currentTask => {
+          setCurrentTask(currentTask)
+          setName(currentTask.name);
+          formatCurrentTaskTime(currentTask);
+        }}
         deleteTask={deleteTask}
         updateTask={updateTask} />
     </div>

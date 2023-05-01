@@ -3,6 +3,10 @@ import { Link, useLocation } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 
 const ResetPassword = () => {
+  useEffect(() => {
+    document.title = "Reset Password - Pocketwatch";
+  });
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [repeatPassword, setRepeatPassword] = useState("");

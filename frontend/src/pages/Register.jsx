@@ -6,6 +6,10 @@ import { Link } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 
 function Register() {
+  useEffect(() => {
+    document.title = "Register - Pocketwatch";
+  });
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",

@@ -254,13 +254,12 @@ h3 {
   margin-bottom:1%;
 }
 
-.task-name {
-  margin-top: 5px;
-  margin-left: 5px;
+.task-container:hover {
+  background-color: #ECECEC;
 }
 
-.task-elapsed-time {
-  margin-left: 5px;
+.task-name {
+  margin-top: 5px;
 }
 
 .edit-task-button {
@@ -302,6 +301,11 @@ h3 {
   .current-task-buttons {
     justify-content: space-around;
   }
+
+  .control-button {
+    width: 30px;
+    height: 30px;
+  }
 }
 
 @media (min-width: 768px) {
@@ -309,8 +313,9 @@ h3 {
     justify-content: end;
   }
 
-  #media-control {
-    margin-right: 15px;
+  .control-button {
+    width: 50px;
+    height: 50px;
   }
 }
 

@@ -1,28 +1,19 @@
-import EditTask from './EditTask'
-import DeleteTask from './DeleteTask'
+import React from 'react';
+import CurrentTime from './CurrentTime';
+import EditTask from './EditTask';
+import DeleteTask from './DeleteTask';
 
-const Task = ({ task }) => {
-
-  return (
-    <>
-      <td>
-        <div className="task-container lg flex-column rounded">
-          <div className="text-start">
-            <h1 className="task-name">{task.name}</h1>
-          </div>
-          <div className="d-flex justify-content-between">
-            <time className="task-elapsed-time fs-3">{task.endTime}</time>
-            <div>
-              <EditTask task={task} />
-              <DeleteTask task={task} />
+const Task = ({ task, updateTask, deleteTask, currentTask }) => {
+    return (
+        <div className="task-container d-flex flex-column rounded mb-5" onClick={() => currentTask(task)}>
+            <div className="text-start">
+                <h1 className="task-name">{task.name}</h1>
+                <CurrentTime task={task} />
+                <EditTask task={task} updateTask={updateTask} />
+                <DeleteTask task={task} deleteTask={deleteTask} />
             </div>
-          </div>
         </div>
-      </td>
-
-    </>
-  );
-
+    )
 }
 
 export default Task; 

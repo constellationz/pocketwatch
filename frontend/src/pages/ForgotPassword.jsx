@@ -6,6 +6,10 @@ import { Link } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 
 function ForgotPassword() {
+  useEffect(() => {
+    document.title = "Forgot Password - Pocketwatch";
+  });
+
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
