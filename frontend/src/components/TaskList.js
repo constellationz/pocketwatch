@@ -35,6 +35,7 @@ const TaskList = ({ tasks, currentTask, updateTask, deleteTask }) => {
             <h1 className="task-name d-flex flex-column rounded text-start border border-white">
               {tasks[0].month}/{tasks[0].day}
             </h1>
+            <hr class="mb-10"/>
             <Tasks selectedTasks={tasks} updateTask={updateTask} deleteTask={deleteTask} currentTask={currentTask}/>
           </div>
         )).reverse()
