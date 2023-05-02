@@ -65,32 +65,35 @@ function EditTask({ task, updateTask }) {
   const [unformattedStartTime, setUnformattedStartTime] = useState(defaultStart)
   const getEditStartTime = unformattedStartTime.split(' ');
   const formattedStartTime = getEditStartTime[0].split(':');
+  var startTimeString = getEditStartTime[1];
 
   const [unformattedEndTime, setUnformattedEndTime] = useState(defaultEnd)
   const getEditEndTime = unformattedEndTime.split(' ');
   const formattedEndTime = getEditEndTime[0].split(':');
+  var endTimeString = getEditEndTime[1];
+
 
   //splitting the user input into HH, MM, SS -> error thats showing AM when I edit 
   var startTimeHH = formattedStartTime[0];
-  if ((getEditStartTime[1] === 'PM') && (startTimeHH !== '12')){
+  if ((startTimeString.toLowerCase() === 'pm') && (startTimeHH !== '12')){
     startTimeHH = parseInt(startTimeHH) + 12;
   }
-  else if ((getEditStartTime[1] === 'PM') && (startTimeHH === '12')){
+  else if ((startTimeString.toLowerCase() === 'pm') && (startTimeHH === '12')){
     startTimeHH = 12;
   }
-  else if ((getEditStartTime[1] === 'AM') && (startTimeHH === '12')){
+  else if ((startTimeString.toLowerCase() === 'am') && (startTimeHH === '12')){
     startTimeHH = 0;
   }
   var startTimeMM = formattedStartTime[1];
   var startTimeSS = formattedStartTime[2];
   var endTimeHH = formattedEndTime[0];
-  if ((getEditEndTime[1] === 'PM') && (endTimeHH !== '12')){
+  if ((endTimeString.toLowerCase() === 'pm') && (endTimeHH !== '12')){
     endTimeHH = parseInt(endTimeHH) + 12;
   }
-  else if ((getEditEndTime[1] === 'PM') && (endTimeHH === '12')){
+  else if ((endTimeString.toLowerCase() === 'pm') && (endTimeHH === '12')){
     endTimeHH = 12;
   }
-  else if ((getEditEndTime[1] === 'AM') && (endTimeHH === '12')){
+  else if ((endTimeString.toLowerCase() === 'am') && (endTimeHH === '12')){
     endTimeHH = 0;
   }
   var endTimeMM = formattedEndTime[1];
