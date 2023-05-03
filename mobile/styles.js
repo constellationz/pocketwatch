@@ -1,11 +1,21 @@
 import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
+  content: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   container: {
     flex: 1,
     backgroundColor: '#FFFFFF',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  taskStyle: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'flex-start',
   },
   containerDash: {
     flex: 1,
@@ -21,6 +31,17 @@ const styles = StyleSheet.create({
     marginBottom: 18,
     minWidth: '80%',
     maxWidth: '80%',
+  },
+  inputMax: {
+    borderWidth: 2,
+    borderColor: '#CCCCCC',
+    borderRadius: 4,
+    paddingVertical: 10,
+    paddingHorizontal: 10,
+    marginTop: 4,
+    marginBottom: 18,
+    minWidth: '100%',
+    maxWidth: '100%',
   },
   text: {
     textAlign: 'left',
@@ -56,6 +77,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     padding: 15,
     fontFamily: 'Inter-Bold',
+    alignSelf: 'flex-end',
   },
   button: {
     fontFamily: 'Inter-Bold',

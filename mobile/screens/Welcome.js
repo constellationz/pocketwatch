@@ -12,13 +12,34 @@ import {
   Alert,
   ActivityIndicator,
 } from 'react-native';
-// Old login, need to fix this to validate before navigating to dashboard
-// <Text style={styles.button} onPress={() => userLogin(email, password)}>
+import * as SecureStore from 'expo-secure-store';
+
+const setToken = (token) => {
+  return SecureStore.setItemAsync('secure_token', token);
+};
+
+const getToken = () => {
+  return SecureStore.getItemAsync('secure_token');
+};
+
+
 function Welcome({ navigation }) {
   let [email, setEmail] = useState('');
   let [password, setPassword] = useState('');
 
   let userLogin = () => {
+    
+    // Potential issue here, as the submit button is not disabled while processing
+    // allowing users to potentially spam login requests
+
+    // IMPORTANT //
+    // if dev is the username, we skip auth
+    // remove this before prod
+    if (email === 'dev') {
+      navigation.navigate('Dashboard')
+      return
+    }
+
     fetch('https://www.pocketwatch.page/api/users/login', {
       method: 'POST',
       crossDomain: true,
@@ -34,9 +55,17 @@ function Welcome({ navigation }) {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
-        if (data.message !== undefined) alert(data.message);
-        else alert('Login success');
+        if (data.message !== undefined) {
+          // Incorrect login
+          alert("Incorrect login info!")
+          return
+        }
+        
+        // Store token securely
+        setToken(data['token'])
+
+        // Navigate to dashboard
+        navigation.navigate('Dashboard')
       });
   };
 
@@ -57,7 +86,7 @@ function Welcome({ navigation }) {
           value={password}
           onChangeText={(value) => setPassword(value)}
           secureTextEntry={true}></TextInput>
-        <Text style={styles.button} onPress={() => navigation.navigate('Dashboard')}>
+        <Text style={styles.button} onPress={userLogin}>
           Login
         </Text>
       </View>

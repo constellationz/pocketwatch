@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { styles } from '../styles';
 import {
   StyleSheet,
@@ -11,21 +11,44 @@ import {
   TextInput,
   Alert,
 } from 'react-native';
+import * as SecureStore from 'expo-secure-store';
+const getToken = () => {
+  return SecureStore.getItemAsync('secure_token');
+};
 
 function Settings({ navigation }) {
   let [email, setEmail] = useState('');
+
+  useEffect(() => {
+    getUserEmail()
+  }, []);
+
+  async function getUserEmail() {
+    const token = await getToken();
+    const url = 'http://www.pocketwatch.page/api/users/me';
+
+    let response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`
+      }
+    })
+
+    if (!response.ok) {
+      Alert("Something went wrong. Please try again.")
+    }
+
+    let parsed = await response.json()
+    setEmail(parsed['email'])
+  }
 
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.topText}>Settings</Text>
       <View>
         <Text style={styles.text}>Current Email</Text>
-        <Text style={styles.graybox}>User's email goes here</Text>
-        <Text
-          style={styles.buttonSettings}
-          onPress={() => navigation.navigate('UpdateEmail')}>
-          Re-verify email
-        </Text>
+        <Text style={styles.graybox}>{email}</Text>
         <Text
           style={styles.buttonSettings}
           onPress={() => navigation.navigate('UpdateEmail')}>
@@ -41,7 +64,9 @@ function Settings({ navigation }) {
           onPress={() => navigation.navigate('Forgot')}>
           Forgot Password
         </Text>
-        <Text style={styles.buttonSettings}>Logout</Text>
+        <Text 
+          onPress={() => navigation.popToTop()}
+          style={styles.buttonSettings}>Logout</Text>
       </View>
       <Text
         style={styles.smallText}

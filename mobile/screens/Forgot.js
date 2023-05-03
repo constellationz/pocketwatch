@@ -32,9 +32,9 @@ function Forgot({ navigation }) {
         </Text>
       </View>
       <Text
-        style={styles.smallText}
-        onPress={() => navigation.navigate('Welcome')}>
-        Back to login
+        style={styles.cancel}
+        onPress={() => navigation.goBack()}>
+        Discard Changes
       </Text>
       <StatusBar style="dark" />
     </SafeAreaView>
